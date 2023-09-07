@@ -46,7 +46,7 @@ function App() {
   };
 
   return (
-    <>
+
       <img src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4">
       <Cart cartItems={cartItems} onCheckout={onCheckout}/>
       <div className="cards__container">
