@@ -19,6 +19,9 @@ body{
   position: absolute;
   top: 5%;
   left: 50%;
-  padding: 10px;
   transform: translate(-50%, -50%);
+  margin-top: 20px; /* Задайте желаемое значение отступа сверху */
+  margin-bottom: 20px; /* Задайте желаемое значение отступа снизу */
+  margin-left: 20px; /* Задайте желаемое значение отступа слева */
+  margin-right: 20px; /* Задайте желаемое значение отступа справа */
 }
