@@ -18,9 +18,9 @@ function App() {
     const exist = cartItems.find((x) => x.id === food.id);
     if (exist) {
       setCartItems(
-        cartItems.map((x) =>
-          x.id === food.id ? { ...exist, quantity: exist.quantity + 1 } : x
-        )
+          cartItems.map((x) =>
+              x.id === food.id ? { ...exist, quantity: exist.quantity + 1 } : x
+          )
       );
     } else {
       setCartItems([...cartItems, { ...food, quantity: 1 }]);
@@ -33,9 +33,9 @@ function App() {
       setCartItems(cartItems.filter((x) => x.id !== food.id));
     } else {
       setCartItems(
-        cartItems.map((x) =>
-          x.id === food.id ? { ...exist, quantity: exist.quantity - 1 } : x
-        )
+          cartItems.map((x) =>
+              x.id === food.id ? { ...exist, quantity: exist.quantity - 1 } : x
+          )
       );
     }
   };
@@ -46,18 +46,19 @@ function App() {
   };
 
   return (
-    <>
-
-      <img style="  width: 50px;  height: 50px; border-radius: 50%; position: absolute;  top: 5%; left: 50%; transform: translate(-50%, -50%);" src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4" alt="logo"></img>
-      <Cart cartItems={cartItems} onCheckout={onCheckout}/>
-      <div className="cards__container">
-        {foods.map((food) => {
-          return (
-            <Card food={food} key={food.id} onAdd={onAdd} onRemove={onRemove} />
-          );
-        })}
-      </div>
-    </>
+      <>
+        <div className="circle-img-container">
+          <img className="circle-img" src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4" alt="logo" />
+        </div>
+        <Cart cartItems={cartItems} onCheckout={onCheckout}/>
+        <div className="cards__container">
+          {foods.map((food) => {
+            return (
+                <Card food={food} key={food.id} onAdd={onAdd} onRemove={onRemove} />
+            );
+          })}
+        </div>
+      </>
   );
 }
 
