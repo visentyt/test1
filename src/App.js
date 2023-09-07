@@ -46,8 +46,8 @@ function App() {
   };
 
   return (
-
-      <img src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4">
+    <>
+      <h1 className="heading">Medusa Bar</h1>
       <Cart cartItems={cartItems} onCheckout={onCheckout}/>
       <div className="cards__container">
         {foods.map((food) => {
@@ -56,7 +56,7 @@ function App() {
           );
         })}
       </div>
-
+    </>
   );
 }
 
