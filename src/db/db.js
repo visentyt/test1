@@ -8,6 +8,6 @@ export function getData() {
     { title: "Кальян", price: 1000, Image: hooka1Img,id:1 },
     { title: "Пиво", price: 200, Image: pivo1Img,id:2 },
     { title: "Шот", price: 300, Image: shot1Img ,id:3},
-    { title: "Кола", price: 13.99, Image: cocaImg,id:4 },
+    { title: "Кола", price: 139, Image: cocaImg,id:4 },
   ];
 }
