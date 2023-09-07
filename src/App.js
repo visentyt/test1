@@ -48,7 +48,7 @@ function App() {
   return (
     <>
 
-      <img class="circle-img" src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4" alt="logo"></img>
+      <img style="  width: 50px;  height: 50px; border-radius: 50%; position: absolute;  top: 5%; left: 50%; transform: translate(-50%, -50%);" src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4" alt="logo"></img>
       <Cart cartItems={cartItems} onCheckout={onCheckout}/>
       <div className="cards__container">
         {foods.map((food) => {
