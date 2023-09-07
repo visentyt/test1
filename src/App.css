@@ -13,11 +13,12 @@ body{
   text-align: center;
 }
 .circle-img {
-  width: 200px;
-  height: 200px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   position: absolute;
   top: 5%;
   left: 50%;
+  padding: 10px;
   transform: translate(-50%, -50%);
 }
