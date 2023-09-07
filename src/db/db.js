@@ -1,19 +1,13 @@
-import pizzaImg from "../images/pizza.png";
-import burgerImg from "../images/burger.png";
+import hooka1Img from "../images/hooka1.png";
+import pivo1Img from "../images/pivo1.png";
 import cocaImg from "../images/coca.png";
-import saladImg from "../images/salad.png";
-import waterImg from "../images/water.png";
-import iceCreamImg from "../images/icecream.png";
-import kebabImg from "../images/kebab.png";
+import shot1Img from "../images/shot1.png";
 
 export function getData() {
   return [
-    { title: "Pizza", price: 17.99, Image: pizzaImg,id:1 },
-    { title: "Burger", price: 15, Image: burgerImg,id:2 },
-    { title: "Coca", price: 3.5, Image: cocaImg ,id:3},
-    { title: "Kebab", price: 13.99, Image: kebabImg,id:4 },
-    { title: "Salad", price: 2.5, Image: saladImg,id:5 },
-    { title: "Bottle of water", price: 0.99, Image: waterImg,id:6 },
-    { title: "Ice cream", price: 2.99, Image: iceCreamImg,id:7 },
+    { title: "Кальян", price: 1000, Image: hooka1Img,id:1 },
+    { title: "Пиво", price: 200, Image: pivo1Img,id:2 },
+    { title: "Шот", price: 300, Image: shot1Img ,id:3},
+    { title: "Кола", price: 13.99, Image: cocaImg,id:4 },
   ];
 }
