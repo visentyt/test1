@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
+import Button from "./Components/Button/Button";
 const { getData } = require("./db/db");
 const foods = getData();
 
@@ -69,57 +70,61 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
+    const goToCart = () => {
+        // Добавьте вашу логику перехода на страницу корзины здесь
+    };
+
     return (
         <>
-            <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <div id="menu">
-                <div className="menu-item" onClick={() => showCards(null)}>
-                    Все
-                </div>
-                <div className="menu-item" onClick={() => showCards("hookah")}>
-                    Кальян
-                </div>
-                <div className="menu-item" onClick={() => showCards("beer")}>
-                    Пиво
-                </div>
-                <div className="menu-item" onClick={() => showCards("shot")}>
-                    Шоты
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
+            <div className="container">
+                <div id="menu">
+                    <div className="menu-item" onClick={() => showCards(null)}>
+                        Все
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("hookah")}>
+                        Кальян
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("beer")}>
+                        Пиво
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("shot")}>
+                        Шоты
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div><div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div><div className="menu-item" onClick={() => showCards("drink")}>
                     Напитки
                 </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+
+
                 </div>
                 <div className="search-bar">
                     <input
                         type="text"
-                        placeholder="Поиск продуктов"
+                        placeholder="Найдем что-нибудь?"
                         value={searchKeyword}
                         onChange={searchFoods}
                     />
                 </div>
             </div>
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card
-                        key={food.id}
-                        food={food}
-                        onAdd={onAdd}
-                        onRemove={onRemove}
-                    />
+                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
                 ))}
             </div>
         </>
