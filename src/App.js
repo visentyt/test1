@@ -8,7 +8,7 @@ import AdminPanel from "./db/AdminPanel";
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [searchKeyword, setSearchKeyword] = useState("");
+    const [searchKeyword] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
 
     const foods = getData();
