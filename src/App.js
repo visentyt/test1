@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
@@ -10,6 +11,7 @@ const tele = window.Telegram.WebApp;
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
+    const [showAdminPanel, setShowAdminPanel] = useState(false); // Флаг для отображения/скрытия админ-панели
     const foods = getData();
 
     const onAdd = (food) => {
@@ -43,26 +45,40 @@ function App() {
         tele.MainButton.show();
     };
 
+    const toggleAdminPanel = () => {
+        setShowAdminPanel(!showAdminPanel);
+    };
+
     return (
         <>
-            <div className="circle-img-container">
-                <img
-                    className="circle-img"
-                    src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4"
-                    alt="logo"
-                />
-            </div>
-            <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <Menu setActiveCategory={setActiveCategory} />
-            <div className="cards__container">
-                {foods
-                    .filter((food) =>
-                        activeCategory ? food.category === activeCategory : true
-                    )
-                    .map((food) => (
-                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                    ))}
-            </div>
+            {showAdminPanel ? (
+                <AdminPanel foods={foods} />
+            ) : (
+                <>
+                    <div className="circle-img-container">
+                        <img
+                            className="circle-img"
+                            src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4"
+                            alt="logo"
+                        />
+                    </div>
+                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
+                    <Menu setActiveCategory={setActiveCategory} />
+                    <div className="cards__container">
+                        {foods
+                            .filter((food) =>
+                                activeCategory ? food.category === activeCategory : true
+                            )
+                            .map((food) => (
+                                <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                            ))}
+                    </div>
+                </>
+            )}
+
+            <button className="admin-panel-button" onClick={toggleAdminPanel}>
+                Админ-Панель
+            </button>
         </>
     );
 }
