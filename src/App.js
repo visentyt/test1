@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
+
+const tele = window.Telegram.WebApp;
 function App() {
     const [cartItems, setCartItems] = useState([]);
+    useEffect(() => {
+        tele.ready();
+    });
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
+
+
 
     const foods = getData();
 
@@ -37,9 +44,10 @@ function App() {
         }
     };
 
+
     const onCheckout = () => {
-        window.Telegram.MainButton.text = "Оплатить";
-        window.Telegram.MainButton.show();
+        tele.Telegram.MainButton.text = `Оплатить`;
+        tele.Telegram.MainButton.show();
     };
 
     const filterFoodsByCategory = (category) => {

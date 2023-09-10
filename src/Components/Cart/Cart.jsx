@@ -17,5 +17,4 @@ function Cart({ cartItems, onCheckout }) {
     </div>
   );
 }
-
 export default Cart;
