@@ -55,13 +55,14 @@ function App() {
                     alt="logo"
                 />
             </div>
-            {isAdminPanelOpen ? (
+            {isAdminPanelOpen && (
                 <AdminPanel
-                    foods={foods}
-                    updateCartItems={setCartItems}
-                    toggleAdminPanel={toggleAdminPanel}
+                    database={foods}
+                    updateDatabase={updateDatabase}
+                    setActiveCategory={setActiveCategory}
                 />
-            ) : (
+            )}
+            {!isAdminPanelOpen && (
                 <>
                     <Cart cartItems={cartItems} onCheckout={onCheckout} />
                     <Menu setActiveCategory={setActiveCategory} />
