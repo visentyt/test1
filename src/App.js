@@ -52,9 +52,6 @@ function App() {
         setActiveCategory(category);
     };
 
-    const searchFoods = (event) => {
-        setSearchKeyword(event.target.value);
-    };
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
