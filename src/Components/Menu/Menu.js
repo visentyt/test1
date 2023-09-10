@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Menu.css";
 import Card from "../Card/Card";
-const { getData } = require(".../db/db");
+import { getData } from "../../db/db";
 
 function Menu() {
     const [category, setCategory] = useState(null);
