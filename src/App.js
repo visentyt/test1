@@ -8,8 +8,6 @@ import { getData } from "./db/db";
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [database, setDatabase] = useState(getData());
-    const [showAdminPanel, setShowAdminPanel] = useState(false); // Добавляем состояние для отображения админ панели
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
