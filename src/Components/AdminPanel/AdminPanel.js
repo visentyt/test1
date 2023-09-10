@@ -4,13 +4,33 @@ import { getData, updateData } from "../../db/db";
 
 function AdminPanel() {
     const [database, setDatabase] = useState([]);
+    const [newFood, setNewFood] = useState({
+        title: "",
+        price: 0,
+        image: "",
+        category: ""
+    });
 
     useEffect(() => {
         setDatabase(getData());
     }, []);
 
     const handleInputChange = (event) => {
-        // код обработки изменений ввода
+        const { name, value } = event.target;
+        setNewFood((prevFood) => ({ ...prevFood, [name]: value }));
+    };
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setNewFood((prevFood) => ({ ...prevFood, image: reader.result }));
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleAddFood = () => {
