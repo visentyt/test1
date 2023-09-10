@@ -11,6 +11,7 @@ const tele = window.Telegram.WebApp;
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
+    const [searchKeyword] = useState("");
 
     useEffect(() => {
         tele.ready();
