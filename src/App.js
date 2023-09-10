@@ -3,7 +3,7 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
-import AdminPanel from "./Components/AdminPanel";
+import AdminPanel from "./db/AdminPanel";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
