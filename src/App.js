@@ -5,11 +5,11 @@ import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
 import { getData } from "./db/db";
 
-const tele = window.Telegram.WebApp;
-
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
+    const [searchKeyword, setSearchKeyword] = useState("");
+
     const foods = getData();
 
     const onAdd = (food) => {
@@ -39,9 +39,27 @@ function App() {
     };
 
     const onCheckout = () => {
-        tele.MainButton.text = "Оплатить";
-        tele.MainButton.show();
+        window.Telegram.MainButton.text = "Оплатить";
+        window.Telegram.MainButton.show();
     };
+
+    const filterFoodsByCategory = (category) => {
+        if (category === null) {
+            return foods;
+        } else {
+            return foods.filter((food) => food.category === category);
+        }
+    };
+
+    const searchFoods = (keyword) => {
+        setSearchKeyword(keyword);
+    };
+
+    const filteredFoods = searchKeyword
+        ? foods.filter((food) =>
+            food.title.toLowerCase().includes(searchKeyword.toLowerCase())
+        )
+        : filterFoodsByCategory(activeCategory);
 
     return (
         <>
@@ -53,15 +71,16 @@ function App() {
                 />
             </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <Menu setActiveCategory={setActiveCategory} />
+            <Menu setActiveCategory={setActiveCategory} onSearch={searchFoods} />
             <div className="cards__container">
-                {foods
-                    .filter((food) =>
-                        activeCategory ? food.category === activeCategory : true
-                    )
-                    .map((food) => (
-                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                    ))}
+                {filteredFoods.map((food) => (
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                    />
+                ))}
             </div>
         </>
     );

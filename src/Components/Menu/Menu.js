@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Menu.css";
 
 function Menu({ setActiveCategory, onSearch }) {
-    const [searchKeyword, setSearchKeyword] = useState("");
-
     const handleCategoryClick = (category) => {
         setActiveCategory(category);
     };
 
     const handleSearch = (event) => {
         const keyword = event.target.value;
-        setSearchKeyword(keyword);
         onSearch(keyword);
     };
 
@@ -24,7 +21,6 @@ function Menu({ setActiveCategory, onSearch }) {
             <input
                 type="text"
                 placeholder="Поиск..."
-                value={searchKeyword}
                 onChange={handleSearch}
             />
         </div>
