@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
-import Menu from "./Components/Menu/Menu";
-import { getData } from "./db/db";
+const { getData } = require("./db/db");
+const foods = getData();
+
+const tele = window.Telegram.WebApp;
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [searchKeyword, setSearchKeyword] = useState("");
 
-    const foods = getData();
+    useEffect(() => {
+        tele.ready();
+    });
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -39,34 +42,27 @@ function App() {
     };
 
     const onCheckout = () => {
-        window.Telegram.MainButton.text = "Оплатить";
-        window.Telegram.MainButton.show();
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
     };
-
-    const filterFoodsByCategory = (category) => {
-        if (category === null) {
-            return foods;
-        } else {
-            return foods.filter((food) => food.category === category);
-        }
-    };
-
-    const searchFoods = (keyword) => {
-        setSearchKeyword(keyword);
-    };
-
-    const filteredFoods = searchKeyword
-        ? foods.filter((food) =>
-            food.title.toLowerCase().includes(searchKeyword.toLowerCase())
-        )
-        : filterFoodsByCategory(activeCategory);
 
     const showCards = (category) => {
         setActiveCategory(category);
     };
 
+    const filteredFoods = activeCategory
+        ? foods.filter((food) => food.category === activeCategory)
+        : foods;
+
     return (
         <>
+            <div className="circle-img-container">
+                <img
+                    className="circle-img"
+                    src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4"
+                    alt="logo"
+                />
+            </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
@@ -84,7 +80,12 @@ function App() {
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                    />
                 ))}
             </div>
         </>
