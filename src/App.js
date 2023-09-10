@@ -3,13 +3,11 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
-import AdminPanel from "./db/AdminPanel";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
 
     const foods = getData();
 
@@ -52,6 +50,8 @@ function App() {
         }
     };
 
+
+
     const filteredFoods = searchKeyword
         ? foods.filter((food) =>
             food.title.toLowerCase().includes(searchKeyword.toLowerCase())
@@ -62,28 +62,9 @@ function App() {
         setActiveCategory(category);
     };
 
-    const handleToggleAdmin = () => {
-        setIsAdmin(!isAdmin);
-    };
-
-    const handleAddItem = (item) => {
-        // Добавить товар в базу данных
-        // ...
-    };
-
-    const handleDeleteItem = (id) => {
-        // Удалить товар из базы данных по id
-        // ...
-    };
-
     return (
         <>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            {isAdmin ? (
-                <AdminPanel onAddItem={handleAddItem} onDeleteItem={handleDeleteItem} />
-            ) : (
-                <button onClick={handleToggleAdmin}>Админка</button>
-            )}
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все
