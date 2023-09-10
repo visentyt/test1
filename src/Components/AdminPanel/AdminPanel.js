@@ -16,17 +16,16 @@ function AdminPanel({ database, updateDatabase }) {
     };
 
     const handleAddFood = () => {
-        addFood(newFood);
-        setNewFood({
-            title: "",
-            price: 0,
-            Image: "",
-            category: ""
-        });
+        // ... код добавления продукта
+        updateDatabase([...database, newFoodWithId]);
+        setNewFood({ title: "", price: 0, Image: "", category: "" });
+        saveData([...database, newFoodWithId]); // сохранение данных
     };
 
     const handleDeleteFood = (foodId) => {
-        deleteFood(foodId);
+        // ... код удаления продукта
+        updateDatabase(database.filter((food) => food.id !== foodId));
+        saveData(database.filter((food) => food.id !== foodId)); // сохранение данных
     };
 
     return (

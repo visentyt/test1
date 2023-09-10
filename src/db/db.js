@@ -11,6 +11,10 @@ export const database = [
 ];
 
 export function getData() {
+  const savedData = localStorage.getItem("database");
+  if (savedData) {
+    return JSON.parse(savedData);
+  }
   return database;
 }
 
@@ -25,4 +29,8 @@ export function deleteFood(foodId) {
   if (index !== -1) {
     database.splice(index, 1);
   }
+}
+
+export function saveData(database) {
+  localStorage.setItem("database", JSON.stringify(database));
 }

@@ -5,6 +5,7 @@ import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
 import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import { getData, addFood, deleteFood } from "./db/db";
+import { saveData } from "./db/db";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
@@ -38,12 +39,15 @@ function App() {
         }
     };
 
+
+
     const onCheckout = () => {
         // Обработка оформления заказа
     };
 
     const updateDatabase = (newDatabase) => {
         setDatabase(newDatabase);
+        saveData(newDatabase); // сохранение данных
     };
 
     const handleAdminClick = () => {
