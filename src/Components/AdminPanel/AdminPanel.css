@@ -1,0 +1,34 @@
+.admin-panel {
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.admin-panel h2 {
+    margin-bottom: 10px;
+}
+
+.food-form {
+    margin-bottom: 20px;
+}
+
+.food-form input {
+    margin: 5px 0;
+}
+
+.food-list {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.food-list ul {
+    padding: 0;
+}
+
+.food-list li {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+
+.food-list button {
+    margin-left: 10px;
+}
