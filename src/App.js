@@ -91,7 +91,6 @@ function App() {
             );
           })}
         </div>
-          <script>
               function openContent(contentId) {
               var contents = document.getElementsByClassName("content");
               for (var i = 0; i < contents.length; i++) {
@@ -99,7 +98,6 @@ function App() {
           }
               document.getElementById(contentId).style.display = "block";
           }
-          </script>
       </>
   );
 }
