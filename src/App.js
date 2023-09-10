@@ -63,13 +63,6 @@ function App() {
 
     return (
         <>
-            <div className="circle-img-container">
-                <img
-                    className="circle-img"
-                    src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4"
-                    alt="logo"
-                />
-            </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <Menu setActiveCategory={setActiveCategory} onSearch={searchFoods} />
             <div className="cards__container">
