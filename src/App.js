@@ -61,18 +61,30 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
+    const showCards = (category) => {
+        setActiveCategory(category);
+    };
+
     return (
         <>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <Menu setActiveCategory={setActiveCategory} onSearch={searchFoods} />
+            <div id="menu">
+                <div className="menu-item" onClick={() => showCards(null)}>
+                    Все
+                </div>
+                <div className="menu-item" onClick={() => showCards("hookah")}>
+                    Кальян
+                </div>
+                <div className="menu-item" onClick={() => showCards("beer")}>
+                    Пиво
+                </div>
+                <div className="menu-item" onClick={() => showCards("shots")}>
+                    Шоты
+                </div>
+            </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card
-                        key={food.id}
-                        food={food}
-                        onAdd={onAdd}
-                        onRemove={onRemove}
-                    />
+                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
                 ))}
             </div>
         </>
