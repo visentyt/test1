@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
@@ -11,10 +11,6 @@ const tele = window.Telegram.WebApp;
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-
-    useEffect(() => {
-        tele.ready();
-    });
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -62,7 +58,13 @@ function App() {
             </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout}/>
             <Menu setActiveCategory={setActiveCategory} />
-
+            <div className="cards__container">
+                {filterFoodsByCategory(activeCategory).map((food) => {
+                    return (
+                        <Card food={food} key={food.id} onAdd={onAdd} onRemove={onRemove} />
+                    );
+                })}
+            </div>
         </>
     );
 }
