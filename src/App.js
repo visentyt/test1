@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
-import Button from "./Components/Button/Button";
 const { getData } = require("./db/db");
 const foods = getData();
 
@@ -70,12 +69,11 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
-    const goToCart = () => {
-        // Добавьте вашу логику перехода на страницу корзины здесь
-    };
+
 
     return (
         <>
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <div className="container">
                 <div id="menu">
                     <div className="menu-item" onClick={() => showCards(null)}>
