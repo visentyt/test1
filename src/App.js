@@ -48,6 +48,7 @@ function App() {
     const onCheckout = () => {
         tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
+        tele.MainButton.textColor = "#00FF00";
     };
 
     const filterFoodsByCategory = (category) => {
