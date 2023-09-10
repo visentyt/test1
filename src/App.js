@@ -46,8 +46,8 @@ function App() {
 
 
     const onCheckout = () => {
-        tele.Telegram.MainButton.text = `Оплатить`;
-        tele.Telegram.MainButton.show();
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
     };
 
     const filterFoodsByCategory = (category) => {
