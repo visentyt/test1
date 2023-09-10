@@ -13,37 +13,42 @@ function Menu({ setActiveCategory, onSearch }) {
         onSearch(keyword);
     };
 
-    // Функция пролистывания вправо
-    const scrollRight = () => {
+    // Функция пролистывания пальцем вправо или влево
+    const handleTouchMove = (event) => {
         if (menuRef.current) {
-            menuRef.current.scrollLeft += 100;
-        }
-    };
+            const touch = event.touches[0];
+            const touchX = touch.clientX;
+            const menuRect = menuRef.current.getBoundingClientRect();
+            const menuCenterX = menuRect.left + menuRect.width / 2;
 
-    // Функция пролистывания влево
-    const scrollLeft = () => {
-        if (menuRef.current) {
-            menuRef.current.scrollLeft -= 100;
+            if (touchX > menuCenterX) {
+                // Пролистывание вправо
+                menuRef.current.scrollLeft += 10;
+            } else {
+                // Пролистывание влево
+                menuRef.current.scrollLeft -= 10;
+            }
         }
     };
 
     return (
         <div className="menu-wrapper">
-            <div className="menu" ref={menuRef}>
+            <div className="menu" ref={menuRef} onTouchMove={handleTouchMove}>
                 <button onClick={() => handleCategoryClick(null)}>Все</button>
                 <button onClick={() => handleCategoryClick("hookah")}>Кальян</button>
                 <button onClick={() => handleCategoryClick("beer")}>Пиво</button>
                 <button onClick={() => handleCategoryClick("shot")}>Шоты</button>
-                <button onClick={() => handleCategoryClick("beer")}>Пиво1</button>
-                <button onClick={() => handleCategoryClick("shot")}>Шоты1</button>
-                <button onClick={() => handleCategoryClick("beer")}>Пиво2</button>
-                <button onClick={() => handleCategoryClick("shot")}>Шоты2</button>
+                <button onClick={() => handleCategoryClick("beer")}>Пиво</button>
+                <button onClick={() => handleCategoryClick("shot")}>Шоты</button>
+                <button onClick={() => handleCategoryClick("beer")}>Пиво</button>
+                <button onClick={() => handleCategoryClick("shot")}>Шоты</button>
+                <button onClick={() => handleCategoryClick("beer")}>Пиво</button>
+                <button onClick={() => handleCategoryClick("shot")}>Шоты</button>              <button onClick={() => handleCategoryClick("beer")}>Пиво</button>
+                <button onClick={() => handleCategoryClick("shot")}>Шоты</button>
+
                 {/* Добавьте другие кнопки для остальных категорий */}
             </div>
-            <div className="menu-navigation">
-                <button onClick={scrollLeft}>&lt;</button>
-                <button onClick={scrollRight}>&gt;</button>
-            </div>
+            {/* Удалите кнопки menu-navigation */}
             <input
                 type="text"
                 placeholder="Поиск..."
