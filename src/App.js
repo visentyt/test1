@@ -10,6 +10,7 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [database, setDatabase] = useState(getData());
+    const [showAdminPanel, setShowAdminPanel] = useState(false); // Добавляем состояние для отображения админ панели
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -45,6 +46,10 @@ function App() {
         setDatabase(newDatabase);
     };
 
+    const handleAdminClick = () => {
+        setShowAdminPanel(!showAdminPanel); // Изменяем состояние для отображения/скрытия админ панели
+    };
+
     return (
         <>
             <div className="circle-img-container">
@@ -55,18 +60,35 @@ function App() {
                 />
             </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <Menu setActiveCategory={setActiveCategory} />
-            <div className="cards__container">
-                {database
-                    .filter((food) =>
-                        activeCategory ? food.category === activeCategory : true
-                    )
-                    .map((food) => (
-                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                    ))}
-            </div>
-            <AdminPanel database={database} updateDatabase={updateDatabase} />
+            {showAdminPanel ? ( // Показываем админ панель, если showAdminPanel === true
+                <AdminPanel database={database} updateDatabase={updateDatabase} />
+            ) : (
+                <>
+                    <Menu setActiveCategory={setActiveCategory} />
+                    <div className="cards__container">
+                        {database
+                            .filter((food) =>
+                                activeCategory ? food.category === activeCategory : true
+                            )
+                            .map((food) => (
+                                <Card
+                                    key={food.id}
+                                    food={food}
+                                    onAdd={onAdd}
+                                    onRemove={onRemove}
+                                />
+                            ))}
+                    </div>
+                </>
+            )}
+            <button
+                className="admin-button"
+                onClick={handleAdminClick}
+            >
+                Админка
+            </button>
         </>
     );
 }
+
 export default App;
