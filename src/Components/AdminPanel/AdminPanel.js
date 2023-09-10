@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import "./AdminPanel.css";
 
 function AdminPanel({ database, updateDatabase }) {
-    const [newFood, setNewFood] = useState({ title: "", price: 0, Image: "", id: 0, category: "" });
+    const [newFood, setNewFood] = useState({
+        title: "",
+        price: 0,
+        Image: "",
+        id: 0,
+        category: "",
+    });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -59,7 +65,7 @@ function AdminPanel({ database, updateDatabase }) {
                     onChange={handleInputChange}
                 />
                 <button onClick={handleAddFood}>Добавить</button>
-                </div>
+            </div>
             <div className="food-list">
                 <h3>Список продуктов:</h3>
                 <ul>
@@ -71,6 +77,9 @@ function AdminPanel({ database, updateDatabase }) {
                     ))}
                 </ul>
             </div>
+            <button onClick={updateDatabase} className="return-button">
+                Вернуться к меню
+            </button>
         </div>
     );
 }

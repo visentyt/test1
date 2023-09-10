@@ -32,3 +32,8 @@
 .food-list button {
     margin-left: 10px;
 }
+
+.admin-button,
+.return-button {
+    margin-top: 10px;
+}

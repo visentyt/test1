@@ -9,7 +9,8 @@ import { getData } from "./db/db";
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [database, setDatabase] = useState(getData());
+    const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
+    const foods = getData();
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -41,8 +42,8 @@ function App() {
         // Обработка оформления заказа
     };
 
-    const updateDatabase = (newDatabase) => {
-        setDatabase(newDatabase);
+    const toggleAdminPanel = () => {
+        setIsAdminPanelOpen(!isAdminPanelOpen);
     };
 
     return (
@@ -54,19 +55,36 @@ function App() {
                     alt="logo"
                 />
             </div>
-            <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <Menu setActiveCategory={setActiveCategory} />
-            <div className="cards__container">
-                {database
-                    .filter((food) =>
-                        activeCategory ? food.category === activeCategory : true
-                    )
-                    .map((food) => (
-                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                    ))}
-            </div>
-            <AdminPanel database={database} updateDatabase={updateDatabase} />
+            {!isAdminPanelOpen ? (
+                <>
+                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
+                    <Menu setActiveCategory={setActiveCategory} />
+                    <div className="cards__container">
+                        {foods
+                            .filter((food) =>
+                                activeCategory ? food.category === activeCategory : true
+                            )
+                            .map((food) => (
+                                <Card
+                                    key={food.id}
+                                    food={food}
+                                    onAdd={onAdd}
+                                    onRemove={onRemove}
+                                />
+                            ))}
+                    </div>
+                </>
+            ) : (
+                <AdminPanel
+                    database={foods}
+                    updateDatabase={toggleAdminPanel}
+                />
+            )}
+            <button onClick={toggleAdminPanel} className="admin-button">
+                Админка
+            </button>
         </>
     );
 }
+
 export default App;
