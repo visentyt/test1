@@ -42,7 +42,9 @@ function App() {
         // Обработка оформления заказа
     };
 
-    
+    const updateDatabase = (newDatabase) => {
+        setDatabase(newDatabase);
+    };
 
     const handleAdminClick = () => {
         setShowAdminPanel(!showAdminPanel); // Изменяем состояние для отображения/скрытия админ панели
@@ -58,9 +60,8 @@ function App() {
                 />
             </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            {showAdminPanel ? ( // Показываем админ панель, если showAdminPanel === true
-                <AdminPanel database={database} addFood={addFood} deleteFood={deleteFood} />
-
+            {showAdminPanel ? (
+                <AdminPanel database={database} addFood={addFood} deleteFood={deleteFood} updateDatabase={updateDatabase} />
             ) : (
                 <>
                     <Menu setActiveCategory={setActiveCategory} />
