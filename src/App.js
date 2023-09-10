@@ -42,10 +42,7 @@ function App() {
         // Обработка оформления заказа
     };
 
-
-    const updateDatabase = (newDatabase) => {
-        setDatabase(newDatabase);
-    };
+    
 
     const handleAdminClick = () => {
         setShowAdminPanel(!showAdminPanel); // Изменяем состояние для отображения/скрытия админ панели
