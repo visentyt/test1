@@ -36,8 +36,6 @@ function Card({ food, onAdd, onRemove }) {
                     ""
                 )}
             </div>
-
-            <p>Category: {category}</p>
         </div>
     );
 }
