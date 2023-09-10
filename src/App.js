@@ -49,7 +49,7 @@ function App() {
         tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#00FF00"; //изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9"; //изменяем цвет бэкграунда кнопки
     };
 
     const filterFoodsByCategory = (category) => {
