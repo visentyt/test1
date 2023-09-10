@@ -46,6 +46,10 @@ function App() {
         setIsAdminPanelOpen(!isAdminPanelOpen);
     };
 
+    const updateDatabase = (newDatabase) => {
+        setData(newDatabase);
+    };
+
     return (
         <>
             <div className="circle-img-container">
