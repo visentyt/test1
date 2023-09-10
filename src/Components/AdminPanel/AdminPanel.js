@@ -1,37 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AdminPanel.css";
+import { getData, updateData } from "../db/db";
 
-function AdminPanel({ database, updateDatabase }) {
-    const [newFood, setNewFood] = useState({
-        title: "",
-        price: 0,
-        image: "",
-        category: ""
-    });
+function AdminPanel() {
+    const [database, setDatabase] = useState([]);
+
+    useEffect(() => {
+        setDatabase(getData());
+    }, []);
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setNewFood((prevFood) => ({ ...prevFood, [name]: value }));
-    };
-
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setNewFood((prevFood) => ({ ...prevFood, image: reader.result }));
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+        // код обработки изменений ввода
     };
 
     const handleAddFood = () => {
         const lastId = database.length > 0 ? database[database.length - 1].id : 0;
         const newFoodWithId = { ...newFood, id: lastId + 1 };
 
-        updateDatabase([...database, newFoodWithId]);
+        const updatedDatabase = [...database, newFoodWithId];
+        setDatabase(updatedDatabase);
+        updateData(updatedDatabase);
+
         setNewFood({
             title: "",
             price: 0,
@@ -41,7 +30,9 @@ function AdminPanel({ database, updateDatabase }) {
     };
 
     const handleDeleteFood = (foodId) => {
-        updateDatabase(database.filter((food) => food.id !== foodId));
+        const updatedDatabase = database.filter((food) => food.id !== foodId);
+        setDatabase(updatedDatabase);
+        updateData(updatedDatabase);
     };
 
     return (
