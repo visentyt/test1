@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getData } from "./db";
+const { getData, addItem, deleteItem } = require("./db");
 
 const AdminPanel = ({ onAddItem, onDeleteItem }) => {
     const [title, setTitle] = useState("");
