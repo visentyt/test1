@@ -5,13 +5,26 @@ function AdminPanel({ database, updateDatabase }) {
     const [newFood, setNewFood] = useState({
         title: "",
         price: 0,
-        Image: "",
+        image: "",
         category: ""
     });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNewFood((prevFood) => ({ ...prevFood, [name]: value }));
+    };
+
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setNewFood((prevFood) => ({ ...prevFood, image: reader.result }));
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleAddFood = () => {
@@ -22,7 +35,7 @@ function AdminPanel({ database, updateDatabase }) {
         setNewFood({
             title: "",
             price: 0,
-            Image: "",
+            image: "",
             category: ""
         });
     };
@@ -51,11 +64,9 @@ function AdminPanel({ database, updateDatabase }) {
                     onChange={handleInputChange}
                 />
                 <input
-                    type="text"
-                    name="Image"
-                    placeholder="URL изображения"
-                    value={newFood.Image}
-                    onChange={handleInputChange}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
                 />
                 <input
                     type="text"
