@@ -3,8 +3,8 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
-import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import { getData } from "./db/db";
+import AdminPanel from "./Components/AdminPanel/AdminPanel";
 
 const tele = window.Telegram.WebApp;
 
