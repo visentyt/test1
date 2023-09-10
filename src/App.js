@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
-import { getData } from "./db/db";
+const { getData } = require("./db/db");
+const foods = getData();
+
+const tele = window.Telegram.WebApp;
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const data = getData();
+
+    useEffect(() => {
+        tele.ready();
+    });
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -36,26 +42,27 @@ function App() {
         }
     };
 
-    const filteredData = activeCategory
-        ? data.filter((item) => item.category === activeCategory)
-        : data;
+    const onCheckout = () => {
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
+    };
+
+    const filterFoodsByCategory = (category) => {
+        if (category === null) {
+            return foods;
+        } else {
+            return foods.filter((food) => food.category === category);
+        }
+    };
 
     return (
         <>
             <div className="circle-img-container">
-                <img
-                    className="circle-img"
-                    src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4"
-                    alt="logo"
-                />
+                <img className="circle-img" src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4" alt="logo" />
             </div>
-            <Cart cartItems={cartItems} />
+            <Cart cartItems={cartItems} onCheckout={onCheckout}/>
             <Menu setActiveCategory={setActiveCategory} />
-            <div className="cards__container">
-                {filteredData.map((food, index) => (
-                    <Card key={index} food={food} onAdd={onAdd} onRemove={onRemove} />
-                ))}
-            </div>
+
         </>
     );
 }
