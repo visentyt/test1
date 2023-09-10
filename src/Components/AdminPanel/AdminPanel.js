@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import "./AdminPanel.css";
 
 function AdminPanel({ database, updateDatabase }) {
-    const [newFood, setNewFood] = useState({ title: "", price: 0, Image: "", id: 0, category: "" });
+    const [newFood, setNewFood] = useState({
+        title: "",
+        price: 0,
+        Image: "",
+        category: ""
+    });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -10,8 +15,16 @@ function AdminPanel({ database, updateDatabase }) {
     };
 
     const handleAddFood = () => {
-        updateDatabase([...database, newFood]);
-        setNewFood({ title: "", price: 0, Image: "", id: 0, category: "" });
+        const lastId = database.length > 0 ? database[database.length - 1].id : 0;
+        const newFoodWithId = { ...newFood, id: lastId + 1 };
+
+        updateDatabase([...database, newFoodWithId]);
+        setNewFood({
+            title: "",
+            price: 0,
+            Image: "",
+            category: ""
+        });
     };
 
     const handleDeleteFood = (foodId) => {
@@ -45,13 +58,6 @@ function AdminPanel({ database, updateDatabase }) {
                     onChange={handleInputChange}
                 />
                 <input
-                    type="number"
-                    name="id"
-                    placeholder="ID"
-                    value={newFood.id}
-                    onChange={handleInputChange}
-                />
-                <input
                     type="text"
                     name="category"
                     placeholder="Категория"
@@ -59,7 +65,7 @@ function AdminPanel({ database, updateDatabase }) {
                     onChange={handleInputChange}
                 />
                 <button onClick={handleAddFood}>Добавить</button>
-                </div>
+            </div>
             <div className="food-list">
                 <h3>Список продуктов:</h3>
                 <ul>
