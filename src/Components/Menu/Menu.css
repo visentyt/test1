@@ -4,7 +4,7 @@
     justify-content: center;
     background-color: var(--tg-theme-bg-color);;
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 300px;
 }
 
 .menu__buttons {
@@ -15,7 +15,7 @@
 
 .menu__buttons button {
     margin: 0 10px;
-    border-radius: 300px;
+    border-radius: 50px;
     padding: 8px 12px;
     background-color: white;
     color: black;
