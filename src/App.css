@@ -35,13 +35,3 @@ body{
   padding: 10px;
   cursor: pointer;
 }
-
-.search-bar {
-  margin-left: auto;
-}
-
-.search-bar input {
-  width: 50%;
-  padding: 5px;
-  font-size: 14px;
-}
