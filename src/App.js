@@ -43,6 +43,10 @@ function App() {
         // Обработка оформления заказа
     };
 
+    const updateDatabase = (newDatabase) => {
+        setDatabase(newDatabase);
+    };
+
     const toggleAdminPanel = () => {
         setIsAdminPanelOpen(!isAdminPanelOpen);
     };
@@ -84,6 +88,21 @@ function App() {
             )}
         </>
     );
+}
+
+return (
+    <>
+        {/* ... */}
+        {isAdminPanelOpen && (
+            <AdminPanel
+                database={foods}
+                updateDatabase={updateDatabase}
+                setActiveCategory={setActiveCategory}
+            />
+        )}
+        {/* ... */}
+    </>
+);
 }
 
 export default App;
