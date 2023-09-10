@@ -71,13 +71,6 @@ function App() {
 
     return (
         <>
-            <div className="circle-img-container">
-                <img
-                    className="circle-img"
-                    src="https://taplink.st/a/0/c/0/8/4d0981.jpg?4"
-                    alt="logo"
-                />
-            </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
@@ -91,6 +84,21 @@ function App() {
                 </div>
                 <div className="menu-item" onClick={() => showCards("shot")}>
                     Шоты
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
                 </div>
                 <div className="menu-item" onClick={() => showCards("drink")}>
                     Напитки
