@@ -5,6 +5,8 @@ import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
 import { getData } from "./db/db";
 
+const tele = window.Telegram.WebApp;
+
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
@@ -39,8 +41,8 @@ function App() {
     };
 
     const onCheckout = () => {
-        window.Telegram.MainButton.text = "Оплатить";
-        window.Telegram.MainButton.show();
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
     };
 
     const filterFoodsByCategory = (category) => {
