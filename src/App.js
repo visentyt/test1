@@ -3,12 +3,14 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
-import AdminPanel from "./Components/AdminPanel/AdminPanel";
+import { getData } from "./db/db";
+
+const tele = window.Telegram.WebApp;
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [database, setDatabase] = useState(getData());
+    const foods = getData();
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -37,11 +39,8 @@ function App() {
     };
 
     const onCheckout = () => {
-        // Обработка оформления заказа
-    };
-
-    const updateDatabase = (newDatabase) => {
-        setDatabase(newDatabase);
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
     };
 
     return (
@@ -56,7 +55,7 @@ function App() {
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <Menu setActiveCategory={setActiveCategory} />
             <div className="cards__container">
-                {database
+                {foods
                     .filter((food) =>
                         activeCategory ? food.category === activeCategory : true
                     )
@@ -64,7 +63,6 @@ function App() {
                         <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
                     ))}
             </div>
-            <AdminPanel database={database} updateDatabase={updateDatabase} />
         </>
     );
 }
