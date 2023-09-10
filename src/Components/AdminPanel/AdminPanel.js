@@ -1,58 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AdminPanel.css";
-import { getData, updateData } from "../../db/db";
 
-function AdminPanel() {
-    const [database, setDatabase] = useState([]);
+function AdminPanel({ database, updateDatabase }) {
     const [newFood, setNewFood] = useState({
         title: "",
         price: 0,
-        image: "",
+        Image: "",
         category: ""
     });
-
-    useEffect(() => {
-        setDatabase(getData());
-    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNewFood((prevFood) => ({ ...prevFood, [name]: value }));
     };
 
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            setNewFood((prevFood) => ({ ...prevFood, image: reader.result }));
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
-
     const handleAddFood = () => {
         const lastId = database.length > 0 ? database[database.length - 1].id : 0;
         const newFoodWithId = { ...newFood, id: lastId + 1 };
 
-        const updatedDatabase = [...database, newFoodWithId];
-        setDatabase(updatedDatabase);
-        updateData(updatedDatabase);
-
+        updateDatabase([...database, newFoodWithId]);
         setNewFood({
             title: "",
             price: 0,
-            image: "",
+            Image: "",
             category: ""
         });
     };
 
     const handleDeleteFood = (foodId) => {
-        const updatedDatabase = database.filter((food) => food.id !== foodId);
-        setDatabase(updatedDatabase);
-        updateData(updatedDatabase);
+        updateDatabase(database.filter((food) => food.id !== foodId));
     };
 
     return (
@@ -75,9 +51,11 @@ function AdminPanel() {
                     onChange={handleInputChange}
                 />
                 <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
+                    type="text"
+                    name="Image"
+                    placeholder="URL изображения"
+                    value={newFood.Image}
+                    onChange={handleInputChange}
                 />
                 <input
                     type="text"
