@@ -1,21 +1,17 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
-import AdminPanel from "./db/AdminPanel";
-const { getData } = require("./db/db");
-const foods = getData();
-
-const tele = window.Telegram.WebApp;
+import { getData } from "./db/db";
+import AdminPanel from "./Components/AdminPanel";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [searchKeyword] = useState("");
+    const [searchKeyword, setSearchKeyword] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
 
-    useEffect(() => {
-        tele.ready();
-    });
+    const foods = getData();
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -44,14 +40,9 @@ function App() {
     };
 
     const onCheckout = () => {
-        tele.MainButton.text = "Оплатить";
-        tele.MainButton.show();
+        window.Telegram.MainButton.text = "Оплатить";
+        window.Telegram.MainButton.show();
     };
-
-    const showCards = (category) => {
-        setActiveCategory(category);
-    };
-
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -67,9 +58,32 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
+    const showCards = (category) => {
+        setActiveCategory(category);
+    };
+
+    const handleToggleAdmin = () => {
+        setIsAdmin(!isAdmin);
+    };
+
+    const handleAddItem = (item) => {
+        // Добавить товар в базу данных
+        // ...
+    };
+
+    const handleDeleteItem = (id) => {
+        // Удалить товар из базы данных по id
+        // ...
+    };
+
     return (
         <>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
+            {isAdmin ? (
+                <AdminPanel onAddItem={handleAddItem} onDeleteItem={handleDeleteItem} />
+            ) : (
+                <button onClick={handleToggleAdmin}>Админка</button>
+            )}
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все
@@ -80,39 +94,15 @@ function App() {
                 <div className="menu-item" onClick={() => showCards("beer")}>
                     Пиво
                 </div>
-                <div className="menu-item" onClick={() => showCards("shot")}>
+                <div className="menu-item" onClick={() => showCards("shots")}>
                     Шоты
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
                 </div>
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card
-                        key={food.id}
-                        food={food}
-                        onAdd={onAdd}
-                        onRemove={onRemove}
-                    />
+                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
                 ))}
             </div>
-            <AdminPanel /> {/* Добавляем админ-панель */}
         </>
     );
 }

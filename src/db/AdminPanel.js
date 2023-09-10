@@ -1,91 +1,59 @@
 import React, { useState } from "react";
 import { getData } from "./db";
 
-function AdminPanel() {
+const AdminPanel = ({ onAddItem, onDeleteItem }) => {
     const [title, setTitle] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(0);
     const [image, setImage] = useState("");
     const [category, setCategory] = useState("");
 
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-    };
-
-    const handlePriceChange = (e) => {
-        setPrice(e.target.value);
-    };
-
-    const handleImageChange = (e) => {
-        setImage(e.target.value);
-    };
-
-    const handleCategoryChange = (e) => {
-        setCategory(e.target.value);
-    };
-
-    const handleAddProduct = () => {
-        const newProduct = {
-            title: title,
-            price: price,
-            Image: image,
-            id: getData().length + 1,
-            category: category,
-        };
-
-        // Добавляем новый продукт в данные
-        getData().push(newProduct);
-
-        // Очищаем поля ввода
+    const handleAddItem = () => {
+        onAddItem({ title, price, image, category });
         setTitle("");
-        setPrice("");
+        setPrice(0);
         setImage("");
         setCategory("");
     };
 
-    const handleDeleteProduct = (id) => {
-        // Удаляем продукт по его id
-        const index = getData().findIndex((product) => product.id === id);
-        if (index !== -1) {
-            getData().splice(index, 1);
-        }
+    const handleDeleteItem = (id) => {
+        onDeleteItem(id);
     };
 
     return (
-        <div className="admin-panel">
+        <div>
             <h2>Админ-панель</h2>
             <div>
-                <label>Название продукта:</label>
-                <input type="text" value={title} onChange={handleTitleChange} />
-            </div>
-            <div>
+                <h3>Добавить товар</h3>
+                <label>Название:</label>
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <label>Цена:</label>
-                <input type="number" value={price} onChange={handlePriceChange} />
-            </div>
-            <div>
-                <label>Изображение:</label>
-                <input type="text" value={image} onChange={handleImageChange} />
-            </div>
-            <div>
+                <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                <label>Изображение URL:</label>
+                <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
                 <label>Категория:</label>
-                <input type="text" value={category} onChange={handleCategoryChange} />
+                <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                    <option value="">Выберите категорию</option>
+                    <option value="hookah">Кальян</option>
+                    <option value="beer">Пиво</option>
+                    <option value="shot">Шот</option>
+                    <option value="drink">Напиток</option>
+                </select>
+                <button onClick={handleAddItem}>Добавить</button>
             </div>
-            <button onClick={handleAddProduct}>Добавить продукт</button>
-
-            <h3>Существующие продукты:</h3>
-            <ul>
-                {getData().map((product) => (
-                    <li key={product.id}>
-                        <span>{product.title}</span>
-                        <span>{product.price}</span>
-                        <img src={product.Image} alt={product.title} />
-                        <button onClick={() => handleDeleteProduct(product.id)}>
-                            Удалить
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            <div>
+                <h3>Удалить товар</h3>
+                <label>Выберите товар:</label>
+                <select>
+                    {getData().map((item) => (
+                        <option key={item.id} value={item.id}>
+                            {item.title}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={handleDeleteItem}>Удалить</button>
+            </div>
         </div>
     );
-}
+};
 
 export default AdminPanel;
