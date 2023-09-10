@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
-const { getData, addProduct, deleteProduct } = require("./db/db");
+import AdminPanel from "./db/AdminPanel";
+const { getData } = require("./db/db");
 const foods = getData();
 
 const tele = window.Telegram.WebApp;
@@ -11,7 +12,6 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword, setSearchKeyword] = useState("");
-    const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false); // Добавляем состояние для открытия и закрытия админ-панели
 
     useEffect(() => {
         tele.ready();
@@ -52,6 +52,9 @@ function App() {
         setActiveCategory(category);
     };
 
+    const searchFoods = (event) => {
+        setSearchKeyword(event.target.value);
+    };
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -67,98 +70,52 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
-    // Функция для открытия админ-панели
-    const openAdminPanel = () => {
-        setIsAdminPanelOpen(true);
-    };
-
-    // Функция для закрытия админ-панели
-    const closeAdminPanel = () => {
-        setIsAdminPanelOpen(false);
-    };
-
     return (
         <>
-            {/* Кнопка "админка" */}
-            <button className="admin-button" onClick={openAdminPanel}>
-                Админка
-            </button>
-
-            {isAdminPanelOpen ? (
-                <div className="admin-panel">
-                    <h2>Админ-панель</h2>
-
-                    <div id="products-container"></div>
-
-                    <h3>Добавить новый продукт</h3>
-                    <div>
-                        <label htmlFor="title-input">Название:</label>
-                        <input id="title-input" type="text" />
-
-                        <label htmlFor="price-input">Цена:</label>
-                        <input id="price-input" type="number" />
-
-                        <label htmlFor="image-input">Изображение:</label>
-                        <input id="image-input" type="text" />
-
-                        <label htmlFor="category-input">Категория:</label>
-                        <input id="category-input" type="text" />
-
-                        <button id="add-button">Добавить</button>
-                    </div>
-
-                    {/* Кнопка для закрытия админ-панели */}
-                    <button className="close-button" onClick={closeAdminPanel}>
-                        Закрыть
-                    </button>
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
+            <div id="menu">
+                <div className="menu-item" onClick={() => showCards(null)}>
+                    Все
                 </div>
-            ) : (
-                <>
-                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
-                    <div id="menu">
-                        <div className="menu-item" onClick={() => showCards(null)}>
-                            Все
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("hookah")}>
-                            Кальян
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("beer")}>
-                            Пиво
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("shot")}>
-                            Шоты
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                    </div>
-                    <div className="cards__container">
-                        {filteredFoods.map((food) => (
-                            <Card
-                                key={food.id}
-                                food={food}
-                                onAdd={onAdd}
-                                onRemove={onRemove}
-                            />
-                        ))}
-                    </div>
-                </>
-            )}
+                <div className="menu-item" onClick={() => showCards("hookah")}>
+                    Кальян
+                </div>
+                <div className="menu-item" onClick={() => showCards("beer")}>
+                    Пиво
+                </div>
+                <div className="menu-item" onClick={() => showCards("shot")}>
+                    Шоты
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+            </div>
+            <div className="cards__container">
+                {filteredFoods.map((food) => (
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                    />
+                ))}
+            </div>
+            <AdminPanel /> {/* Добавляем админ-панель */}
         </>
     );
 }
