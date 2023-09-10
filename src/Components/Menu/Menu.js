@@ -16,22 +16,18 @@ function Menu() {
         }
     };
 
-    return (
-        <div className="menu">
-            <div className="menu__buttons">
-                <button onClick={() => setCategory("hookah")}>Кальян</button>
-                <button onClick={() => setCategory("beer")}>Пиво</button>
-                <button onClick={() => setCategory("shot")}>Шоты</button>
-                {/* Добавьте другие кнопки для остальных категорий */}
-            </div>
+    function Menu({ setActiveCategory }) {
+        const handleCategoryClick = (category) => {
+            setActiveCategory(category);
+        };
 
-            <div className="menu__cards">
-                {filterCards(category).map((item) => (
-                    <Card key={item.id} food={item} />
-                ))}
+        return (
+            <div className="menu">
+                <button onClick={() => handleCategoryClick("hookah")}>Кальян</button>
+                <button onClick={() => handleCategoryClick("beer")}>Пиво</button>
+                <button onClick={() => handleCategoryClick("shot")}>Шоты</button>
             </div>
-        </div>
-    );
-}
+        );
+    }
 
 export default Menu;
