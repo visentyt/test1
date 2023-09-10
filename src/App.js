@@ -3,9 +3,7 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
-import AdminPanel from "./Components/AdminPanel/AdminPanel";
-import { getData, addFood, deleteFood } from "./db/db";
-import { saveData } from "./db/db";
+import { getData } from "./db/db";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
