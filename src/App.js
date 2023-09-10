@@ -5,6 +5,7 @@ import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
 import AdminPanel from "./Components/AdminPanel/AdminPanel";
 import { getData } from "./db/db";
+import AdminButton from "./Components/AdminButton/AdminButton";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
@@ -46,10 +47,6 @@ function App() {
         setIsAdminPanelOpen(!isAdminPanelOpen);
     };
 
-    const updateDatabase = (newDatabase) => {
-        setData(newDatabase);
-    };
-
     return (
         <>
             <div className="circle-img-container">
@@ -59,14 +56,12 @@ function App() {
                     alt="logo"
                 />
             </div>
-            {isAdminPanelOpen && (
+            {isAdminPanelOpen ? (
                 <AdminPanel
-                    database={foods}
-                    updateDatabase={updateDatabase}
-                    setActiveCategory={setActiveCategory}
+                    foods={foods}
+                    toggleAdminPanel={toggleAdminPanel}
                 />
-            )}
-            {!isAdminPanelOpen && (
+            ) : (
                 <>
                     <Cart cartItems={cartItems} onCheckout={onCheckout} />
                     <Menu setActiveCategory={setActiveCategory} />
@@ -84,9 +79,7 @@ function App() {
                                 />
                             ))}
                     </div>
-                    <button onClick={toggleAdminPanel} className="admin-button">
-                        Админка
-                    </button>
+                    <AdminButton onClick={toggleAdminPanel} />
                 </>
             )}
         </>
