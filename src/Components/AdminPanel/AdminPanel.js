@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import "./AdminPanel.css";
 
-function AdminPanel({ database, updateDatabase, setActiveCategory }) {
-    const [newFood, setNewFood] = useState({
-        title: "",
-        price: 0,
-        Image: "",
-        id: 0,
-        category: ""
-    });
+function AdminPanel({ database, updateDatabase }) {
+    const [newFood, setNewFood] = useState({ title: "", price: 0, Image: "", id: 0, category: "" });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -16,17 +10,12 @@ function AdminPanel({ database, updateDatabase, setActiveCategory }) {
     };
 
     const handleAddFood = () => {
-        const newFoodWithId = { ...newFood, id: database.length + 1 };
-        updateDatabase([...database, newFoodWithId]);
+        updateDatabase([...database, newFood]);
         setNewFood({ title: "", price: 0, Image: "", id: 0, category: "" });
     };
 
     const handleDeleteFood = (foodId) => {
         updateDatabase(database.filter((food) => food.id !== foodId));
-    };
-
-    const handleReturnToMenu = () => {
-        setActiveCategory(null);
     };
 
     return (
@@ -56,6 +45,13 @@ function AdminPanel({ database, updateDatabase, setActiveCategory }) {
                     onChange={handleInputChange}
                 />
                 <input
+                    type="number"
+                    name="id"
+                    placeholder="ID"
+                    value={newFood.id}
+                    onChange={handleInputChange}
+                />
+                <input
                     type="text"
                     name="category"
                     placeholder="Категория"
@@ -63,7 +59,7 @@ function AdminPanel({ database, updateDatabase, setActiveCategory }) {
                     onChange={handleInputChange}
                 />
                 <button onClick={handleAddFood}>Добавить</button>
-            </div>
+                </div>
             <div className="food-list">
                 <h3>Список продуктов:</h3>
                 <ul>
@@ -75,9 +71,6 @@ function AdminPanel({ database, updateDatabase, setActiveCategory }) {
                     ))}
                 </ul>
             </div>
-            <button onClick={handleReturnToMenu} className="return-button">
-                Вернуться к меню
-            </button>
         </div>
     );
 }

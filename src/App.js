@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+mport React, { useState } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import Menu from "./Components/Menu/Menu";
 import AdminPanel from "./Components/AdminPanel/AdminPanel";
-import { getData } from "./db/db";
-import AdminButton from "./Components/AdminButton/AdminButton";
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
-    const foods = getData();
+    const [database, setDatabase] = useState(getData());
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -47,10 +44,6 @@ function App() {
         setDatabase(newDatabase);
     };
 
-    const toggleAdminPanel = () => {
-        setIsAdminPanelOpen(!isAdminPanelOpen);
-    };
-
     return (
         <>
             <div className="circle-img-container">
@@ -60,49 +53,20 @@ function App() {
                     alt="logo"
                 />
             </div>
-            {isAdminPanelOpen ? (
-                <AdminPanel
-                    foods={foods}
-                    toggleAdminPanel={toggleAdminPanel}
-                />
-            ) : (
-                <>
-                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
-                    <Menu setActiveCategory={setActiveCategory} />
-                    <div className="cards__container">
-                        {foods
-                            .filter((food) =>
-                                activeCategory ? food.category === activeCategory : true
-                            )
-                            .map((food) => (
-                                <Card
-                                    key={food.id}
-                                    food={food}
-                                    onAdd={onAdd}
-                                    onRemove={onRemove}
-                                />
-                            ))}
-                    </div>
-                    <AdminButton onClick={toggleAdminPanel} />
-                </>
-            )}
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
+            <Menu setActiveCategory={setActiveCategory} />
+            <div className="cards__container">
+                {database
+                    .filter((food) =>
+                        activeCategory ? food.category === activeCategory : true
+                    )
+                    .map((food) => (
+                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    ))}
+            </div>
+            <AdminPanel database={database} updateDatabase={updateDatabase} />
         </>
     );
-}
-
-return (
-    <>
-        {/* ... */}
-        {isAdminPanelOpen && (
-            <AdminPanel
-                database={foods}
-                updateDatabase={updateDatabase}
-                setActiveCategory={setActiveCategory}
-            />
-        )}
-        {/* ... */}
-    </>
-);
 }
 
 export default App;
