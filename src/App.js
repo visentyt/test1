@@ -10,6 +10,7 @@ const tele = window.Telegram.WebApp;
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
+    const [searchKeyword, setSearchKeyword] = useState("");
 
     useEffect(() => {
         tele.ready();
@@ -50,9 +51,23 @@ function App() {
         setActiveCategory(category);
     };
 
-    const filteredFoods = activeCategory
-        ? foods.filter((food) => food.category === activeCategory)
-        : foods;
+    const searchFoods = (event) => {
+        setSearchKeyword(event.target.value);
+    };
+
+    const filterFoodsByCategory = (category) => {
+        if (category === null) {
+            return foods;
+        } else {
+            return foods.filter((food) => food.category === category);
+        }
+    };
+
+    const filteredFoods = searchKeyword
+        ? foods.filter((food) =>
+            food.title.toLowerCase().includes(searchKeyword.toLowerCase())
+        )
+        : filterFoodsByCategory(activeCategory);
 
     return (
         <>
@@ -74,8 +89,19 @@ function App() {
                 <div className="menu-item" onClick={() => showCards("beer")}>
                     Пиво
                 </div>
-                <div className="menu-item" onClick={() => showCards("shots")}>
+                <div className="menu-item" onClick={() => showCards("shot")}>
                     Шоты
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Поиск продуктов"
+                        value={searchKeyword}
+                        onChange={searchFoods}
+                    />
                 </div>
             </div>
             <div className="cards__container">
