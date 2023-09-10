@@ -59,6 +59,7 @@ function App() {
                 <AdminPanel
                     foods={foods}
                     updateCartItems={setCartItems}
+                    toggleAdminPanel={toggleAdminPanel}
                 />
             ) : (
                 <>
@@ -78,11 +79,11 @@ function App() {
                                 />
                             ))}
                     </div>
+                    <button onClick={toggleAdminPanel} className="admin-button">
+                        Админка
+                    </button>
                 </>
             )}
-            <button onClick={toggleAdminPanel} className="admin-button">
-                Админка
-            </button>
         </>
     );
 }
