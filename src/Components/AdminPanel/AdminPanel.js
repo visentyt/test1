@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./AdminPanel.css";
-import { getData, updateData } from "../db/db";
+import { getData, updateData } from "../../db/db";
 
 function AdminPanel() {
     const [database, setDatabase] = useState([]);
