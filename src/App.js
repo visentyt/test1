@@ -62,11 +62,8 @@ function App() {
             </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
             {showAdminPanel ? ( // Показываем админ панель, если showAdminPanel === true
-                <AdminPanel
-                    database={database}
-                    addFood={addFood}
-                    deleteFood={deleteFood}
-                />
+                <AdminPanel database={database} updateDatabase={updateDatabase} />
+
             ) : (
                 <>
                     <Menu setActiveCategory={setActiveCategory} />
@@ -92,6 +89,7 @@ function App() {
             >
                 Админка
             </button>
+            <AdminPanel database={database} addFood={addFood} deleteFood={deleteFood} />
         </>
     );
 }
