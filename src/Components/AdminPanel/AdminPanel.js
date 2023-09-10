@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./AdminPanel.css";
 
-function AdminPanel({ database, updateDatabase }) {
+function AdminPanel({ database, updateDatabase, setActiveCategory }) {
     const [newFood, setNewFood] = useState({
         title: "",
         price: 0,
         Image: "",
         id: 0,
-        category: "",
+        category: ""
     });
 
     const handleInputChange = (event) => {
@@ -16,12 +16,17 @@ function AdminPanel({ database, updateDatabase }) {
     };
 
     const handleAddFood = () => {
-        updateDatabase([...database, newFood]);
+        const newFoodWithId = { ...newFood, id: database.length + 1 };
+        updateDatabase([...database, newFoodWithId]);
         setNewFood({ title: "", price: 0, Image: "", id: 0, category: "" });
     };
 
     const handleDeleteFood = (foodId) => {
         updateDatabase(database.filter((food) => food.id !== foodId));
+    };
+
+    const handleReturnToMenu = () => {
+        setActiveCategory(null);
     };
 
     return (
@@ -51,13 +56,6 @@ function AdminPanel({ database, updateDatabase }) {
                     onChange={handleInputChange}
                 />
                 <input
-                    type="number"
-                    name="id"
-                    placeholder="ID"
-                    value={newFood.id}
-                    onChange={handleInputChange}
-                />
-                <input
                     type="text"
                     name="category"
                     placeholder="Категория"
@@ -77,7 +75,7 @@ function AdminPanel({ database, updateDatabase }) {
                     ))}
                 </ul>
             </div>
-            <button onClick={updateDatabase} className="return-button">
+            <button onClick={handleReturnToMenu} className="return-button">
                 Вернуться к меню
             </button>
         </div>

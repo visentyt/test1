@@ -9,8 +9,7 @@ import { getData } from "./db/db";
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [isAdminPanelOpen, setIsAdminPanelOpen] = useState(false);
-    const foods = getData();
+    const [database, setDatabase] = useState(getData());
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -42,8 +41,8 @@ function App() {
         // Обработка оформления заказа
     };
 
-    const toggleAdminPanel = () => {
-        setIsAdminPanelOpen(!isAdminPanelOpen);
+    const updateDatabase = (newDatabase) => {
+        setDatabase(newDatabase);
     };
 
     return (
@@ -55,12 +54,12 @@ function App() {
                     alt="logo"
                 />
             </div>
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
             {!isAdminPanelOpen ? (
                 <>
-                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
                     <Menu setActiveCategory={setActiveCategory} />
                     <div className="cards__container">
-                        {foods
+                        {database
                             .filter((food) =>
                                 activeCategory ? food.category === activeCategory : true
                             )
@@ -76,11 +75,12 @@ function App() {
                 </>
             ) : (
                 <AdminPanel
-                    database={foods}
-                    updateDatabase={toggleAdminPanel}
+                    database={database}
+                    updateDatabase={updateDatabase}
+                    setActiveCategory={setActiveCategory}
                 />
             )}
-            <button onClick={toggleAdminPanel} className="admin-button">
+            <button onClick={() => setIsAdminPanelOpen(!isAdminPanelOpen)} className="admin-button">
                 Админка
             </button>
         </>
