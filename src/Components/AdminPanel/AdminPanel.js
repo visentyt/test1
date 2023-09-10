@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./AdminPanel.css";
-import { addFood, deleteFood } from "../../db/db";
+import { saveData } from "../../db/db";
 
 function AdminPanel({ database, updateDatabase }) {
     const [newFood, setNewFood] = useState({
@@ -16,16 +16,22 @@ function AdminPanel({ database, updateDatabase }) {
     };
 
     const handleAddFood = () => {
-        // ... код добавления продукта
+        const lastId = database.length > 0 ? database[database.length - 1].id : 0;
+        const newFoodWithId = { ...newFood, id: lastId + 1 };
+
         updateDatabase([...database, newFoodWithId]);
-        setNewFood({ title: "", price: 0, Image: "", category: "" });
-        saveData([...database, newFoodWithId]); // сохранение данных
+        setNewFood({
+            title: "",
+            price: 0,
+            Image: "",
+            category: ""
+        });
+        saveData([...database, newFoodWithId]);
     };
 
     const handleDeleteFood = (foodId) => {
-        // ... код удаления продукта
         updateDatabase(database.filter((food) => food.id !== foodId));
-        saveData(database.filter((food) => food.id !== foodId)); // сохранение данных
+        saveData(database.filter((food) => food.id !== foodId));
     };
 
     return (
