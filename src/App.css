@@ -28,9 +28,10 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #f0f0f0;
+  background-color: var(--tg-theme-bg-color);
   padding: 10px;
   border-radius: 5px;
+  border: 5px solid var(--tg-theme-text-color);
 }
 
 #menu {
