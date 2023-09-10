@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AdminPanel.css";
 import { saveData } from "../../db/db";
-
+import { addProduct } from "../../db/db";
 function AdminPanel({ database, updateDatabase }) {
     const [newFood, setNewFood] = useState({
         title: "",
@@ -19,14 +19,13 @@ function AdminPanel({ database, updateDatabase }) {
         const lastId = database.length > 0 ? database[database.length - 1].id : 0;
         const newFoodWithId = { ...newFood, id: lastId + 1 };
 
-        updateDatabase([...database, newFoodWithId]);
+        addProduct(newFoodWithId);
         setNewFood({
             title: "",
             price: 0,
             Image: "",
             category: ""
         });
-        saveData([...database, newFoodWithId]);
     };
 
     const handleDeleteFood = (foodId) => {

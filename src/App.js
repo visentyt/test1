@@ -45,14 +45,6 @@ function App() {
         // Обработка оформления заказа
     };
 
-    const updateDatabase = (newDatabase) => {
-        setDatabase(newDatabase);
-        saveData(newDatabase); // сохранение данных
-    };
-
-    const handleAdminClick = () => {
-        setShowAdminPanel(!showAdminPanel); // Изменяем состояние для отображения/скрытия админ панели
-    };
 
     return (
         <>
@@ -64,9 +56,6 @@ function App() {
                 />
             </div>
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            {showAdminPanel ? (
-                <AdminPanel database={database} addFood={addFood} deleteFood={deleteFood} updateDatabase={updateDatabase} />
-            ) : (
                 <>
                     <Menu setActiveCategory={setActiveCategory} />
                     <div className="cards__container">
@@ -84,13 +73,7 @@ function App() {
                             ))}
                     </div>
                 </>
-            )}
-            <button
-                className="admin-button"
-                onClick={handleAdminClick}
-            >
-                Админка
-            </button>
+
         </>
     );
 }
