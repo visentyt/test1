@@ -35,3 +35,37 @@ body{
   padding: 10px;
   cursor: pointer;
 }
+
+.burger-menu__icon {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.burger-menu__icon span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin-bottom: 5px;
+  background-color: #000;
+  transition: transform 0.3s ease-in-out;
+}
+
+.burger-menu__icon.open span:nth-child(1) {
+  transform: rotate(45deg) translate(-2px, 4px);
+}
+
+.burger-menu__icon.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu__icon.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(-1px, -5px);
+}
+
+.burger-menu__content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  padding: 10px;
+}
