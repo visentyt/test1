@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
+
+const AboutPage = () => {
+    return <h2>Лол</h2>;
+};
+
+const MenuPage = () => {
+    return <h2>Попа</h2>;
+};
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
@@ -13,7 +22,7 @@ function App() {
     });
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Добавляем состояние для открытия/закрытия меню
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const foods = getData();
 
@@ -47,7 +56,7 @@ function App() {
         tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9"; //изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9";
     };
 
     const filterFoodsByCategory = (category) => {
@@ -73,51 +82,56 @@ function App() {
     };
 
     return (
-        <>
-            {isMenuOpen && (
-                <div className="menu-overlay">
-                    <div className="menu">
-                        <button onClick={toggleMenu}>Закрыть</button>
-                        <button onClick={() => alert("лол")}>О нас</button>
-                        <button onClick={() => alert("попа")}>Меню</button>
+        <Router>
+            <>
+                {isMenuOpen && (
+                    <div className="menu-overlay">
+                        <div className="menu">
+                            <button onClick={toggleMenu}>Закрыть</button>
+                            <Link to="/about">О нас</Link>
+                            <Link to="/menu">Меню</Link>
+                        </div>
+                    </div>
+                )}
+                <Cart cartItems={cartItems} onCheckout={onCheckout} />
+                <div className="burger-menu" onClick={toggleMenu}>
+                    <div className="burger-line"></div>
+                    <div className="burger-line"></div>
+                    <div className="burger-line"></div>
+                </div>
+                <div id="menu">
+                    <div className="menu-item" onClick={() => showCards(null)}>
+                        Все
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("hookah")}>
+                        Кальян
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("beer")}>
+                        Пиво
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("shot")}>
+                        Шоты
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("eat")}>
+                        Закуски
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("kokteil")}>
+                        Коктейли
                     </div>
                 </div>
-            )}
-            <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            <div className="burger-menu" onClick={toggleMenu}>
-                <div className="burger-line"></div>
-                <div className="burger-line"></div>
-                <div className="burger-line"></div>
-            </div>
-            <div id="menu">
-                <div className="menu-item" onClick={() => showCards(null)}>
-                    Все
+                <div className="cards__container">
+                    {filteredFoods.map((food) => (
+                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    ))}
                 </div>
-                <div className="menu-item" onClick={() => showCards("hookah")}>
-                    Кальян
-                </div>
-                <div className="menu-item" onClick={() => showCards("beer")}>
-                    Пиво
-                </div>
-                <div className="menu-item" onClick={() => showCards("shot")}>
-                    Шоты
-                </div>
-                <div className="menu-item" onClick={() => showCards("drink")}>
-                    Напитки
-                </div>
-                <div className="menu-item" onClick={() => showCards("eat")}>
-                    Закуски
-                </div>
-                <div className="menu-item" onClick={() => showCards("kokteil")}>
-                    Коктейли
-                </div>
-            </div>
-            <div className="cards__container">
-                {filteredFoods.map((food) => (
-                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                ))}
-            </div>
-        </>
+
+                <Route path="/about" component={AboutPage} />
+                <Route path="/menu" component={MenuPage} />
+            </>
+        </Router>
     );
 }
 
