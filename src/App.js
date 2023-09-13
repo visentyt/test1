@@ -82,6 +82,12 @@ function App() {
         setIsMenuOpen(false);
     };
 
+    const toggleMenuContent = () => {
+        setShowMenu(!showMenu);
+        setShowAbout(false);
+        setIsMenuOpen(false);
+    };
+
     return (
         <>
             <div className="cards__container">
@@ -110,7 +116,7 @@ function App() {
                             className="menu-item"
                             onClick={() => {
                                 showCards(null);
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
                         >
                             Все
@@ -119,7 +125,7 @@ function App() {
                             className="menu-item"
                             onClick={() => {
                                 showCards("hookah");
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
                         >
                             Кальян
@@ -128,7 +134,7 @@ function App() {
                             className="menu-item"
                             onClick={() => {
                                 showCards("beer");
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
                         >
                             Пиво
@@ -137,15 +143,15 @@ function App() {
                             className="menu-item"
                             onClick={() => {
                                 showCards("shot");
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
-                        >Шоты
-                        </div>
+                        >
+                            Шоты</div>
                         <div
                             className="menu-item"
                             onClick={() => {
                                 showCards("drink");
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
                         >
                             Напитки
@@ -154,7 +160,7 @@ function App() {
                             className="menu-item"
                             onClick={() => {
                                 showCards("eat");
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
                         >
                             Закуски
@@ -163,13 +169,48 @@ function App() {
                             className="menu-item"
                             onClick={() => {
                                 showCards("kokteil");
-                                toggleMenu();
+                                toggleMenuContent();
                             }}
                         >
                             Коктейли
                         </div>
                     </div>
                 </div>
+            )}
+
+            {!showAbout && !showMenu && (
+                <>
+                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
+
+                    <div className="burger-menu" onClick={toggleMenu}>
+                        <div className="burger-line"></div>
+                        <div className="burger-line"></div>
+                        <div className="burger-line"></div>
+                    </div>
+                    <div id="menu">
+                        <div className="menu-item" onClick={() => showCards(null)}>
+                            Все
+                        </div>
+                        <div className="menu-item" onClick={() => showCards("hookah")}>
+                            Кальян
+                        </div>
+                        <div className="menu-item" onClick={() => showCards("beer")}>
+                            Пиво
+                        </div>
+                        <div className="menu-item" onClick={() => showCards("shot")}>
+                            Шоты
+                        </div>
+                        <div className="menu-item" onClick={() => showCards("drink")}>
+                            Напитки
+                        </div>
+                        <div className="menu-item" onClick={() => showCards("eat")}>
+                            Закуски
+                        </div>
+                        <div className="menu-item" onClick={() => showCards("kokteil")}>
+                            Коктейли
+                        </div>
+                    </div>
+                </>
             )}
         </>
     );
