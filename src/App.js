@@ -87,6 +87,7 @@ function App() {
                 <button onClick={toggleCart}>Корзина</button>
             </div>
             {isMenuOpen && (
+                <>
                 <div id="menu">
                     <div className="menu-item" onClick={() => showCards(null)}>
                         Все
@@ -115,6 +116,7 @@ function App() {
                 <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
     ))}
 </div>
+                </>
             )}
             {isCartOpen && <Cart cartItems={cartItems} onCheckout={onCheckout} />}
         </>
