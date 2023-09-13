@@ -88,3 +88,11 @@ body{
 .menu-section {
   display: block;
 }
+
+.menu-item {
+  cursor: pointer;
+}
+
+.menu-item.active {
+  color: black;
+}

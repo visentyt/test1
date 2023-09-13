@@ -76,10 +76,12 @@ function App() {
 
     const toggleAbout = () => {
         setShowAbout(!showAbout);
+        setShowMenu(false);
     };
 
     const toggleMenuContent = () => {
         setShowMenu(!showMenu);
+        setShowAbout(false);
     };
 
     return (
@@ -88,8 +90,18 @@ function App() {
                 <div className="menu-overlay">
                     <div className="menu">
                         <button onClick={toggleMenu}>Закрыть</button>
-                        <div onClick={toggleAbout}>О нас</div>
-                        <div onClick={toggleMenuContent}>Меню</div>
+                        <div
+                            onClick={toggleAbout}
+                            className={showAbout ? "menu-item active" : "menu-item"}
+                        >
+                            О нас
+                        </div>
+                        <div
+                            onClick={toggleMenuContent}
+                            className={showMenu ? "menu-item active" : "menu-item"}
+                        >
+                            Меню
+                        </div>
                     </div>
                 </div>
             )}
