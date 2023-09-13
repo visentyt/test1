@@ -67,17 +67,17 @@ function App() {
 
     const showCards = (category) => {
         setActiveCategory(category);
-        setIsMenuOpen(false);
+
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-        setIsCartOpen(false);
+
     };
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
-        setIsMenuOpen(false);
+
     };
 
     return (
@@ -117,7 +117,9 @@ function App() {
     ))}
 </div>
                 </>
-            )}
+            ) : (
+                null
+                )}
             {isCartOpen && <Cart cartItems={cartItems} onCheckout={onCheckout} />}
         </>
     );
