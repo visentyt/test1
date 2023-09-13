@@ -117,9 +117,7 @@ function App() {
     ))}
 </div>
                 </>
-            ) : (
-                null
-                )}
+            ) : null}
             {isCartOpen && <Cart cartItems={cartItems} onCheckout={onCheckout} />}
         </>
     );
