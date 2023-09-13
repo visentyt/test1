@@ -5,15 +5,16 @@ import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
+
 function App() {
     const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
         tele.ready();
     });
-
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     const foods = getData();
 
@@ -47,7 +48,7 @@ function App() {
         tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9"; //изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9";
     };
 
     const filterFoodsByCategory = (category) => {
@@ -66,21 +67,25 @@ function App() {
 
     const showCards = (category) => {
         setActiveCategory(category);
-        setIsMenuOpen(false); // Закрываем бургер-меню после выбора категории
+        setIsMenuOpen(false);
     };
 
     const toggleMenu = () => {
-        setIsMenuOpen((prevState) => !prevState);
+        setIsMenuOpen(!isMenuOpen);
+        setIsCartOpen(false);
+    };
+
+    const toggleCart = () => {
+        setIsCartOpen(!isCartOpen);
+        setIsMenuOpen(false);
     };
 
     return (
         <>
             <div className="burger-menu">
                 <button onClick={toggleMenu}>Меню</button>
-                <button onClick={() => console.log("Корзина")}>Корзина</button>
+                <button onClick={toggleCart}>Корзина</button>
             </div>
-
-            {/* Отображение элементов меню */}
             {isMenuOpen && (
                 <div id="menu">
                     <div className="menu-item" onClick={() => showCards(null)}>
@@ -106,15 +111,14 @@ function App() {
                     </div>
                 </div>
             )}
-
-            {/* Отображение содержимого корзины */}
-            <Cart cartItems={cartItems} onCheckout={onCheckout} />
-
-            <div className="cards__container">
-                {filteredFoods.map((food) => (
-                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                ))}
-            </div>
+            {isCartOpen && <Cart cartItems={cartItems} onCheckout={onCheckout} />}
+            {!isMenuOpen && !isCartOpen && (
+                <div className="cards__container">
+                    {filteredFoods.map((food) => (
+                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    ))}
+                </div>
+            )}
         </>
     );
 }
