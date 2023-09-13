@@ -86,7 +86,7 @@ function App() {
                 <button onClick={toggleMenu}>Меню</button>
                 <button onClick={toggleCart}>Корзина</button>
             </div>
-            {isMenuOpen && (
+            {isMenuOpen ? (
                 <>
                 <div id="menu">
                     <div className="menu-item" onClick={() => showCards(null)}>
