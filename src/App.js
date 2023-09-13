@@ -72,76 +72,102 @@ function App() {
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+        setShowAbout(false);
+        setShowMenu(false);
     };
 
     const toggleAbout = () => {
         setShowAbout(!showAbout);
         setShowMenu(false);
+        setIsMenuOpen(false);
     };
 
     const toggleMenuContent = () => {
         setShowMenu(!showMenu);
         setShowAbout(false);
+        setIsMenuOpen(false);
     };
 
     return (
         <>
-            {isMenuOpen && (
-                <div className="menu-overlay">
-                    <div className="menu">
-                        <button onClick={toggleMenu}>Закрыть</button>
-                        <div
-                            onClick={toggleAbout}
-                            className={showAbout ? "menu-item active" : "menu-item"}
-                        >
-                            О нас
-                        </div>
-                        <div
-                            onClick={toggleMenuContent}
-                            className={showMenu ? "menu-item active" : "menu-item"}
-                        >
-                            Меню
-                        </div>
-                    </div>
-                </div>
-            )}
-
+            <div className="cards__container">
+                {filteredFoods.map((food) => (
+                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                ))}
+            </div>
 
             {showAbout && <div className="about-section">Лол</div>}
             {showMenu && <div className="menu-section">
                 <Cart cartItems={cartItems} onCheckout={onCheckout} />
+
                 <div className="burger-menu" onClick={toggleMenu}>
                     <div className="burger-line"></div>
                     <div className="burger-line"></div>
                     <div className="burger-line"></div>
                 </div>
-                <div id="menu">
-                    <div className="menu-item" onClick={() => showCards(null)}>
+                <div className="menu">
+                    <div
+                        className="menu-item"
+                        onClick={() => {
+                            showCards(null);
+                            toggleMenuContent();
+                        }}
+                    >
                         Все
                     </div>
-                    <div className="menu-item" onClick={() => showCards("hookah")}>
+                    <div
+                        className="menu-item"
+                        onClick={() => {
+                            showCards("hookah");
+                            toggleMenuContent();
+                        }}
+                    >
                         Кальян
                     </div>
-                    <div className="menu-item" onClick={() => showCards("beer")}>
+                    <div
+                        className="menu-item"
+                        onClick={() => {
+                            showCards("beer");
+                            toggleMenuContent();
+                        }}
+                    >
                         Пиво
                     </div>
-                    <div className="menu-item" onClick={() => showCards("shot")}>
+                    <div
+                        className="menu-item"
+                        onClick={() => {
+                            showCards("shot");
+                            toggleMenuContent();
+                        }}
+                    >
                         Шоты
                     </div>
-                    <div className="menu-item" onClick={() => showCards("drink")}>
+                    <div
+                        className="menu-item"
+                        onClick={() => {
+                            showCards("drink");
+                            toggleMenuContent();
+                        }}
+                    >
                         Напитки
-                    </div>
-                    <div className="menu-item" onClick={() => showCards("eat")}>
-                        Закуски
-                    </div>
-                    <div className="menu-item" onClick={() => showCards("kokteil")}>
+                    </div><div
+                    className="menu-item"
+                    onClick={() => {
+                        showCards("eat");
+                        toggleMenuContent();
+                    }}
+                >
+                    Закуски
+                </div>
+                    <div
+                        className="menu-item"
+                        onClick={() => {
+                            showCards("kokteil");
+                            toggleMenuContent();
+                        }}
+                    >
                         Коктейли
                     </div>
-                </div>
-                <div className="cards__container">
-                    {filteredFoods.map((food) => (
-                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                    ))}
                 </div>
             </div>}
         </>
