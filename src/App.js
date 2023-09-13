@@ -106,11 +106,6 @@ function App() {
                 <div className="menu-section">
                     <Cart cartItems={cartItems} onCheckout={onCheckout} />
 
-                    <div className="burger-menu" onClick={toggleMenu}>
-                        <div className="burger-line"></div>
-                        <div className="burger-line"></div>
-                        <div className="burger-line"></div>
-                    </div>
                     <div className="menu">
                         <div
                             className="menu-item"
@@ -146,7 +141,8 @@ function App() {
                                 toggleMenuContent();
                             }}
                         >
-                            Шоты</div>
+                            Шоты
+                        </div>
                         <div
                             className="menu-item"
                             onClick={() => {
@@ -154,8 +150,7 @@ function App() {
                                 toggleMenuContent();
                             }}
                         >
-                            Напитки
-                        </div>
+                            Напитки</div>
                         <div
                             className="menu-item"
                             onClick={() => {
@@ -182,12 +177,16 @@ function App() {
                 <>
                     <Cart cartItems={cartItems} onCheckout={onCheckout} />
 
-                    <div className="burger-menu" onClick={toggleMenu}>
+                    <div
+                        className="burger-menu"
+                        onClick={toggleMenu}
+                        style={{ display: "block" }}
+                    >
                         <div className="burger-line"></div>
                         <div className="burger-line"></div>
                         <div className="burger-line"></div>
                     </div>
-                    <div id="menu">
+                    <div id="menu" style={{ display: "block" }}>
                         <div className="menu-item" onClick={() => showCards(null)}>
                             Все
                         </div>
