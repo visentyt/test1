@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
+import BurgerMenu from "./Components/BurgerMenu/BurgerMenu";
 
 
 const tele = window.Telegram.WebApp;
@@ -74,6 +75,7 @@ function App() {
 
     return (
         <>
+            <BurgerMenu />
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
