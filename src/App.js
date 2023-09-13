@@ -5,17 +5,15 @@ import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
-
 function App() {
     const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
         tele.ready();
     });
+
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [showAbout, setShowAbout] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
 
     const foods = getData();
 
@@ -49,7 +47,7 @@ function App() {
         tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
+        tele.MainButton.color = "#A9A9A9"; //изменяем цвет бэкграунда кнопки
     };
 
     const filterFoodsByCategory = (category) => {
@@ -68,149 +66,55 @@ function App() {
 
     const showCards = (category) => {
         setActiveCategory(category);
+        setIsMenuOpen(false); // Закрываем бургер-меню после выбора категории
     };
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-        setShowAbout(false);
-        setShowMenu(false);
-    };
-
-    const toggleAbout = () => {
-        setShowAbout(!showAbout);
-        setShowMenu(false);
-        setIsMenuOpen(false);
-    };
-
-    const toggleMenuContent = () => {
-        setShowMenu(!showMenu);
-        setShowAbout(false);
-        setIsMenuOpen(false);
+        setIsMenuOpen((prevState) => !prevState);
     };
 
     return (
         <>
+            <div className="burger-menu">
+                <button onClick={toggleMenu}>Меню</button>
+                <button onClick={() => console.log("Корзина")}>Корзина</button>
+            </div>
+
+            {/* Отображение элементов меню */}
+            {isMenuOpen && (
+                <div id="menu">
+                    <div className="menu-item" onClick={() => showCards(null)}>
+                        Все
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("hookah")}>
+                        Кальян
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("beer")}>
+                        Пиво
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("shot")}>
+                        Шоты
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("eat")}>
+                        Закуски
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("kokteil")}>
+                        Коктейли
+                    </div>
+                </div>
+            )}
+
+            {/* Отображение содержимого корзины */}
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
+
             <div className="cards__container">
                 {filteredFoods.map((food) => (
                     <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
                 ))}
             </div>
-
-            {showAbout && (
-                <div className="about-section">
-                    Лол
-                    <button onClick={toggleAbout}>Закрыть</button>
-                </div>
-            )}
-            {showMenu && (
-                <div className="menu-section">
-                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
-
-                    <div className="menu">
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards(null);
-                                toggleMenuContent();
-                            }}
-                        >
-                            Все
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards("hookah");
-                                toggleMenuContent();
-                            }}
-                        >
-                            Кальян
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards("beer");
-                                toggleMenuContent();
-                            }}
-                        >
-                            Пиво
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards("shot");
-                                toggleMenuContent();
-                            }}
-                        >
-                            Шоты
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards("drink");
-                                toggleMenuContent();
-                            }}
-                        >
-                            Напитки</div>
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards("eat");
-                                toggleMenuContent();
-                            }}
-                        >
-                            Закуски
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => {
-                                showCards("kokteil");
-                                toggleMenuContent();
-                            }}
-                        >
-                            Коктейли
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {!showAbout && !showMenu && (
-                <>
-                    <Cart cartItems={cartItems} onCheckout={onCheckout} />
-
-                    <div
-                        className="burger-menu"
-                        onClick={toggleMenu}
-                        style={{ display: "block" }}
-                    >
-                        <div className="burger-line"></div>
-                        <div className="burger-line"></div>
-                        <div className="burger-line"></div>
-                    </div>
-                    <div id="menu" style={{ display: "block" }}>
-                        <div className="menu-item" onClick={() => showCards(null)}>
-                            Все
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("hookah")}>
-                            Кальян
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("beer")}>
-                            Пиво
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("shot")}>
-                            Шоты
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("eat")}>
-                            Закуски
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("kokteil")}>
-                            Коктейли
-                        </div>
-                    </div>
-                </>
-            )}
         </>
     );
 }
