@@ -4,21 +4,8 @@ import Card from "./Components/Card/Card";
 import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
-
 const tele = window.Telegram.WebApp;
-const [menuOpen, setMenuOpen] = useState(false);
-const [selectedPage, setSelectedPage] = useState(null);
-const openMenu = () => {
-    setMenuOpen(true);
-};
 
-const closeMenu = () => {
-    setMenuOpen(false);
-};
-
-const selectPage = (page) => {
-    setSelectedPage(page);
-};
 function App() {
     const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
@@ -26,8 +13,7 @@ function App() {
     });
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-
-
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Добавляем состояние для открытия/закрытия меню
 
     const foods = getData();
 
@@ -57,7 +43,6 @@ function App() {
         }
     };
 
-
     const onCheckout = () => {
         tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
@@ -73,8 +58,6 @@ function App() {
         }
     };
 
-
-
     const filteredFoods = searchKeyword
         ? foods.filter((food) =>
             food.title.toLowerCase().includes(searchKeyword.toLowerCase())
@@ -85,28 +68,27 @@ function App() {
         setActiveCategory(category);
     };
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <>
-            <div className={`burger-menu ${menuOpen ? 'open' : ''}`}>
-                <div className="burger-icon" onClick={openMenu}>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                {menuOpen && (
+            {isMenuOpen && (
+                <div className="menu-overlay">
                     <div className="menu">
-                        <button className={`menu-item ${selectedPage === 'about' ? 'selected' : ''}`} onClick={() => selectPage('about')}>
-                            О нас
-                        </button>
-                        <button className={`menu-item ${selectedPage === 'menu' ? 'selected' : ''}`} onClick={() => selectPage('menu')}>
-                            Меню
-                        </button>
+                        <button onClick={toggleMenu}>Закрыть</button>
+                        <button onClick={() => alert("лол")}>О нас</button>
+                        <button onClick={() => alert("попа")}>Меню</button>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
             <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            {selectedPage === 'about' && <div>лол</div>}
-            {selectedPage === 'menu' && <div>попа</div>}
+            <div className="burger-menu" onClick={toggleMenu}>
+                <div className="burger-line"></div>
+                <div className="burger-line"></div>
+                <div className="burger-line"></div>
+            </div>
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все
@@ -129,7 +111,6 @@ function App() {
                 <div className="menu-item" onClick={() => showCards("kokteil")}>
                     Коктейли
                 </div>
-
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
