@@ -110,15 +110,13 @@ function App() {
                         Коктейли
                     </div>
                 </div>
+                <div className="cards__container">
+            {filteredFoods.map((food) => (
+                <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+    ))}
+</div>
             )}
             {isCartOpen && <Cart cartItems={cartItems} onCheckout={onCheckout} />}
-            {!isMenuOpen && !isCartOpen && (
-                <div className="cards__container">
-                    {filteredFoods.map((food) => (
-                        <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
-                    ))}
-                </div>
-            )}
         </>
     );
 }
