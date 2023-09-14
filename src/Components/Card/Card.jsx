@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
@@ -6,23 +6,22 @@ const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const { title, Image, price } = food;
 
-    const getTotalPrice = useCallback(() => {
-        return count * price;
-    }, [count, price]);
-
     useEffect(() => {
-        const onCheckout = () => {
-            tele.MainButton.text = `Цена: ${getTotalPrice().toFixed(2)}₽`;
+        const calculateTotalPrice = () => {
+            const newTotalPrice = (count * price).toFixed(2);
+            setTotalPrice(newTotalPrice);
+            tele.MainButton.text = `Цена: ${newTotalPrice}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         };
 
-        onCheckout();
-    }, [getTotalPrice]);
+        calculateTotalPrice();
+    }, [count, price]);
 
     const handleIncrement = () => {
         setCount(count + 1);
