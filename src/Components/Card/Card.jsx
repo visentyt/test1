@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
+import { getData } from "../../db/db";
 
 const tele = window.Telegram.WebApp;
+
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    const { title, Image, price } = food;
+    const { title, Image, price, id } = food;
 
     useEffect(() => {
         const onCheckout = () => {
@@ -23,13 +25,13 @@ function Card({ food, onAdd, onRemove }) {
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + food.price);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + price);
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - food.price);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - price);
     };
 
     return (
@@ -52,6 +54,13 @@ function Card({ food, onAdd, onRemove }) {
                     ""
                 )}
             </div>
+
+            {id === getData().length && (
+                <div>
+                    <h4>Итоговая цена:</h4>
+                    <p>{`Цена: ${totalPrice?.toFixed(2)}₽`}</p>
+                </div>
+            )}
         </div>
     );
 }
