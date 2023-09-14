@@ -9,14 +9,26 @@ function Card({ food, onAdd, onRemove, onCheckout }) {
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        onCheckout();
+        updateCheckoutButton();
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
-        onCheckout();
+        updateCheckoutButton();
     };
+
+    const updateCheckoutButton = () => {
+        const totalPriceText = `Цена: ${totalPrice.toFixed(2)}₽`;
+        tele.MainButton.setParams({
+            text: totalPriceText,
+            show: true,
+            textColor: "#ffffff",
+            color: "#A9A9A9"
+        });
+    };
+
+    const totalPrice = count * price;
 
     return (
         <div className="card">
