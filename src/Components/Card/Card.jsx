@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
+import { totalPrice } from "../Cart/Cart"
 
 const tele = window.Telegram.WebApp;
 
 
-const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;

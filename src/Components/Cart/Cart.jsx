@@ -18,3 +18,4 @@ function Cart({ cartItems, onCheckout }) {
   );
 }
 export default Cart;
+export const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
