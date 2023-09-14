@@ -2,48 +2,36 @@ import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
+const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
-
-    const onUpdateTotalPrice = (amount) => {
-        setTotalPrice(totalPrice + amount);
-    };
-
     const { title, Image, price } = food;
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        onUpdateTotalPrice(+price);
-        onCheckout();
+        onCheckout(); // Вызываем функцию onCheckout
     };
 
     const handleDecrement = () => {
-        if (count > 0) {
-            setCount(count - 1);
-            onRemove(food);
-            onUpdateTotalPrice(-price);
-            onCheckout();
-        }
+        setCount(count - 1);
+        onRemove(food);
+        onCheckout(); // Вызываем функцию onCheckout
     };
-    const tele = window.Telegram.WebApp;
-    
-    tele.MainButton.textColor = "#ffffff";
-    tele.MainButton.color = "#A9A9A9";
-    tele.MainButton.show();
+
     const onCheckout = () => {
-        const totalPriceText = `Цена: ${totalPrice}₽`;
-        tele.MainButton.text = totalPriceText;
+        tele.MainButton.text = "Оплатить";
         tele.MainButton.show();
+        tele.MainButton.textColor = "#ffffff";
+        tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
     };
 
     return (
         <div className="card">
-      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-        {count}
-      </span>
+            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+                {count}
+            </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
             </div>
