@@ -8,6 +8,8 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
+    <Card food={food} onAdd={handleAdd} onRemove={handleRemove} totalPrice={totalPrice} />
+
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
