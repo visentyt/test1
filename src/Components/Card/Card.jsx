@@ -1,67 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
-
-function Card({ food, onAdd, onRemove }) {
+function Card({ food, onAdd, onRemove, totalPrice }) {
     const [count, setCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [cartItems, setCartItems] = useState({});
-
-    const { title, Image, price, id } = food;
-
-    useEffect(() => {
-        const calculateTotalPrice = () => {
-            let newTotalPrice = totalPrice;
-            Object.values(cartItems).forEach((item) => {
-                newTotalPrice += item.price * item.count;
-            });
-            tele.MainButton.text = `Цена: ${newTotalPrice.toFixed(2)}₽`;
-            tele.MainButton.show();
-            tele.MainButton.textColor = "#ffffff";
-            tele.MainButton.color = "#A9A9A9";
-        };
-
-        calculateTotalPrice();
-    }, [cartItems, totalPrice]);
+    const { title, Image, price } = food;
 
     const handleIncrement = () => {
-        const newCount = count + 1;
-        setCount(newCount);
+        setCount(count + 1);
         onAdd(food);
-
-        if (cartItems[id]) {
-            const updatedItem = { ...cartItems[id], count: cartItems[id].count + 1 };
-            const updatedCartItems = { ...cartItems, [id]: updatedItem };
-            setCartItems(updatedCartItems);
-            setTotalPrice(totalPrice + price); // Обновляем общую цену
-        } else {
-            const newItem = { id, title, price, count: 1 };
-            const updatedCartItems = { ...cartItems, [id]: newItem };
-            setCartItems(updatedCartItems);
-            setTotalPrice(totalPrice + price); // Обновляем общую цену
-        }
     };
 
     const handleDecrement = () => {
-        if (count > 0) {
-            const newCount = count - 1;
-            setCount(newCount);
-            onRemove(food);
+        setCount(count - 1);
+        onRemove(food);
+    };
 
-            if (cartItems[id]) {
-                const updatedItem = { ...cartItems[id], count: cartItems[id].count - 1 };
-                const updatedCartItems = { ...cartItems, [id]: updatedItem };
-                setCartItems(updatedCartItems);
-                setTotalPrice(totalPrice - price); // Обновляем общую цену
-
-                if (updatedItem.count === 0) {
-                    const { [id]: removedItem, ...restItems } = updatedCartItems;
-                    setCartItems(restItems);
-                }
-            }
-        }
+    const handleClick = () => {
+        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
+        tele.MainButton.show();
+        tele.MainButton.textColor = "#ffffff";
+        tele.MainButton.color = "#A9A9A9";
     };
 
     return (
@@ -78,10 +38,18 @@ function Card({ food, onAdd, onRemove }) {
 
             <div className="btn-container">
                 <Button title={"+"} type={"add"} onClick={handleIncrement} />
-                {count !== 0 && (
+                {count !== 0 ? (
                     <Button title={"-"} type={"remove"} onClick={handleDecrement} />
+                ) : (
+                    ""
                 )}
             </div>
+
+            <Button
+                title={"Show Total Price"}
+                type={"showPrice"}
+                onClick={handleClick}
+            />
         </div>
     );
 }
