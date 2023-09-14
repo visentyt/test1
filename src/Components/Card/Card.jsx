@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-function Card({ food, onAdd, onRemove, onCheckout }) {
+const tele = window.Telegram.WebApp;
+
+function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
+
+    useEffect(() => {
+        tele.MainButton.setParams({
+            text: `Цена: ${price * count}₽`,
+        });
+        tele.MainButton.show();
+        tele.MainButton.textColor = "#ffffff";
+        tele.MainButton.color = "#A9A9A9";
+    }, [count, price]);
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        onCheckout();
     };
 
     const handleDecrement = () => {
-        setCount(count - 1);
-        onRemove(food);
-        onCheckout();
+        if (count > 0) {
+            setCount(count - 1);
+            onRemove(food);
+        }
     };
 
     return (
@@ -32,10 +43,8 @@ function Card({ food, onAdd, onRemove, onCheckout }) {
 
             <div className="btn-container">
                 <Button title={"+"} type={"add"} onClick={handleIncrement} />
-                {count !== 0 ? (
+                {count !== 0 && (
                     <Button title={"-"} type={"remove"} onClick={handleDecrement} />
-                ) : (
-                    ""
                 )}
             </div>
         </div>
