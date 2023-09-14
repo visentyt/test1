@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
@@ -9,18 +9,20 @@ function Card({ food, onAdd, onRemove }) {
 
     const { title, Image, price } = food;
 
+    useEffect(() => {
+        onCheckout();
+    }, [totalPrice]);
+
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
         setTotalPrice(totalPrice + food.price);
-        onCheckout(); // Вызываем функцию onCheckout
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
         setTotalPrice(totalPrice - food.price);
-        onCheckout(); // Вызываем функцию onCheckout
     };
 
     const onCheckout = () => {
@@ -32,7 +34,9 @@ function Card({ food, onAdd, onRemove }) {
 
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>{count}</span>
+            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+                {count}
+            </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
             </div>
@@ -48,7 +52,6 @@ function Card({ food, onAdd, onRemove }) {
                     ""
                 )}
             </div>
-
         </div>
     );
 }
