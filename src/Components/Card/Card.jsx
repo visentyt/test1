@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
-import { getData } from "../../data";
+import { getData } from "../../db/db";
 
 const tele = window.Telegram.WebApp;
 
