@@ -43,7 +43,7 @@ function App() {
         }
     };
 
-    
+
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {

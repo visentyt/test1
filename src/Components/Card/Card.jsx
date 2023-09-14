@@ -22,7 +22,6 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
 
     const onCheckout = () => {
         const totalPriceText = `Цена: ${totalPrice.toFixed(2)}₽`;
-        tele.MainButton.show();
         tele.MainButton.setParams({
             text: totalPriceText,
             show: true,
