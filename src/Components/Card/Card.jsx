@@ -13,9 +13,10 @@ function Card({ food, onAdd, onRemove }) {
 
     useEffect(() => {
         const calculateTotalPrice = () => {
-            let newTotalPrice = Object.values(cartItems).reduce((acc, item) => {
-                return acc + item.price * item.count; // Суммируем цены всех товаров в корзине
-            }, 0);
+            let newTotalPrice = totalPrice;
+            Object.values(cartItems).forEach((item) => {
+                newTotalPrice += item.price * item.count;
+            });
             tele.MainButton.text = `Цена: ${newTotalPrice.toFixed(2)}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
@@ -23,7 +24,7 @@ function Card({ food, onAdd, onRemove }) {
         };
 
         calculateTotalPrice();
-    }, [cartItems]);
+    }, [cartItems, totalPrice]);
 
     const handleIncrement = () => {
         const newCount = count + 1;
@@ -31,18 +32,16 @@ function Card({ food, onAdd, onRemove }) {
         onAdd(food);
 
         if (cartItems[id]) {
-            // Если товар уже есть в корзине, увеличиваем его количество и обновляем цену
             const updatedItem = { ...cartItems[id], count: cartItems[id].count + 1 };
             const updatedCartItems = { ...cartItems, [id]: updatedItem };
             setCartItems(updatedCartItems);
+            setTotalPrice(totalPrice + price); // Обновляем общую цену
         } else {
-            // Если товара нет в корзине, добавляем его с количеством 1 и ценой
             const newItem = { id, title, price, count: 1 };
             const updatedCartItems = { ...cartItems, [id]: newItem };
             setCartItems(updatedCartItems);
+            setTotalPrice(totalPrice + price); // Обновляем общую цену
         }
-
-        setTotalPrice(totalPrice + price);
     };
 
     const handleDecrement = () => {
@@ -52,19 +51,16 @@ function Card({ food, onAdd, onRemove }) {
             onRemove(food);
 
             if (cartItems[id]) {
-                // Уменьшаем количество товара в корзине и обновляем цену
                 const updatedItem = { ...cartItems[id], count: cartItems[id].count - 1 };
                 const updatedCartItems = { ...cartItems, [id]: updatedItem };
                 setCartItems(updatedCartItems);
+                setTotalPrice(totalPrice - price); // Обновляем общую цену
 
                 if (updatedItem.count === 0) {
-                    // Если количество товара достигло 0, удаляем его из корзины
                     const { [id]: removedItem, ...restItems } = updatedCartItems;
                     setCartItems(restItems);
                 }
             }
-
-            setTotalPrice(totalPrice - price);
         }
     };
 
