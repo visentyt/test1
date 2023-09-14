@@ -3,6 +3,10 @@ import "./Card.css";
 import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
+const totalPriceText = `Цена: ${totalPrice}₽`;
+tele.MainButton.text = totalPriceText;
+tele.MainButton.textColor = "#ffffff";
+tele.MainButton.color = "#A9A9A9";
 tele.MainButton.show();
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
@@ -31,10 +35,7 @@ function Card({ food, onAdd, onRemove }) {
     };
 
     const onCheckout = () => {
-        const totalPriceText = `Цена: ${totalPrice}₽`;
-        tele.MainButton.text = totalPriceText;
-        tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
+        tele.MainButton.setText(totalPriceText);
     };
 
     return (
