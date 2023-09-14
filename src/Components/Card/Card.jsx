@@ -18,7 +18,7 @@ function Card({ food, onAdd, onRemove }) {
         };
 
         onCheckout();
-    }, [count]);
+    }, [count, getTotalPrice]); // Добавлен getTotalPrice в массив зависимостей
 
     const getTotalPrice = () => {
         return count * price;
