@@ -16,6 +16,8 @@ function Card({ food, onAdd, onRemove }) {
         onRemove(food);
     };
 
+
+
     return (
         <div className="card">
       <span className={`${count !== 0 ? "card__badge" : "card__badge--hidden"}`}>

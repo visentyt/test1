@@ -10,14 +10,15 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
         tele.ready();
-    }, []);
-
+    });
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     const foods = getData();
+
+    const [totalPrice, setTotalPrice] = useState(0); // Добавьте переменную totalPrice
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -46,11 +47,22 @@ function App() {
     };
 
     const onCheckout = () => {
-        tele.MainButton.text = "Оплатить";
+        tele.MainButton.setParams({
+            text: `Цена: ${totalPrice}` // Используйте totalPrice здесь
+        });
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
     };
+
+    useEffect(() => {
+        const calculateTotalPrice = () => {
+            const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+            setTotalPrice(totalPrice); // Обновляем значение totalPrice
+        };
+
+        calculateTotalPrice(); // Вызываем функцию при изменении cartItems
+    }, [cartItems]);
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -68,16 +80,18 @@ function App() {
 
     const showCards = (category) => {
         setActiveCategory(category);
+
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-        setIsCartOpen(false);
+
     };
+
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
-        setIsMenuOpen(false);
+
     };
 
     return (
@@ -86,67 +100,39 @@ function App() {
                 <button onClick={toggleMenu}>Меню</button>
                 <button onClick={toggleCart}>Корзина</button>
             </div>
-            {isMenuOpen && (
+            {isMenuOpen ? (
                 <>
-                    <div id="menu">
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards(null)}
-                        >
-                            Все
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards("hookah")}
-                        >
-                            Кальян
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards("beer")}
-                        >
-                            Пиво
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards("shot")}
-                        >
-                            Шоты
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards("drink")}
-                        >
-                            Напитки
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards("eat")}
-                        >
-                            Закуски
-                        </div>
-                        <div
-                            className="menu-item"
-                            onClick={() => showCards("kokteil")}
-                        >
-                            Коктейли
-                        </div>
+                <div id="menu">
+                    <div className="menu-item" onClick={() => showCards(null)}>
+                        Все
                     </div>
-                    <div className="cards__container">
-                        {filteredFoods.map((food) => (
-                            <Card
-                                key={food.id}
-                                food={food}
-                                onAdd={onAdd}
-                                onRemove={onRemove}
-                            />
-                        ))}
+                    <div className="menu-item" onClick={() => showCards("hookah")}>
+                        Кальян
                     </div>
+                    <div className="menu-item" onClick={() => showCards("beer")}>
+                        Пиво
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("shot")}>
+                        Шоты
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("drink")}>
+                        Напитки
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("eat")}>
+                        Закуски
+                    </div>
+                    <div className="menu-item" onClick={() => showCards("kokteil")}>
+                        Коктейли
+                    </div>
+                </div>
+                <div className="cards__container">
+            {filteredFoods.map((food) => (
+                <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+    ))}
+</div>
                 </>
-            )}
-            {!isMenuOpen && isCartOpen && (
-                <Cart cartItems={cartItems} onCheckout={onCheckout} />
-            )}
+            ) : null}
+            {isCartOpen && <Cart cartItems={cartItems} onCheckout={onCheckout} />}
         </>
     );
 }
