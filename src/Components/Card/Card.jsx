@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
 
+<Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} cartItems={cartItems} />
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
