@@ -4,43 +4,45 @@ import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
 
-
-const [totalPrice, setTotalPrice] = useState(0);
-const onUpdateTotalPrice = (amount) => {
-    setTotalPrice(totalPrice + amount);
-};
-
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+    const onUpdateTotalPrice = (amount) => {
+        setTotalPrice(totalPrice + amount);
+    };
+
     const { title, Image, price } = food;
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        onUpdateTotalPrice(+price); // Обновляем общую стоимость при увеличении количества
-        onCheckout(); // Вызываем функцию onCheckout
+        onUpdateTotalPrice(+price);
+        onCheckout();
     };
 
     const handleDecrement = () => {
-        setCount(count - 1);
-        onRemove(food);
-        onUpdateTotalPrice(-price); // Обновляем общую стоимость при уменьшении количества
-        onCheckout(); // Вызываем функцию onCheckout
+        if (count > 0) {
+            setCount(count - 1);
+            onRemove(food);
+            onUpdateTotalPrice(-price);
+            onCheckout();
+        }
     };
 
     const onCheckout = () => {
-        const totalPriceText = `Цена: ${onUpdateTotalPrice}₽`;
+        const totalPriceText = `Цена: ${totalPrice}₽`;
         tele.MainButton.text = totalPriceText;
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9";
         tele.MainButton.show();
     };
 
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-                {count}
-            </span>
+      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+        {count}
+      </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
             </div>
