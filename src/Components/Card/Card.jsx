@@ -35,7 +35,7 @@ function Card({ food, onAdd, onRemove }) {
     tele.MainButton.color = "#A9A9A9";
     tele.MainButton.show();
     const onCheckout = () => {
-        tele.MainButton.setText(totalPriceText);
+        tele.MainButton.text = totalPriceText;
     };
 
     return (
