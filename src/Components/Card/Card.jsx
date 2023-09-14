@@ -2,20 +2,28 @@ import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-function Card({ food, onAdd, onRemove, onCheckout }) {
+const tele = window.Telegram.WebApp;
+
+function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
-    const { title, Image, price } = food;
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        onCheckout(); // вызываем функцию onCheckout
+        onCheckout();
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
-        onCheckout(); // вызываем функцию onCheckout
+        onCheckout();
+    };
+
+    const onCheckout = () => {
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
+        tele.MainButton.textColor = "#ffffff";
+        tele.MainButton.color = "#A9A9A9"; //изменяем цвет бэкграунда кнопки
     };
 
     return (
