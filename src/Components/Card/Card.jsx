@@ -1,37 +1,53 @@
 import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
-import { getData } from "../../db/db";
+import { getData } from "../../data";
 
 const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
+    const [selectedItems, setSelectedItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    const { title, Image, price, id } = food;
-
     useEffect(() => {
+        const updatedTotalPrice = selectedItems.reduce(
+            (sum, item) => sum + item.price * item.count,
+            0
+        );
+        setTotalPrice(updatedTotalPrice);
+
         const onCheckout = () => {
-            tele.MainButton.text = `Цена: ${totalPrice?.toFixed(2)}₽`;
+            tele.MainButton.text = `Цена: ${updatedTotalPrice?.toFixed(2)}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         };
 
         onCheckout();
-    }, [totalPrice]);
+    }, [selectedItems]);
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + price);
+        const selectedItem = selectedItems.find((item) => item.id === food.id);
+        if (selectedItem) {
+            selectedItem.count += 1;
+        } else {
+            setSelectedItems([...selectedItems, { ...food, count: 1 }]);
+        }
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - price);
+        const selectedItem = selectedItems.find((item) => item.id === food.id);
+        if (selectedItem) {
+            selectedItem.count -= 1;
+            if (selectedItem.count === 0) {
+                setSelectedItems(selectedItems.filter((item) => item.id !== food.id));
+            }
+        }
     };
 
     return (
@@ -40,10 +56,10 @@ function Card({ food, onAdd, onRemove }) {
                 {count}
             </span>
             <div className="image__container">
-                <img src={Image} alt={title} />
+                <img src={food.Image} alt={food.title} />
             </div>
             <h4 className="card__title">
-                {title} <span className="card__price">{price}₽</span>
+                {food.title} <span className="card__price">{food.price}₽</span>
             </h4>
 
             <div className="btn-container">
@@ -55,7 +71,7 @@ function Card({ food, onAdd, onRemove }) {
                 )}
             </div>
 
-            {id === getData().length && (
+            {food.id === getData().length && (
                 <div>
                     <h4>Итоговая цена:</h4>
                     <p>{`Цена: ${totalPrice?.toFixed(2)}₽`}</p>
