@@ -66,4 +66,3 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
 }
 
 export default Card;
-export default Cart;
