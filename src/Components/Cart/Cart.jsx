@@ -1,8 +1,10 @@
 import React from "react";
 import "./Cart.css";
 import Button from "../Button/Button";
+import Card from "../Card/Card"; // Импортируем компонент Card
+
 function Cart({ cartItems, onCheckout }) {
-  const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
     return (
         <div className="cart__container">
@@ -15,8 +17,12 @@ function Cart({ cartItems, onCheckout }) {
                 disable={cartItems.length === 0 ? true : false}
                 onClick={onCheckout}
             />
-            <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} totalPrice={totalPrice} />
+            {/* Исправленная строка */}
+            {cartItems.map((food) => (
+                <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} cartItems={cartItems} />
+            ))}
         </div>
     );
 }
+
 export default Cart;

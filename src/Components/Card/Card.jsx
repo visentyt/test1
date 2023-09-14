@@ -4,8 +4,7 @@ import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
 
-<Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} cartItems={cartItems} />
-function Card({ food, onAdd, onRemove }) {
+function Card({ food, onAdd, onRemove, cartItems }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
@@ -22,6 +21,7 @@ function Card({ food, onAdd, onRemove }) {
     };
 
     const updateCheckoutButton = () => {
+        const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0); // Обновляем totalPrice с учетом текущего состояния корзины
         const totalPriceText = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.setParams({
@@ -32,13 +32,11 @@ function Card({ food, onAdd, onRemove }) {
         });
     };
 
-    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
-
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-                {count}
-            </span>
+      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+        {count}
+      </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
             </div>
