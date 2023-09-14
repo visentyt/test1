@@ -11,7 +11,7 @@ function Card({ food, onAdd, onRemove }) {
 
     useEffect(() => {
         onCheckout();
-    }, [totalPrice]);
+    }, [totalPrice, onCheckout]);
 
     const handleIncrement = () => {
         setCount(count + 1);
@@ -34,9 +34,7 @@ function Card({ food, onAdd, onRemove }) {
 
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-                {count}
-            </span>
+            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>{count}</span>
             <div className="image__container">
                 <img src={Image} alt={title} />
             </div>
