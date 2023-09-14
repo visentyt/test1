@@ -13,7 +13,7 @@ function Cart({ cartItems, onCheckout }) {
                 title={cartItems.length === 0 ? "Заказать !" : "Оплатить"}
                 type={"checkout"}
                 disable={cartItems.length === 0 ? true : false}
-                onClick={onCheckout}
+                onClick={() => onCheckout(totalPrice)}
             />
         </div>
     );
