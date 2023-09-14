@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
+import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
 
@@ -44,6 +45,12 @@ function App() {
     };
 
 
+    const onCheckout = () => {
+        tele.MainButton.text = "Оплатить";
+        tele.MainButton.show();
+        tele.MainButton.textColor = "#ffffff";
+        tele.MainButton.color = "#A9A9A9"; //изменяем цвет бэкграунда кнопки
+    };
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -67,7 +74,7 @@ function App() {
 
     return (
         <>
-
+            <Cart cartItems={cartItems} onCheckout={onCheckout} />
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все

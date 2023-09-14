@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-const tele = window.Telegram.WebApp;
-function Card({ food, onAdd, onRemove, totalPrice }) {
+function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
@@ -17,16 +16,9 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
         onRemove(food);
     };
 
-    const handleClick = () => {
-        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
-        tele.MainButton.show();
-        tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
-    };
-
     return (
         <div className="card">
-      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+      <span className={`${count !== 0 ? "card__badge" : "card__badge--hidden"}`}>
         {count}
       </span>
             <div className="image__container">
@@ -44,12 +36,6 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
                     ""
                 )}
             </div>
-
-            <Button
-                title={"Show Total Price"}
-                type={"showPrice"}
-                onClick={handleClick}
-            />
         </div>
     );
 }
