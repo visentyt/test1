@@ -6,10 +6,7 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
-    useEffect(() => {
-        setCount(getItemCount()); // Устанавливаем начальное значение счетчика при загрузке компонента
-    }, []);
-
+    // Функция для получения количества товара в корзине
     const getItemCount = () => {
         const item = totalPrice.find((item) => item.id === food.id);
         return item ? item.quantity : 0;
@@ -25,9 +22,15 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
         onRemove(food);
     };
 
+    // Устанавливаем начальное значение счетчика при загрузке компонента
     useEffect(() => {
-        setCount(getItemCount()); // Обновляем значение счетчика при изменении списка totalPrice
-    }, [totalPrice]);
+        setCount(getItemCount());
+    }, [getItemCount]);
+
+    // Обновляем значение счетчика при изменении массива `totalPrice`
+    useEffect(() => {
+        setCount(getItemCount());
+    }, [totalPrice, getItemCount]);
 
     return (
         <div className="card">
