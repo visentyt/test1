@@ -71,12 +71,13 @@ function App() {
     };
 
     const toggleMenu = () => {
-        setIsMenuOpen(false);
+        setIsMenuOpen(!isMenuOpen);
+        setIsCartOpen(false);
     };
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
-        setIsMenuOpen(false); // Добавляем эту строку
+        setIsMenuOpen(false);
     };
 
     return (
