@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
 
-function Card({ food, onAdd, onRemove }) {
+function Card({ food, onAdd, onRemove, cartItems, }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
     const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
