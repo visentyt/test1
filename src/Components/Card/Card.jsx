@@ -35,7 +35,7 @@ function Card({ food, onAdd, onRemove }) {
     tele.MainButton.show();
     const onCheckout = () => {
         const totalPriceText = `Цена: ${totalPrice}₽`;
-        tele.MainButton.text = totalPriceText;
+        tele.MainButton.text = "1";
     };
 
     return (
