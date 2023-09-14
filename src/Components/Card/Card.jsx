@@ -13,12 +13,14 @@ function Card({ food, onAdd, onRemove }) {
         setCount(count + 1);
         onAdd(food);
         setTotalPrice(totalPrice + food.price);
+        onCheckout(); // Вызываем функцию onCheckout
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
         setTotalPrice(totalPrice - food.price);
+        onCheckout(); // Вызываем функцию onCheckout
     };
 
     const onCheckout = () => {
@@ -47,7 +49,6 @@ function Card({ food, onAdd, onRemove }) {
                 )}
             </div>
 
-            <Button title={"Checkout"} onClick={onCheckout} />
         </div>
     );
 }
