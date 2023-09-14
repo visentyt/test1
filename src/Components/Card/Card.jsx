@@ -6,39 +6,41 @@ const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0); // Добавляем новое состояние totalPrice
 
     const { title, Image, price } = food;
 
     useEffect(() => {
         const calculateTotalPrice = () => {
-            const newTotalPrice = (price * count).toFixed(2);
-            setTotalPrice(newTotalPrice);
-            tele.MainButton.text = `Цена: ${newTotalPrice}₽`;
+            const newTotalPrice = (price * count + totalPrice).toFixed(2); // Обновляем totalPrice
+            tele.MainButton.text = `Цена: ${newTotalPrice}₽`; // Используем правильную строку
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         };
 
         calculateTotalPrice();
-    }, [count, price]);
+    }, [count, price, totalPrice]); // Добавляем totalPrice в зависимости
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
+        setTotalPrice(totalPrice + price); // Обновляем totalPrice при каждом нажатии на кнопку "+"
     };
 
     const handleDecrement = () => {
         if (count > 0) {
             setCount(count - 1);
             onRemove(food);
+            setTotalPrice(totalPrice - price); // Обновляем totalPrice при каждом нажатии на кнопку "-"
         }
     };
 
+    // Остальной код остается неизменным
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-                {count}
+      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+        {count}
       </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
