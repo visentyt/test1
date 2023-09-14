@@ -68,17 +68,14 @@ function App() {
 
     const showCards = (category) => {
         setActiveCategory(category);
-        setIsMenuOpen(false);
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
-        setIsCartOpen(false);
     };
 
     const toggleCart = () => {
         setIsCartOpen(!isCartOpen);
-        setIsMenuOpen(false);
     };
 
     return (
@@ -87,7 +84,7 @@ function App() {
                 <button onClick={toggleMenu}>Меню</button>
                 <button onClick={toggleCart}>Корзина</button>
             </div>
-            {isMenuOpen && !isCartOpen && (
+            {isMenuOpen && (
                 <>
                     <div id="menu">
                         <div
@@ -124,7 +121,8 @@ function App() {
                             className="menu-item"
                             onClick={() => showCards("eat")}
                         >
-                            Закуски</div>
+                            Закуски
+                        </div>
                         <div
                             className="menu-item"
                             onClick={() => showCards("kokteil")}
