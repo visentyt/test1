@@ -3,7 +3,7 @@ import "./Cart.css";
 import Button from "../Button/Button";
 import Card from "../Card/Card";
 
-function Cart({ cartItems, onCheckout }) {
+function Cart({ cartItems, food, onAdd, onRemove, onCheckout }) {
     const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
     return (
