@@ -29,13 +29,13 @@ function Card({ food, onAdd, onRemove }) {
         }
     };
     const tele = window.Telegram.WebApp;
-    tele.MainButton.text = "Цена: 0₽";
+    tele.MainButton.text = "Цена: 1₽";
     tele.MainButton.textColor = "#ffffff";
     tele.MainButton.color = "#A9A9A9";
     tele.MainButton.show();
     const onCheckout = () => {
         const totalPriceText = `Цена: ${totalPrice}₽`;
-        tele.MainButton.text = "1";
+        tele.MainButton.text = totalPriceText;
     };
 
     return (
