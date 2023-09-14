@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
+const tele = window.Telegram.WebApp;
+
 function Card({ food, onAdd, onRemove, onCheckout }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
