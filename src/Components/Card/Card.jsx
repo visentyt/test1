@@ -52,9 +52,9 @@ function Card({ food, onAdd, onRemove }) {
 
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-                {count}
-            </span>
+      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+        {count}
+      </span>
             <div className="image__container">
                 <img src={food.Image} alt={food.title} />
             </div>
