@@ -6,13 +6,15 @@ const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const { title, Image, price } = food;
 
     useEffect(() => {
         const calculateTotalPrice = () => {
-            const totalPrice = (count * price).toFixed(2);
-            tele.MainButton.text = `Цена: ${totalPrice}₽`;
+            const newTotalPrice = (price * count).toFixed(2);
+            setTotalPrice(newTotalPrice);
+            tele.MainButton.text = `Цена: ${newTotalPrice}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
@@ -35,8 +37,8 @@ function Card({ food, onAdd, onRemove }) {
 
     return (
         <div className="card">
-      <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
-        {count}
+            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+                {count}
       </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
