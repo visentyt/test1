@@ -23,13 +23,13 @@ function Card({ food, onAdd, onRemove }) {
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        setTotalPrice(totalPrice + food.price);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + food.price);
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
-        setTotalPrice(totalPrice - food.price);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice - food.price);
     };
 
     return (
