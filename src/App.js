@@ -81,6 +81,15 @@ function App() {
         setIsCartOpen(!isCartOpen);
     };
 
+    useEffect(() => {
+        const calculateTotalPrice = () => {
+            const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+            setTotalPrice(totalPrice);
+        };
+
+        calculateTotalPrice();
+    }, [cartItems]);
+
     return (
         <>
             <div className="burger-menu">
@@ -88,7 +97,6 @@ function App() {
                 <button onClick={toggleCart}>Корзина</button>
             </div>
 
-            {/* Перемещаем компоненты Card и Cart за пределы условия */}
             <div id="menu" className={isMenuOpen ? "menu-open" : ""}>
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все
