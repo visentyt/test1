@@ -22,6 +22,7 @@ function Card({ food, onAdd, onRemove }) {
 
     const updateCheckoutButton = () => {
         const totalPriceText = `Цена: ${totalPrice.toFixed(2)}₽`;
+        tele.MainButton.show();
         tele.MainButton.setParams({
             text: totalPriceText,
             show: true,
@@ -30,7 +31,7 @@ function Card({ food, onAdd, onRemove }) {
         });
     };
 
-    const totalPrice = count * price;
+    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
     return (
         <div className="card">
