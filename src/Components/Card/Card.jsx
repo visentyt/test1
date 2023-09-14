@@ -4,22 +4,6 @@ import Button from "../Button/Button";
 
 const tele = window.Telegram.WebApp;
 
-function Cart({ cartItems, onCheckout }) {
-    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
-
-    return (
-        <div className="cart__container">
-            {cartItems.length === 0 ? "Вы ничего не добавили в корзину" : ""}
-            <br /> <span className="">Цена: {totalPrice.toFixed(2)}₽</span>
-            <Button
-                title={cartItems.length === 0 ? "Заказать !" : "Оплатить"}
-                type={"checkout"}
-                disable={cartItems.length === 0 ? true : false}
-                onClick={() => onCheckout(totalPrice)}
-            />
-        </div>
-    );
-}
 function Card({ food, onAdd, onRemove, totalPrice }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
@@ -37,7 +21,7 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
     };
 
     const onCheckout = () => {
-        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
+        tele.MainButton.text = `Цена: ${totalPrice?.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
