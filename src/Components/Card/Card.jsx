@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
@@ -7,10 +7,10 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
     const { title, Image, price } = food;
 
     // Функция для получения количества товара в корзине
-    const getItemCount = () => {
+    const getItemCount = useCallback(() => {
         const item = totalPrice.find((item) => item.id === food.id);
         return item ? item.quantity : 0;
-    };
+    }, [totalPrice, food]);
 
     const handleIncrement = () => {
         setCount(count + 1);
