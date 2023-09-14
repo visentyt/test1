@@ -6,22 +6,23 @@ const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0);
 
     const { title, Image, price } = food;
 
     useEffect(() => {
-        const calculateTotalPrice = () => {
-            const newTotalPrice = count * price;
-            setTotalPrice(newTotalPrice);
-            tele.MainButton.text = `Цена: ${newTotalPrice.toFixed(2)}₽`;
+        const onCheckout = () => {
+            tele.MainButton.text = `Цена: ${getTotalPrice().toFixed(2)}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         };
 
-        calculateTotalPrice();
-    }, [count, price]);
+        onCheckout();
+    }, [count]);
+
+    const getTotalPrice = () => {
+        return count * price;
+    };
 
     const handleIncrement = () => {
         setCount(count + 1);
