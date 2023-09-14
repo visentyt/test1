@@ -21,16 +21,9 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
     };
 
     const onCheckout = () => {
-        const totalPriceText = `Цена: ${totalPrice.toFixed(2)}₽`;
-        tele.MainButton.setParams({
-            text: totalPriceText,
-            show: true,
-            textColor: "#ffffff",
-            color: "#A9A9A9"
-        });
-        tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
+        tele.MainButton.show();
     };
 
     return (
