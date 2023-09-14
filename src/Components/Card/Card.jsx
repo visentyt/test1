@@ -6,37 +6,67 @@ const tele = window.Telegram.WebApp;
 
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0); // Добавляем новое состояние totalPrice
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [cartItems, setCartItems] = useState({}); // Добавляем новое состояние cartItems
 
-    const { title, Image, price } = food;
+    const { title, Image, price, id } = food;
 
     useEffect(() => {
         const calculateTotalPrice = () => {
-            const newTotalPrice = (price * count + totalPrice).toFixed(2); // Обновляем totalPrice
-            tele.MainButton.text = `Цена: ${newTotalPrice}₽`; // Используем правильную строку
+            let newTotalPrice = totalPrice;
+            Object.values(cartItems).forEach((item) => {
+                newTotalPrice += item.price * item.count; // Суммируем цены всех товаров в корзине
+            });
+            tele.MainButton.text = `Цена: ${newTotalPrice.toFixed(2)}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         };
 
         calculateTotalPrice();
-    }, [count, price, totalPrice]); // Добавляем totalPrice в зависимости
+    }, [cartItems, totalPrice]);
 
     const handleIncrement = () => {
-        setCount(count + 1);
+        const newCount = count + 1;
+        setCount(newCount);
         onAdd(food);
-        setTotalPrice(totalPrice + price); // Обновляем totalPrice при каждом нажатии на кнопку "+"
+
+        if (cartItems[id]) {
+            // Если товар уже есть в корзине, увеличиваем его количество и обновляем цену
+            const updatedItem = { ...cartItems[id], count: cartItems[id].count + 1 };
+            setCartItems({ ...cartItems, [id]: updatedItem });
+        } else {
+            // Если товара нет в корзине, добавляем его с количеством 1
+            const newItem = { id, title, price, count: 1 };
+            setCartItems({ ...cartItems, [id]: newItem });
+        }
+
+        setTotalPrice(totalPrice + price);
     };
 
     const handleDecrement = () => {
         if (count > 0) {
-            setCount(count - 1);
+            const newCount = count - 1;
+            setCount(newCount);
             onRemove(food);
-            setTotalPrice(totalPrice - price); // Обновляем totalPrice при каждом нажатии на кнопку "-"
+
+            if (cartItems[id]) {
+                // Уменьшаем количество товара в корзине и обновляем цену
+                const updatedItem = { ...cartItems[id], count: cartItems[id].count - 1 };
+                setCartItems({ ...cartItems, [id]: updatedItem });
+
+                if (updatedItem.count === 0) {
+                    // Если количество товара достигло 0, удаляем его из корзины
+                    const updatedCartItems = { ...cartItems };
+                    delete updatedCartItems[id];
+                    setCartItems(updatedCartItems);
+                }
+            }
+
+            setTotalPrice(totalPrice - price);
         }
     };
 
-    // Остальной код остается неизменным
     return (
         <div className="card">
       <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
