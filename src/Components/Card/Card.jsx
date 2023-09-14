@@ -22,7 +22,7 @@ function Card({ food, onAdd, onRemove, totalPrice }) {
 
     const onCheckout = () => {
         const totalPriceText = `Цена: ${totalPrice.toFixed(2)}₽`;
-        tg.MainButton.text = totalPriceText;
+        tele.MainButton.text = totalPriceText;
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
         tele.MainButton.show();
