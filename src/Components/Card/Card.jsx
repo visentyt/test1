@@ -7,16 +7,15 @@ const tele = window.Telegram.WebApp;
 function Card({ food, onAdd, onRemove }) {
     const [count, setCount] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
-    const [cartItems, setCartItems] = useState({}); // Добавляем новое состояние cartItems
+    const [cartItems, setCartItems] = useState({});
 
     const { title, Image, price, id } = food;
 
     useEffect(() => {
         const calculateTotalPrice = () => {
-            let newTotalPrice = totalPrice;
-            Object.values(cartItems).forEach((item) => {
-                newTotalPrice += item.price * item.count; // Суммируем цены всех товаров в корзине
-            });
+            let newTotalPrice = Object.values(cartItems).reduce((acc, item) => {
+                return acc + item.price * item.count; // Суммируем цены всех товаров в корзине
+            }, 0);
             tele.MainButton.text = `Цена: ${newTotalPrice.toFixed(2)}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
@@ -24,7 +23,7 @@ function Card({ food, onAdd, onRemove }) {
         };
 
         calculateTotalPrice();
-    }, [cartItems, totalPrice]);
+    }, [cartItems]);
 
     const handleIncrement = () => {
         const newCount = count + 1;
@@ -34,11 +33,13 @@ function Card({ food, onAdd, onRemove }) {
         if (cartItems[id]) {
             // Если товар уже есть в корзине, увеличиваем его количество и обновляем цену
             const updatedItem = { ...cartItems[id], count: cartItems[id].count + 1 };
-            setCartItems({ ...cartItems, [id]: updatedItem });
+            const updatedCartItems = { ...cartItems, [id]: updatedItem };
+            setCartItems(updatedCartItems);
         } else {
-            // Если товара нет в корзине, добавляем его с количеством 1
+            // Если товара нет в корзине, добавляем его с количеством 1 и ценой
             const newItem = { id, title, price, count: 1 };
-            setCartItems({ ...cartItems, [id]: newItem });
+            const updatedCartItems = { ...cartItems, [id]: newItem };
+            setCartItems(updatedCartItems);
         }
 
         setTotalPrice(totalPrice + price);
@@ -53,13 +54,13 @@ function Card({ food, onAdd, onRemove }) {
             if (cartItems[id]) {
                 // Уменьшаем количество товара в корзине и обновляем цену
                 const updatedItem = { ...cartItems[id], count: cartItems[id].count - 1 };
-                setCartItems({ ...cartItems, [id]: updatedItem });
+                const updatedCartItems = { ...cartItems, [id]: updatedItem };
+                setCartItems(updatedCartItems);
 
                 if (updatedItem.count === 0) {
                     // Если количество товара достигло 0, удаляем его из корзины
-                    const updatedCartItems = { ...cartItems };
-                    delete updatedCartItems[id];
-                    setCartItems(updatedCartItems);
+                    const { [id]: removedItem, ...restItems } = updatedCartItems;
+                    setCartItems(restItems);
                 }
             }
 
