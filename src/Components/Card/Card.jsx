@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
@@ -10,8 +10,15 @@ function Card({ food, onAdd, onRemove }) {
     const { title, Image, price } = food;
 
     useEffect(() => {
+        const onCheckout = () => {
+            tele.MainButton.text = `Цена: ${totalPrice?.toFixed(2)}₽`;
+            tele.MainButton.show();
+            tele.MainButton.textColor = "#ffffff";
+            tele.MainButton.color = "#A9A9A9";
+        };
+
         onCheckout();
-    }, [totalPrice, onCheckout]);
+    }, [totalPrice]);
 
     const handleIncrement = () => {
         setCount(count + 1);
@@ -25,16 +32,11 @@ function Card({ food, onAdd, onRemove }) {
         setTotalPrice(totalPrice - food.price);
     };
 
-    const onCheckout = () => {
-        tele.MainButton.text = `Цена: ${totalPrice?.toFixed(2)}₽`;
-        tele.MainButton.show();
-        tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
-    };
-
     return (
         <div className="card">
-            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>{count}</span>
+            <span className={count !== 0 ? "card__badge" : "card__badge--hidden"}>
+                {count}
+            </span>
             <div className="image__container">
                 <img src={Image} alt={title} />
             </div>
