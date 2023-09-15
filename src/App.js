@@ -24,6 +24,7 @@ function App() {
             setCartItems([...cartItems, { ...food, quantity: 1 }]);
         }
         updateTotalPrice(food.price);
+        updateButtonLabel();
     };
 
     const onRemove = (food) => {
@@ -38,6 +39,7 @@ function App() {
             );
         }
         updateTotalPrice(-food.price);
+        updateButtonLabel();
     };
 
     useEffect(() => {
@@ -49,7 +51,7 @@ function App() {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
     };
 
-    const onCheckout = () => {
+    const updateButtonLabel = () => {
         tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
