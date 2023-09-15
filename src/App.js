@@ -47,7 +47,7 @@ function App() {
     const updateTotalPrice = (priceDifference) => {
         // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(prevTotalPrice + priceDifference);
+        updateButtonLabel(totalPrice + priceDifference);
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
