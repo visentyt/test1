@@ -9,7 +9,6 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [totalPrice, setTotalPrice] = useState(0);
 
     const foods = getData();
 
@@ -47,9 +46,8 @@ function App() {
 
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel((prevTotalPrice) => prevTotalPrice + priceDifference);
+        updateButtonLabel(prevTotalPrice + priceDifference);
     };
-
 
     const updateButtonLabel = (updatedTotalPrice) => {
         tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
