@@ -24,7 +24,6 @@ function App() {
             setCartItems([...cartItems, { ...food, quantity: 1 }]);
         }
         updateTotalPrice(food.price);
-        updateButtonLabel();
     };
 
     const onRemove = (food) => {
@@ -39,7 +38,6 @@ function App() {
             );
         }
         updateTotalPrice(-food.price);
-        updateButtonLabel();
     };
 
     useEffect(() => {
@@ -48,7 +46,10 @@ function App() {
 
     const updateTotalPrice = (priceDifference) => {
         // Функция для обновления totalPrice
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference, () => {
+            // После обновления totalPrice обновляем текст кнопки
+            updateButtonLabel();
+        });
     };
 
     const updateButtonLabel = () => {
