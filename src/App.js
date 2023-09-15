@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
+import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
@@ -47,7 +48,7 @@ function App() {
     const updateTotalPrice = (priceDifference) => {
         // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(totalPrice + priceDifference);
+        updateButtonLabel(prevTotalPrice + priceDifference);
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
@@ -55,6 +56,17 @@ function App() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
+    };
+
+    const removeItemFromCart = (foodId) => {
+        setCartItems(cartItems.filter((x) => x.id !== foodId));
+    };
+
+    const showCards = (category) => {
+        cartItems.forEach((item) => {
+            removeItemFromCart(item.id); // Удалить товары из предыдущей категории
+        });
+        setActiveCategory(category);
     };
 
     const filterFoodsByCategory = (category) => {
@@ -70,10 +82,6 @@ function App() {
             food.title.toLowerCase().includes(searchKeyword.toLowerCase())
         )
         : filterFoodsByCategory(activeCategory);
-
-    const showCards = (category) => {
-        setActiveCategory(category);
-    };
 
     return (
         <>
