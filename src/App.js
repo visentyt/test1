@@ -46,7 +46,7 @@ function App() {
 
 
     const onCheckout = () => {
-        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
+        tele.MainButton.text = `Цена: ${checkoutTotalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
