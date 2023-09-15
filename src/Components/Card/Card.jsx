@@ -3,34 +3,27 @@ import "./Card.css";
 import Button from "../Button/Button";
 
 function Card({ food, onAdd, onRemove, cartItems, setCartItems }) {
-    const [count, setCount] = useState(
-        cartItems.find((x) => x.id === food.id)?.quantity || 0
-    );
+    const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
     useEffect(() => {
-        setCount(cartItems.find((x) => x.id === food.id)?.quantity || 0);
+        const existingItem = cartItems.find((item) => item.id === food.id);
+        if (existingItem) {
+            setCount(existingItem.quantity);
+        } else {
+            setCount(0);
+        }
     }, [cartItems, food]);
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        setCartItems((prevCartItems) =>
-            prevCartItems.map((item) =>
-                item.id === food.id ? { ...item, quantity: item.quantity + 1 } : item
-            )
-        );
     };
 
     const handleDecrement = () => {
         if (count > 0) {
             setCount(count - 1);
             onRemove(food);
-            setCartItems((prevCartItems) =>
-                prevCartItems.map((item) =>
-                    item.id === food.id ? { ...item, quantity: item.quantity - 1 } : item
-                )
-            );
         }
     };
 
