@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from "react"; // Добавлен импорт useState
+import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
-import { CartProvider } from "./Components/CartContext/CartContext"; // Импортируйте CartProvider
 
 const tele = window.Telegram.WebApp;
-
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0); // Состояние для хранения totalPrice
 
     const foods = getData();
 
@@ -47,6 +45,7 @@ function App() {
     }, []);
 
     const updateTotalPrice = (priceDifference) => {
+        // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
         updateButtonLabel(totalPrice + priceDifference);
     };
@@ -55,7 +54,7 @@ function App() {
         tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
+        tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
     };
 
     const filterFoodsByCategory = (category) => {
@@ -76,12 +75,7 @@ function App() {
         setActiveCategory(category);
     };
 
-    const isItemInCart = (food) => {
-        return cartItems.some((item) => item.id === food.id);
-    };
-
     return (
-        <CartProvider>
         <>
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
@@ -108,18 +102,10 @@ function App() {
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card
-                        key={food.id}
-                        food={food}
-                        onAdd={onAdd}
-                        onRemove={onRemove}
-                        updateTotalPrice={updateTotalPrice}
-                        isItemInCart={isItemInCart(food)}
-                    />
+                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
                 ))}
             </div>
         </>
-        </CartProvider>
     );
 }
 
