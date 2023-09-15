@@ -44,7 +44,6 @@ function App() {
             );
         }
     };
-    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
     useEffect(() => {
         tele.ready();
