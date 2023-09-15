@@ -1,6 +1,4 @@
-// Ваш файл App.js
-
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react"; // Добавлен импорт useState
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
@@ -12,7 +10,7 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [totalPrice, setTotalPrice] = useState(0); // Добавили totalPrice
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const foods = getData();
 
