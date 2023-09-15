@@ -33,11 +33,13 @@ function Card({ food, onAdd, onRemove, updateTotalPrice, isItemInCart }) {
             <div className="btn-container">
                 {isItemInCart && (
                     <>
+                        <Button title={"-"} type={"remove"} onClick={handleDecrement} />
+                        <span className="count">{count}</span>
                         <Button title={"+"} type={"add"} onClick={handleIncrement} />
-                        {count !== 0 && (
-                            <Button title={"-"} type={"remove"} onClick={handleDecrement} />
-                        )}
                     </>
+                )}
+                {!isItemInCart && (
+                    <Button title={"Добавить"} type={"add"} onClick={handleIncrement} />
                 )}
             </div>
         </div>
