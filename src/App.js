@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+// Ваш файл App.js
+
+import React, { useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
+import { CartProvider } from "./CartContext"; // Импортируйте CartProvider
 
 const tele = window.Telegram.WebApp;
 
@@ -80,6 +83,7 @@ function App() {
     };
 
     return (
+        <CartProvider>
         <>
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
@@ -117,6 +121,7 @@ function App() {
                 ))}
             </div>
         </>
+        </CartProvider>
     );
 }
 
