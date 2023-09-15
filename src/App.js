@@ -42,18 +42,16 @@ function App() {
 
     useEffect(() => {
         tele.ready();
-    });
+    }, []);
 
     const updateTotalPrice = (priceDifference) => {
         // Функция для обновления totalPrice
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference, () => {
-            // После обновления totalPrice обновляем текст кнопки
-            updateButtonLabel();
-        });
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+        updateButtonLabel(prevTotalPrice + priceDifference);
     };
 
-    const updateButtonLabel = () => {
-        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
+    const updateButtonLabel = (updatedTotalPrice) => {
+        tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
