@@ -43,10 +43,10 @@ function App() {
             );
         }
     };
-
+    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
     const onCheckout = () => {
-        tele.MainButton.text = `Цена: ${checkoutTotalPrice.toFixed(2)}₽`;
+        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки

@@ -1,8 +1,8 @@
 import React from "react";
 import "./Cart.css";
 import Button from "../Button/Button";
-function Cart({ cartItems, onCheckout, totalPrice: checkoutTotalPrice }) {
-    const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+function Cart({ cartItems, onCheckout, totalPrice }) {
+
 
   return (
     <div className="cart__container">
