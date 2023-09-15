@@ -47,8 +47,9 @@ function App() {
 
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(prevTotalPrice + priceDifference); // Используем prevTotalPrice
+        updateButtonLabel((prevTotalPrice) => prevTotalPrice + priceDifference);
     };
+
 
     const updateButtonLabel = (updatedTotalPrice) => {
         tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
