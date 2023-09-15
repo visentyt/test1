@@ -29,15 +29,17 @@ function App() {
 
     const onRemove = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
-        if (exist && exist.quantity > 1) {
-            setCartItems(
-                cartItems.map((x) =>
-                    x.id === food.id ? { ...exist, quantity: exist.quantity - 1 } : x
-                )
-            );
+        if (exist) {
+            if (exist.quantity === 1) {
+                setCartItems(cartItems.filter((x) => x.id !== food.id));
+            } else {
+                setCartItems(
+                    cartItems.map((x) =>
+                        x.id === food.id ? { ...exist, quantity: exist.quantity - 1 } : x
+                    )
+                );
+            }
             updateTotalPrice(-food.price);
-        } else {
-            setCartItems(cartItems.filter((x) => x.id !== food.id));
         }
     };
 
