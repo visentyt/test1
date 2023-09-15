@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
-import Cart from "./Components/Cart/Cart";
 import { getData } from "./db/db";
-
 
 const tele = window.Telegram.WebApp;
 function App() {
@@ -11,11 +9,6 @@ function App() {
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0); // Состояние для хранения totalPrice
-
-    const updateTotalPrice = (priceDifference) => {
-        // Функция для обновления totalPrice
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-    };
 
     const foods = getData();
 
@@ -30,6 +23,7 @@ function App() {
         } else {
             setCartItems([...cartItems, { ...food, quantity: 1 }]);
         }
+        updateTotalPrice(food.price);
     };
 
     const onRemove = (food) => {
@@ -43,11 +37,18 @@ function App() {
                 )
             );
         }
+        updateTotalPrice(-food.price);
     };
 
     useEffect(() => {
         tele.ready();
     });
+
+    const updateTotalPrice = (priceDifference) => {
+        // Функция для обновления totalPrice
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+    };
+
     const onCheckout = () => {
         tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
@@ -62,8 +63,6 @@ function App() {
             return foods.filter((food) => food.category === category);
         }
     };
-
-
 
     const filteredFoods = searchKeyword
         ? foods.filter((food) =>
@@ -99,7 +98,6 @@ function App() {
                 <div className="menu-item" onClick={() => showCards("kokteil")}>
                     Коктейли
                 </div>
-
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
