@@ -78,32 +78,3 @@
 .card__badge--hidden {
   display: none;
 }
-
-/* Добавленные стили для кнопок "+" и "-" */
-.card__btns {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card__btn {
-  width: 30px;
-  height: 30px;
-  font-size: 24px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.card__btn.add {
-  background-color: var(--primary-color);
-  color: #fff;
-  border-radius: 50%;
-  margin-right: 5px;
-}
-
-.card__btn.remove {
-  background-color: #ccc;
-  color: #fff;
-  border-radius: 50%;
-  margin-left: 5px;
-}
