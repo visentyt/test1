@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
@@ -102,7 +102,14 @@ function App() {
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        cartItems={cartItems} // Передаем корзину как пропс
+                        setCartItems={setCartItems} // Передаем функцию для обновления корзины
+                    />
                 ))}
             </div>
         </>
