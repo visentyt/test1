@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
@@ -9,24 +9,18 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [totalPrice, setTotalPrice] = useState(0); // Состояние для хранения totalPrice
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const foods = getData();
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
         if (exist) {
-            if (activeCategory !== exist.category) {
-                // Если товар из другой категории, то заменяем его
-                setCartItems([...cartItems.filter((x) => x.id !== food.id), { ...food, quantity: 1 }]);
-            } else {
-                // Иначе увеличиваем количество
-                setCartItems(
-                    cartItems.map((x) =>
-                        x.id === food.id ? { ...exist, quantity: exist.quantity + 1 } : x
-                    )
-                );
-            }
+            setCartItems(
+                cartItems.map((x) =>
+                    x.id === food.id ? { ...exist, quantity: exist.quantity + 1 } : x
+                )
+            );
         } else {
             setCartItems([...cartItems, { ...food, quantity: 1 }]);
         }
@@ -52,7 +46,6 @@ function App() {
     }, []);
 
     const updateTotalPrice = (priceDifference) => {
-        // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
         updateButtonLabel(totalPrice + priceDifference);
     };
@@ -61,7 +54,7 @@ function App() {
         tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9";
     };
 
     const filterFoodsByCategory = (category) => {
@@ -114,7 +107,7 @@ function App() {
                         food={food}
                         onAdd={onAdd}
                         onRemove={onRemove}
-                        activeCategory={activeCategory}
+                        cartItems={cartItems}
                     />
                 ))}
             </div>

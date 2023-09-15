@@ -1,43 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-function Card({ food, onAdd, onRemove, updateTotalPrice }) {
-    const [count, setCount] = useState(0);
-    const { title, Image, price } = food;
-
-    const handleIncrement = () => {
-        setCount(count + 1);
-        onAdd(food);
-        updateTotalPrice(price);
-    };
-
-    const handleDecrement = () => {
-        setCount(count - 1);
-        onRemove(food);
-        updateTotalPrice(-price); // Убрать стоимость продукта при уменьшении количества
-    };
+function Card({ food, onAdd, onRemove, cartItems }) {
+    const isInCart = cartItems.some((item) => item.id === food.id);
 
     return (
         <div className="card">
-      <span className={`${count !== 0 ? "card__badge" : "card__badge--hidden"}`}>
-        {count}
-      </span>
-            <div className="image__container">
-                <img src={Image} alt={title} />
-            </div>
-            <h4 className="card__title">
-                {title} <span className="card__price">{price}₽</span>
-            </h4>
-
-            <div className="btn-container">
-                <Button title={"+"} type={"add"} onClick={handleIncrement} />
-                {count !== 0 ? (
-                    <Button title={"-"} type={"remove"} onClick={handleDecrement} />
-                ) : (
-                    ""
-                )}
-            </div>
+            <img src={food.Image} alt={food.title} className="card__image" />
+            <h3 className="card__title">{food.title}</h3>
+            <p className="card__price">{food.price}₽</p>
+            {isInCart ? (
+                <div className="card__quantity-control">
+                    <Button title="-" type="remove" onClick={() => onRemove(food)} />
+                    <p className="card__quantity">
+                        {cartItems.find((item) => item.id === food.id).quantity}
+                    </p>
+                    <Button title="+" type="add" onClick={() => onAdd(food)} />
+                </div>
+            ) : (
+                <Button title="+" type="add" onClick={() => onAdd(food)} />
+            )}
         </div>
     );
 }
