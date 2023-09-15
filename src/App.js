@@ -9,6 +9,7 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
+    const [totalPrice, setTotalPrice] = useState(0); // Добавили totalPrice
 
     const foods = getData();
 
@@ -46,7 +47,7 @@ function App() {
 
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(prevTotalPrice + priceDifference);
+        updateButtonLabel(totalPrice + priceDifference);
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
