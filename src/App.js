@@ -74,7 +74,7 @@ function App() {
 
     return (
         <>
-            <Cart cartItems={cartItems} onCheckout={onCheckout} />
+            <Cart cartItems={cartItems} onCheckout={onCheckout} totalPrice={totalPrice} />
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все
