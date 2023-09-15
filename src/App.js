@@ -6,7 +6,7 @@ import { getData } from "./db/db";
 const tele = window.Telegram.WebApp;
 
 function App() {
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]); // Единое состояние корзины
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
