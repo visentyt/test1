@@ -4,11 +4,12 @@ import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
+
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [totalPrice, setTotalPrice] = useState(0); // Состояние для хранения totalPrice
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const foods = getData();
 
@@ -28,16 +29,16 @@ function App() {
 
     const onRemove = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
-        if (exist.quantity === 1) {
-            setCartItems(cartItems.filter((x) => x.id !== food.id));
-        } else {
+        if (exist && exist.quantity > 1) {
             setCartItems(
                 cartItems.map((x) =>
                     x.id === food.id ? { ...exist, quantity: exist.quantity - 1 } : x
                 )
             );
+            updateTotalPrice(-food.price);
+        } else {
+            setCartItems(cartItems.filter((x) => x.id !== food.id));
         }
-        updateTotalPrice(-food.price);
     };
 
     useEffect(() => {
@@ -45,7 +46,6 @@ function App() {
     }, []);
 
     const updateTotalPrice = (priceDifference) => {
-        // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
         updateButtonLabel(totalPrice + priceDifference);
     };
@@ -54,7 +54,7 @@ function App() {
         tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9";
     };
 
     const filterFoodsByCategory = (category) => {
@@ -107,8 +107,8 @@ function App() {
                         food={food}
                         onAdd={onAdd}
                         onRemove={onRemove}
-                        cartItems={cartItems} // Передаем корзину как пропс
-                        setCartItems={setCartItems} // Передаем функцию для обновления корзины
+                        cartItems={cartItems}
+                        setCartItems={setCartItems}
                     />
                 ))}
             </div>

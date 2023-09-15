@@ -3,7 +3,9 @@ import "./Card.css";
 import Button from "../Button/Button";
 
 function Card({ food, onAdd, onRemove, cartItems, setCartItems }) {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(
+        cartItems.find((x) => x.id === food.id)?.quantity || 0
+    );
     const { title, Image, price } = food;
 
     const handleIncrement = () => {
@@ -13,9 +15,11 @@ function Card({ food, onAdd, onRemove, cartItems, setCartItems }) {
     };
 
     const handleDecrement = () => {
-        setCount(count - 1);
-        onRemove(food);
-        setCartItems(cartItems.filter((item) => item.id !== food.id));
+        if (count > 0) {
+            setCount(count - 1);
+            onRemove(food);
+            setCartItems(cartItems.filter((item) => item.id !== food.id));
+        }
     };
 
     return (
