@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
@@ -7,6 +7,10 @@ function Card({ food, onAdd, onRemove, cartItems, setCartItems }) {
         cartItems.find((x) => x.id === food.id)?.quantity || 0
     );
     const { title, Image, price } = food;
+
+    useEffect(() => {
+        setCount(cartItems.find((x) => x.id === food.id)?.quantity || 0);
+    }, [cartItems, food]);
 
     const handleIncrement = () => {
         setCount(count + 1);
