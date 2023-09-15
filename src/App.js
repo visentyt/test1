@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
-import { CartProvider } from "./CartContext"; // Импортируйте CartProvider
+import { CartProvider } from "./Components/CartContext/CartContext"; // Импортируйте CartProvider
 
 const tele = window.Telegram.WebApp;
 
