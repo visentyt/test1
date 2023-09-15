@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-function Card({ food, onAdd, onRemove, updateTotalPrice }) {
+function Card({ food, onAdd, onRemove, updateTotalPrice, isItemInCart }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
@@ -15,12 +15,12 @@ function Card({ food, onAdd, onRemove, updateTotalPrice }) {
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
-        updateTotalPrice(-price); // Убрать стоимость продукта при уменьшении количества
+        updateTotalPrice(-price);
     };
 
     return (
         <div className="card">
-      <span className={`${count !== 0 ? "card__badge" : "card__badge--hidden"}`}>
+      <span className={`${isItemInCart ? "card__badge" : "card__badge--hidden"}`}>
         {count}
       </span>
             <div className="image__container">
@@ -31,11 +31,13 @@ function Card({ food, onAdd, onRemove, updateTotalPrice }) {
             </h4>
 
             <div className="btn-container">
-                <Button title={"+"} type={"add"} onClick={handleIncrement} />
-                {count !== 0 ? (
-                    <Button title={"-"} type={"remove"} onClick={handleDecrement} />
-                ) : (
-                    ""
+                {isItemInCart && (
+                    <>
+                        <Button title={"+"} type={"add"} onClick={handleIncrement} />
+                        {count !== 0 && (
+                            <Button title={"-"} type={"remove"} onClick={handleDecrement} />
+                        )}
+                    </>
                 )}
             </div>
         </div>

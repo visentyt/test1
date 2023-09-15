@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
+
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
-    const [totalPrice, setTotalPrice] = useState(0); // Состояние для хранения totalPrice
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const foods = getData();
 
@@ -45,7 +46,6 @@ function App() {
     }, []);
 
     const updateTotalPrice = (priceDifference) => {
-        // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
         updateButtonLabel(totalPrice + priceDifference);
     };
@@ -54,7 +54,7 @@ function App() {
         tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9"; // изменяем цвет бэкграунда кнопки
+        tele.MainButton.color = "#A9A9A9";
     };
 
     const filterFoodsByCategory = (category) => {
@@ -73,6 +73,10 @@ function App() {
 
     const showCards = (category) => {
         setActiveCategory(category);
+    };
+
+    const isItemInCart = (food) => {
+        return cartItems.some((item) => item.id === food.id);
     };
 
     return (
@@ -102,7 +106,14 @@ function App() {
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        updateTotalPrice={updateTotalPrice}
+                        isItemInCart={isItemInCart(food)}
+                    />
                 ))}
             </div>
         </>
