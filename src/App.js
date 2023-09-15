@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
+import BottomNavigation from "./Components/BottomNavigation/BottomNavigation";
 
 const tele = window.Telegram.WebApp;
 
@@ -114,6 +115,7 @@ function App() {
                     />
                 ))}
             </div>
+            <BottomNavigation />
         </>
     );
 }
