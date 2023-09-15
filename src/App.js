@@ -4,6 +4,7 @@ import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
 
 const tele = window.Telegram.WebApp;
+
 function App() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
@@ -15,11 +16,17 @@ function App() {
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
         if (exist) {
-            setCartItems(
-                cartItems.map((x) =>
-                    x.id === food.id ? { ...exist, quantity: exist.quantity + 1 } : x
-                )
-            );
+            if (activeCategory !== exist.category) {
+                // Если товар из другой категории, то заменяем его
+                setCartItems([...cartItems.filter((x) => x.id !== food.id), { ...food, quantity: 1 }]);
+            } else {
+                // Иначе увеличиваем количество
+                setCartItems(
+                    cartItems.map((x) =>
+                        x.id === food.id ? { ...exist, quantity: exist.quantity + 1 } : x
+                    )
+                );
+            }
         } else {
             setCartItems([...cartItems, { ...food, quantity: 1 }]);
         }
@@ -47,7 +54,7 @@ function App() {
     const updateTotalPrice = (priceDifference) => {
         // Функция для обновления totalPrice
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(totalPrice + priceDifference); // Заменить prevTotalPrice на totalPrice
+        updateButtonLabel(totalPrice + priceDifference);
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
@@ -102,7 +109,13 @@ function App() {
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
-                    <Card key={food.id} food={food} onAdd={onAdd} onRemove={onRemove} />
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        activeCategory={activeCategory}
+                    />
                 ))}
             </div>
         </>
