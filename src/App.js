@@ -8,13 +8,14 @@ import { getData } from "./db/db";
 const tele = window.Telegram.WebApp;
 function App() {
     const [cartItems, setCartItems] = useState([]);
-    useEffect(() => {
-        tele.ready();
-    });
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
+    const [totalPrice, setTotalPrice] = useState(0); // Состояние для хранения totalPrice
 
-
+    const updateTotalPrice = (priceDifference) => {
+        // Функция для обновления totalPrice
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+    };
 
     const foods = getData();
 
@@ -45,6 +46,9 @@ function App() {
     };
     const totalPrice = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
+    useEffect(() => {
+        tele.ready();
+    });
     const onCheckout = () => {
         tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
@@ -74,7 +78,6 @@ function App() {
 
     return (
         <>
-            <Cart cartItems={cartItems} onCheckout={onCheckout} totalPrice={totalPrice} />
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все

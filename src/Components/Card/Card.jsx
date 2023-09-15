@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-function Card({ food, onAdd, onRemove }) {
+function Card({ food, onAdd, onRemove, updateTotalPrice }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
+        updateTotalPrice(price);
     };
 
     const handleDecrement = () => {
         setCount(count - 1);
         onRemove(food);
+        updateTotalPrice(-price); // Убрать стоимость продукта при уменьшении количества
     };
 
     return (
