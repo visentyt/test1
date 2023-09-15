@@ -11,14 +11,22 @@ function Card({ food, onAdd, onRemove, cartItems, setCartItems }) {
     const handleIncrement = () => {
         setCount(count + 1);
         onAdd(food);
-        setCartItems([...cartItems, { ...food, quantity: count + 1 }]);
+        setCartItems((prevCartItems) =>
+            prevCartItems.map((item) =>
+                item.id === food.id ? { ...item, quantity: item.quantity + 1 } : item
+            )
+        );
     };
 
     const handleDecrement = () => {
         if (count > 0) {
             setCount(count - 1);
             onRemove(food);
-            setCartItems(cartItems.filter((item) => item.id !== food.id));
+            setCartItems((prevCartItems) =>
+                prevCartItems.map((item) =>
+                    item.id === food.id ? { ...item, quantity: item.quantity - 1 } : item
+                )
+            );
         }
     };
 
