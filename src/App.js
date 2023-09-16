@@ -74,10 +74,6 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
-    const showCards = (category) => {
-        setActiveCategory(category);
-    };
-
     return (
         <div className="App">
             <BottomNavigation
