@@ -3,7 +3,6 @@ import React, { useState } from "react";
 function Help() {
     const [messageSent, setMessageSent] = useState(false);
     const [messageText, setMessageText] = useState(""); // Состояние для текста сообщения
-    const [userId, setUserId] = useState(""); // Состояние для идентификатора пользователя
 
     // Получаем имя пользователя Telegram при загрузке компонента
     window.Telegram.WebApp.onInit(() => {
@@ -23,7 +22,7 @@ function Help() {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `Пользователь ${userId} написал: ${messageText}`, // Используем текст сообщения и идентификатор пользователя
+                    text: `Пользователь ${username} написал: ${messageText}`, // Используем текст сообщения и идентификатор пользователя
                 }),
             });
 
