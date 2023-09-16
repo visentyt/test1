@@ -19,12 +19,7 @@ function BottomNavigation() {
         const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
 
-        function showMenu() {
-            button.setAttribute("hidden", "");
-            menu.classList.add("active");
-            overlay.removeAttribute("hidden");
-            setIsMenuOpen(true);
-        }
+
 
         function hideMenu() {
             menu.setAttribute("hidden", "");
@@ -60,13 +55,21 @@ function BottomNavigation() {
         tele.MainButton.hide();
     }
 
+    function showMenu() {
+        const button = document.querySelector(".menu__button");
+        button.setAttribute("hidden", "");
+        menu.classList.add("active");
+        overlay.removeAttribute("hidden");
+        setIsMenuOpen(true);
+    }
+
     return (
         <Router>
             <div className="hero__wrapper">
                 <img
                     className="menu__button"
                     src="../../images/MDA.jpg"
-                    alt="Изображение кнопки"
+                    alt="Меню"
                     onClick={showMenu}
                 />
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
