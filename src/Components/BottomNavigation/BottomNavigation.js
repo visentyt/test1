@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import AboutUs from "./AboutUs"; // Импортируйте компонент AboutUs
+import Menu from "./Menu";
+import Complaints from "./Complaints";
+import Promotions from "./Promotions";
+import Vacancies from "./Vacancies";
 import "./test.css";
 
 function BottomNavigation() {
@@ -60,10 +64,10 @@ function BottomNavigation() {
                     </div>
                     <div className="menu__links">
                         <Link to="/about-us">О нас</Link>
-                        <a href="#0">Меню</a>
-                        <a href="#0">Вакансии</a>
-                        <a href="#0">Акции</a>
-                        <a href="#0">Контакты</a>
+                        <Link to="/Menu">Меню</Link>
+                        <Link to="/Promotions">Акции</Link>
+                        <Link to="/Vacancies">Вакансии</Link>
+                        <Link to="/Complaints">Контакты</Link>
                     </div>
                     <div className="menu__contact">
                         <a href="#0">
@@ -113,6 +117,10 @@ function BottomNavigation() {
             </div>
 
             <Route path="/about-us" component={AboutUs} />
+            <Route path="/menu" component={Menu} />
+            <Route path="/Complaints" component={Complaints} />
+            <Route path="/Promootions" component={Promotions} />
+            <Route path="/Vacancies" component={Vacancies} />
         </Router>
     );
 }
