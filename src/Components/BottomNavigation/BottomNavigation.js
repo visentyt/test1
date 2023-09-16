@@ -70,7 +70,7 @@ function BottomNavigation() {
                         <Link to="/Complaints">Контакты</Link>
                     </div>
                     <div className="menu__contact">
-                        <a href="tel:666-060">
+                        <a href="tel:+79098236060">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="#000000"
