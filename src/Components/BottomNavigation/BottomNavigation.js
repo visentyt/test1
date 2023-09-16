@@ -8,21 +8,8 @@ import Promotions from "./Promotions";
 function BottomNavigation() {
     const [activeTab, setActiveTab] = useState("aboutUs");
 
-    const renderTabContent = () => {
-        switch (activeTab) {
-            case "aboutUs":
-                return <AboutUs />;
-            case "menu":
-                return <Menu />;
-            case "complaints":
-                return <Complaints />;
-            case "vacancies":
-                return <Vacancies />;
-            case "promotions":
-                return <Promotions />;
-            default:
-                return <AboutUs />;
-        }
+    const handleMenuClick = () => {
+        setActiveTab("menu");
     };
 
     return (
@@ -35,7 +22,7 @@ function BottomNavigation() {
             </div>
             <div
                 className={`tab ${activeTab === "menu" ? "active" : ""}`}
-                onClick={() => setActiveTab("menu")}
+                onClick={handleMenuClick} // Добавляем обработчик клика на кнопку "Меню"
             >
                 Меню
             </div>
@@ -57,7 +44,7 @@ function BottomNavigation() {
             >
                 Акции
             </div>
-            {renderTabContent()}
+            <Menu showCards={showCards} activeTab={activeTab} /> {/* Передаем функцию и активный таб в компонент Menu */}
         </div>
     );
 }
