@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./help.css"
 
 function Help() {
     const [messageSent, setMessageSent] = useState(false);
@@ -7,6 +8,11 @@ function Help() {
     const username = window.username;
 
     const handleSendMessage = async () => {
+        if (!messageText) {
+            alert("Вы ничего не написали.");
+            return;
+        }
+
         try {
             const botToken = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на токен вашего бота
             const chatId = "-1001970812497"; // Замените на идентификатор вашей беседы
