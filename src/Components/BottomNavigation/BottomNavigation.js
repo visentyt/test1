@@ -9,64 +9,74 @@ import "./test.css";
 
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [shouldHideMenu, setShouldHideMenu] = useState(false);
-    const menuRef = useRef(null);
 
     useEffect(() => {
         const button = document.querySelector(".menu__button");
+        const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
+        const overlay = document.querySelector(".menu__overlay");
+        const menuRef = useRef(null);
 
         function showMenu() {
-            if (shouldHideMenu) {
-                setShouldHideMenu(false);
-            } else {
-                setIsMenuOpen(true);
+            button.setAttribute("hidden", "");
+            menu.classList.add("active");
+            overlay.removeAttribute("hidden");
+            setIsMenuOpen(true);
+            document.addEventListener("click", handleDocumentClick);
+            document.addEventListener("keydown", handleEscapeKey);
+            menuRef.current.focus(); // Устанавливаем фокус в меню
+        }
+
+        function handleDocumentClick(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                // Если клик был вне меню, скрываем его
+                hideMenu();
+            }
+        }
+
+        function handleEscapeKey(event) {
+            if (event.key === "Escape") {
+                // Если нажата клавиша Escape, скрываем меню
+                hideMenu();
             }
         }
 
         function hideMenu() {
+            menu.setAttribute("hidden", "");
+            overlay.setAttribute("hidden", "");
+            button.removeAttribute("hidden");
+            menu.classList.remove("active");
             setIsMenuOpen(false);
-            setShouldHideMenu(true);
+            document.removeEventListener("click", handleDocumentClick);
+            document.removeEventListener("keydown", handleEscapeKey);
         }
+
 
         button.addEventListener("click", showMenu);
         close.addEventListener("click", hideMenu);
+        overlay.addEventListener("click", hideMenu);
 
         return () => {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
-        };
-    }, [shouldHideMenu]);
-
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsMenuOpen(false);
-                setShouldHideMenu(true);
-            }
-        }
-
-        document.addEventListener("click", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("click", handleClickOutside);
+            overlay.removeEventListener("click", hideMenu);
         };
     }, []);
 
     // Функция для скрытия меню и отображения кнопки "меню" при выборе ссылки
     function handleLinkClick() {
         setIsMenuOpen(false);
-        setShouldHideMenu(true);
+        const button = document.querySelector(".menu__button");
+        button.removeAttribute("hidden"); // Убираем атрибут hidden у кнопки "меню"
     }
 
     return (
         <Router>
             <div className="hero__wrapper">
-                <button className={`menu__button ${isMenuOpen ? 'hidden' : ''}`}>
+                <button className="menu__button">
                     <div>
                         <div></div>
                     </div>
-                    Меню
                 </button>
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
@@ -145,7 +155,6 @@ function BottomNavigation() {
             <Route path="/complaints" component={Complaints} />
             <Route path="/promotions" component={Promotions} />
             <Route path="/vacancies" component={Vacancies} />
-
             <Redirect from="/" to="/about-us" />
         </Router>
     );
