@@ -26,12 +26,11 @@ function BottomNavigation() {
             setIsMenuOpen(true);
             document.addEventListener("click", handleDocumentClick);
             document.addEventListener("keydown", handleEscapeKey);
-            menuRef.current.focus(); // Устанавливаем фокус в меню
         }
 
         function handleDocumentClick(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                // Если клик был вне меню, скрываем его
+            if (menuRef.current && !menuRef.current.contains(event.target) && event.target !== button) {
+                // Если клик был вне меню и не на кнопку "menu__button", скрываем его
                 hideMenu();
             }
         }
@@ -55,7 +54,7 @@ function BottomNavigation() {
 
         button.addEventListener("click", showMenu);
 
-        // Обработчик события для закрытия меню по клику на кнопку
+        // Обработчик события для закрытия меню по клику на кнопку "Close"
         close.addEventListener("click", hideMenu);
 
         overlay.addEventListener("click", hideMenu);
@@ -84,7 +83,7 @@ function BottomNavigation() {
                 </button>
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
-                        <button title="Close">
+                        <button title="Close" onClick={hideMenu}>
                             <div></div>
                         </button>
                     </div>
