@@ -79,9 +79,17 @@ function App() {
     };
 
     return (
-
-            <BottomNavigation />
-
+        <div className="App">
+            <BottomNavigation
+                showCards={showCards}
+                onAdd={onAdd}
+                onRemove={onRemove}
+                filteredFoods={filteredFoods}
+                Card={Card}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+            />
+        </div>
     );
 }
 

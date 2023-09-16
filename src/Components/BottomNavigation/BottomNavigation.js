@@ -4,7 +4,7 @@ import Menu from "./Menu";
 import Complaints from "./Complaints";
 import Vacancies from "./Vacancies";
 import Promotions from "./Promotions";
-import "../../App"
+import { showCards } from "../../App"
 
 function BottomNavigation() {
     const [activeTab, setActiveTab] = useState("aboutUs");
