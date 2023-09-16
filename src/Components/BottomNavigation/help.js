@@ -25,7 +25,7 @@ function Help() {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `Пользователь @${username} \n Написал жалобу: \n <b>${messageText}</b>`,
+                    text: `Пользователь @${username} написал жалобу: \n Написал жалобу: \n ${messageText}`,
                 }),
             });
 
@@ -54,7 +54,11 @@ function Help() {
                     onChange={(e) => setMessageText(e.target.value)}
                 ></textarea>
                 <input type="submit" value="Отправить" />
-                {messageAlert && <p>{messageAlert}</p>}
+                {messageAlert && (
+                    <p style={{ color: messageAlert === "Вы ничего не написали." ? "red" : "lime" }}>
+                        {messageAlert}
+                    </p>
+                )}
             </div>
         </form>
     );
