@@ -6,7 +6,9 @@ function Help() {
     const username = window.username;
     const [messageAlert, setMessageAlert] = useState("");
 
-    const handleSendMessage = async () => {
+    const handleSendMessage = async (e) => {
+        e.preventDefault(); // Остановить стандартное действие отправки формы
+
         if (!messageText) {
             setMessageAlert("Вы ничего не написали.");
             return;
@@ -39,7 +41,7 @@ function Help() {
     };
 
     return (
-        <form className="decor">
+        <form className="decor" onSubmit={handleSendMessage}>
             <div className="form-left-decoration"></div>
             <div className="form-right-decoration"></div>
             <div className="circle"></div>
@@ -51,7 +53,7 @@ function Help() {
                     value={messageText}
                     onChange={(e) => setMessageText(e.target.value)}
                 ></textarea>
-                <input type="submit" value="Отправить" onClick={handleSendMessage} />
+                <input type="submit" value="Отправить" />
                 {messageAlert && <p>{messageAlert}</p>}
             </div>
         </form>
