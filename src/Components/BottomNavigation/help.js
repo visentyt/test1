@@ -18,7 +18,7 @@ function Help() {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `Пользователь ${username} написал: ${messageText}`,
+                    text: `Пользователь @${username} написал жалобу: \n ${messageText}`,
                 }),
             });
 
