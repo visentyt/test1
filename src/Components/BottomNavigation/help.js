@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./help.css"
+import "./help.css";
 
 function Help() {
     const [messageText, setMessageText] = useState("");
@@ -39,19 +39,22 @@ function Help() {
     };
 
     return (
-        <div className="main">
-            <div>
-                <label htmlFor="message">Введите текст сообщения:</label>
-                <input
-                    type="text"
-                    id="message"
+        <form className="decor">
+            <div className="form-left-decoration"></div>
+            <div className="form-right-decoration"></div>
+            <div className="circle"></div>
+            <div className="form-inner">
+                <h3>Написать нам</h3>
+                <textarea
+                    placeholder="Сообщение..."
+                    rows="3"
                     value={messageText}
                     onChange={(e) => setMessageText(e.target.value)}
-                />
+                ></textarea>
+                <input type="submit" value="Отправить" onClick={handleSendMessage} />
+                {messageAlert && <p>{messageAlert}</p>}
             </div>
-            <button onClick={handleSendMessage}>Отправить сообщение в Telegram</button>
-            {messageAlert && <p>{messageAlert}</p>}
-        </div>
+        </form>
     );
 }
 
