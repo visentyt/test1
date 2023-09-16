@@ -13,7 +13,17 @@ function BottomNavigation() {
             case "aboutUs":
                 return <AboutUs />;
             case "menu":
-                return <Menu />;
+                return (
+                    <Menu
+                        showCards={showCards}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        filteredFoods={filteredFoods}
+                        Card={Card}
+                        cartItems={cartItems}
+                        setCartItems={setCartItems}
+                    />
+                );
             case "complaints":
                 return <Complaints />;
             case "vacancies":

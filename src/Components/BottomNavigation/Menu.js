@@ -1,6 +1,14 @@
 import React from "react";
 
-function Menu() {
+function Menu({
+                  showCards,
+                  onAdd,
+                  onRemove,
+                  filteredFoods,
+                  Card,
+                  cartItems,
+                  setCartItems,
+              }) {
     return (
         <div>
             <div id="menu">
