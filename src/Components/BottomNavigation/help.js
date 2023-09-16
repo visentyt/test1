@@ -11,7 +11,6 @@ function Test() {
 
         document.getElementById("tgusername").value = "@" + tg.initDataUnsafe.user.username;
         document.getElementById("privetname").textContent = tg.initDataUnsafe.user.first_name;
-        const chatId = tg.initDataUnsafe.user.id;
 
         tg.expand();
         tg.ready();
