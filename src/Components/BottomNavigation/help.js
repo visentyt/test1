@@ -2,11 +2,12 @@ import React, { useState } from "react";
 
 function Help() {
     const [messageSent, setMessageSent] = useState(false);
+    const [messageText, setMessageText] = useState(""); // Состояние для текста сообщения
 
     const handleSendMessage = async () => {
         try {
-            const botToken = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на токен вашего бота
-            const chatId = "-1001970812497"; // Замените на идентификатор вашей беседы
+            const botToken = "YOUR_BOT_TOKEN"; // Замените на токен вашего бота
+            const chatId = "YOUR_CHAT_ID"; // Замените на идентификатор вашей беседы
 
             const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
@@ -15,12 +16,13 @@ function Help() {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: "тест", // Замените на текст вашего сообщения
+                    text: messageText, // Используем текст из состояния
                 }),
             });
 
             if (response.ok) {
                 setMessageSent(true);
+                setMessageText(""); // Очищаем поле ввода после отправки
             } else {
                 console.error("Ошибка при отправке сообщения:", response.status, response.statusText);
             }
@@ -31,6 +33,15 @@ function Help() {
 
     return (
         <div>
+            <div>
+                <label htmlFor="message">Введите текст сообщения:</label>
+                <input
+                    type="text"
+                    id="message"
+                    value={messageText}
+                    onChange={(e) => setMessageText(e.target.value)}
+                />
+            </div>
             <button onClick={handleSendMessage}>Отправить сообщение в Telegram</button>
             {messageSent && <p>Сообщение отправлено!</p>}
         </div>
