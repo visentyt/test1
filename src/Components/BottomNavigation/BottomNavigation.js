@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import AboutUs from "./AboutUs";
 import Menu from "./Menu";
@@ -9,36 +9,44 @@ import "./test.css";
 
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef(null);
 
     useEffect(() => {
         const button = document.querySelector(".menu__button");
-        const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
-        const overlay = document.querySelector(".menu__overlay");
 
         function showMenu() {
             button.setAttribute("hidden", "");
-            menu.classList.add("active");
-            overlay.removeAttribute("hidden");
             setIsMenuOpen(true);
         }
 
         function hideMenu() {
-            menu.setAttribute("hidden", "");
-            overlay.setAttribute("hidden", "");
-            button.removeAttribute("hidden"); // Убираем атрибут hidden у кнопки "меню"
-            menu.classList.remove("active");
+            button.removeAttribute("hidden");
             setIsMenuOpen(false);
         }
 
         button.addEventListener("click", showMenu);
         close.addEventListener("click", hideMenu);
-        overlay.addEventListener("click", hideMenu);
 
         return () => {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
-            overlay.removeEventListener("click", hideMenu);
+        };
+    }, []);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+                const button = document.querySelector(".menu__button");
+                button.removeAttribute("hidden");
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
         };
     }, []);
 
@@ -57,7 +65,7 @@ function BottomNavigation() {
                         <div></div>
                     </div>
                 </button>
-                <section className="menu__body" hidden={!isMenuOpen}>
+                <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
                         <button title="Close">
                             <div></div>
