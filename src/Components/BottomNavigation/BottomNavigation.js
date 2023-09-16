@@ -7,6 +7,7 @@ import Promotions from "./Promotions";
 import Vacancies from "./Vacancies";
 import "./test.css";
 
+const tele = window.Telegram.WebApp;
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
@@ -55,6 +56,7 @@ function BottomNavigation() {
         setIsMenuOpen(false);
         const button = document.querySelector(".menu__button");
         button.removeAttribute("hidden");
+        tele.MainButton.hide();
     }
 
     return (
