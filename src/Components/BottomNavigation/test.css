@@ -1,4 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:700");
+:root {
+    --dark: #333;
+    --light: #fff;
+    --neutral: #f6f6f6;
+    --neutral-dark: #d1d1d1;
+    --color: #5607d7;
+    --color-light: #941ed2;
+    --color-dark: #2719cd;
+    --font-stack: "Josefin Sans", "Montserrat", "sans-serif";
+}
 
 body {
     display: flex;
@@ -59,8 +69,6 @@ body:after {
 }
 
 .hero__phone {
-    width: 300px;
-    height: 630px;
     background: var(--light);
     background-color: #ffffff;
     background: #fff url("https://codepenworldsfair.com/images/small-worlds-fair.png") center/250px no-repeat;
