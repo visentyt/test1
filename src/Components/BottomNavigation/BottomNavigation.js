@@ -53,15 +53,9 @@ function BottomNavigation() {
                     Меню
                 </button>
                 <section className="menu__body" hidden={!isMenuOpen}>
-                    <div className="menu__header">
-                        <label>
-                            <div></div>
-                        </label>
-                        <p>Быстрая навигация</p>
                         <button title="Close">
                             <div></div>
                         </button>
-                    </div>
                     <div className="menu__links">
                         <Link to="/about-us">О нас</Link>
                         <Link to="/Menu">Меню</Link>
