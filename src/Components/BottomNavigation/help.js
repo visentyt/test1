@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Help() {
     const [messageSent, setMessageSent] = useState(false);
-    const [messageText, setMessageText] = useState(""); // Состояние для текста сообщения
+    const [messageText, setMessageText] = useState("");
+    const [username, setUsername] = useState(""); // Объявляем состояние для имени пользователя
 
-    // Получаем имя пользователя Telegram при загрузке компонента
-    window.Telegram.WebApp.onInit(() => {
-        const username = window.Telegram.WebApp.initDataUnsafe.user.username;
-        setUserId(username);
-    });
+    useEffect(() => {
+        // Получаем имя пользователя Telegram при загрузке компонента
+        let tg = window.Telegram.WebApp;
+        tg.onInit(() => {
+            const user = tg.initDataUnsafe.user;
+            setUsername(user.username);
+        });
+    }, []); // Передаем пустой массив зависимостей, чтобы эффект выполнялся только при монтировании
 
     const handleSendMessage = async () => {
         try {
@@ -22,13 +26,13 @@ function Help() {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `Пользователь ${username} написал: ${messageText}`, // Используем текст сообщения и идентификатор пользователя
+                    text: `Пользователь ${username} написал: ${messageText}`,
                 }),
             });
 
             if (response.ok) {
                 setMessageSent(true);
-                setMessageText(""); // Очищаем поле ввода после отправки
+                setMessageText("");
             } else {
                 console.error("Ошибка при отправке сообщения:", response.status, response.statusText);
             }
