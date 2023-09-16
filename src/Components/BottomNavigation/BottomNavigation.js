@@ -9,6 +9,7 @@ import "./test.css";
 
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [shouldHideMenu, setShouldHideMenu] = useState(false);
     const menuRef = useRef(null);
 
     useEffect(() => {
@@ -16,13 +17,16 @@ function BottomNavigation() {
         const close = document.querySelector(".menu__header button");
 
         function showMenu() {
-            button.setAttribute("hidden", "");
-            setIsMenuOpen(true);
+            if (shouldHideMenu) {
+                setShouldHideMenu(false);
+            } else {
+                setIsMenuOpen(true);
+            }
         }
 
         function hideMenu() {
-            button.removeAttribute("hidden");
             setIsMenuOpen(false);
+            setShouldHideMenu(true);
         }
 
         button.addEventListener("click", showMenu);
@@ -32,14 +36,13 @@ function BottomNavigation() {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
         };
-    }, []);
+    }, [shouldHideMenu]);
 
     useEffect(() => {
         function handleClickOutside(event) {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
                 setIsMenuOpen(false);
-                const button = document.querySelector(".menu__button");
-                button.removeAttribute("hidden");
+                setShouldHideMenu(true);
             }
         }
 
@@ -53,8 +56,7 @@ function BottomNavigation() {
     // Функция для скрытия меню и отображения кнопки "меню" при выборе ссылки
     function handleLinkClick() {
         setIsMenuOpen(false);
-        const button = document.querySelector(".menu__button");
-        button.removeAttribute("hidden"); // Убираем атрибут hidden у кнопки "меню"
+        setShouldHideMenu(true);
     }
 
     return (
