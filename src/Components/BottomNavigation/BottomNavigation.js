@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import AboutUs from "./AboutUs"; // Импортируйте компонент AboutUs
+import AboutUs from "./AboutUs";
 import Menu from "./Menu";
 import Complaints from "./Complaints";
 import Promotions from "./Promotions";
@@ -11,7 +11,6 @@ function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
-        // Используйте useEffect для установки обработчиков событий после монтирования компонента
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
@@ -43,6 +42,11 @@ function BottomNavigation() {
         };
     }, []);
 
+    // Функция для скрытия меню при выборе ссылки
+    function handleLinkClick() {
+        setIsMenuOpen(false);
+    }
+
     return (
         <Router>
             <div className="hero__wrapper">
@@ -59,11 +63,22 @@ function BottomNavigation() {
                         </button>
                     </div>
                     <div className="menu__links">
-                        <Link to="/about-us">О нас</Link>
-                        <Link to="/Menu">Меню</Link>
-                        <Link to="/Promotions">Акции</Link>
-                        <Link to="/Vacancies">Вакансии</Link>
-                        <Link to="/Complaints">Контакты</Link>
+                        {/* Добавляем обработчик события для каждой ссылки */}
+                        <Link to="/about-us" onClick={handleLinkClick}>
+                            О нас
+                        </Link>
+                        <Link to="/menu" onClick={handleLinkClick}>
+                            Меню
+                        </Link>
+                        <Link to="/promotions" onClick={handleLinkClick}>
+                            Акции
+                        </Link>
+                        <Link to="/vacancies" onClick={handleLinkClick}>
+                            Вакансии
+                        </Link>
+                        <Link to="/complaints" onClick={handleLinkClick}>
+                            Контакты
+                        </Link>
                     </div>
                     <div className="menu__contact">
                         <a href="tel:+79098236060">
@@ -115,9 +130,9 @@ function BottomNavigation() {
 
             <Route path="/about-us" component={AboutUs} />
             <Route path="/menu" component={Menu} />
-            <Route path="/Complaints" component={Complaints} />
-            <Route path="/Promootions" component={Promotions} />
-            <Route path="/Vacancies" component={Vacancies} />
+            <Route path="/complaints" component={Complaints} />
+            <Route path="/promotions" component={Promotions} />
+            <Route path="/vacancies" component={Vacancies} />
         </Router>
     );
 }
