@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Card from "./Components/Card/Card";
 import { getData } from "./db/db";
-import BottomNavigation from "./Components/BottomNavigation/BottomNavigation";
+import BottomNavigation from "./BottomNavigation";
 
 const tele = window.Telegram.WebApp;
 
@@ -74,18 +74,49 @@ function App() {
         )
         : filterFoodsByCategory(activeCategory);
 
+    const showCards = (category) => {
+        setActiveCategory(category);
+    };
+
     return (
-        <div className="App">
-            <BottomNavigation
-                showCards={showCards}
-                onAdd={onAdd}
-                onRemove={onRemove}
-                filteredFoods={filteredFoods}
-                Card={Card}
-                cartItems={cartItems}
-                setCartItems={setCartItems}
-            />
-        </div>
+        <>
+            <div id="menu">
+                <div className="menu-item" onClick={() => showCards(null)}>
+                    Все
+                </div>
+                <div className="menu-item" onClick={() => showCards("hookah")}>
+                    Кальян
+                </div>
+                <div className="menu-item" onClick={() => showCards("beer")}>
+                    Пиво
+                </div>
+                <div className="menu-item" onClick={() => showCards("shot")}>
+                    Шоты
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("eat")}>
+                    Закуски
+                </div>
+                <div className="menu-item" onClick={() => showCards("kokteil")}>
+                    Коктейли
+                </div>
+            </div>
+            <div className="cards__container">
+                {filteredFoods.map((food) => (
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        cartItems={cartItems}
+                        setCartItems={setCartItems}
+                    />
+                ))}
+            </div>
+            <BottomNavigation />
+        </>
     );
 }
 
