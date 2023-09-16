@@ -70,6 +70,7 @@
     --y: 0;
     --z: 0;
     display: flex;
+    text-align: center; /* Добавляем это свойство */
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(to right, var(--color-light), var(--color-dark));
@@ -81,6 +82,7 @@
     white-space: nowrap;
     position: fixed; /* Изменили значение на fixed */
     bottom: 15px; /* Установили отступ в 15px от нижнего края */
+    left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
     z-index: 105;
