@@ -67,6 +67,9 @@ function BottomNavigation() {
                 </button>
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
+                        <button title="Close">
+                            <div></div>
+                        </button>
                     </div>
                     <div className="menu__links">
                         <Link to="/about-us" onClick={handleLinkClick}>
