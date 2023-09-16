@@ -115,7 +115,7 @@ function App() {
                     />
                 ))}
             </div>
-            <BottomNavigation />
+            <BottomNavigation showCards={showCards} filteredFoods={filteredFoods} onAdd={onAdd} onRemove={onRemove} cartItems={cartItems} setCartItems={setCartItems} />
         </>
     );
 }

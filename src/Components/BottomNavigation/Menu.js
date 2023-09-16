@@ -1,12 +1,7 @@
 import React from "react";
 import Card from "../Card/Card";
 
-function Menu({ showCards, activeTab }) {
-    // Проверяем, является ли активный таб "menu", чтобы отображать меню
-    if (activeTab !== "menu") {
-        return null;
-    }
-
+function Menu({ showCards, filteredFoods, onAdd, onRemove, cartItems, setCartItems }) {
     return (
         <>
             <div id="menu">
