@@ -36,7 +36,6 @@ function AboutUs() {
     return (
         <>
             <div className="hero__wrapper">
-                <div className="hero__phone">"
             <button className="menu__button">
                 <div>
                     <div></div>
@@ -106,7 +105,6 @@ function AboutUs() {
             </section>
             <div className="menu__overlay" hidden={true}></div>
                 </div>
-            </div>
         </>
     );
 }
