@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 function Help() {
     const [messageSent, setMessageSent] = useState(false);
     const [messageText, setMessageText] = useState("");
-    const [username, setUsername] = useState(""); // Объявляем состояние для имени пользователя
 
-    useEffect(() => {
-        const tele = window.Telegram.WebApp;
-        tele.onInit(() => {
-            const user = tele.initDataUnsafe.user;
-            setUsername(user.username);
-        });
-    }, []);
+    const username = window.username;
 
     const handleSendMessage = async () => {
         try {
