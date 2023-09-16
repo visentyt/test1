@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react"; // Импортируем useEffect и useState из React
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import AboutUs from "./AboutUs"; // Импортируйте компонент AboutUs
 import "./test.css";
 
 function BottomNavigation() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Состояние для открытия/закрытия меню
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
-        // Используем useEffect для установки обработчиков событий после монтирования компонента
+        // Используйте useEffect для установки обработчиков событий после монтирования компонента
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
@@ -13,33 +15,32 @@ function BottomNavigation() {
 
         function showMenu() {
             button.setAttribute("hidden", "");
-            menu.classList.add("active"); // Добавляем класс "active" для показа меню
+            menu.classList.add("active");
             overlay.removeAttribute("hidden");
-            setIsMenuOpen(true); // Устанавливаем состояние "true" при открытии меню
+            setIsMenuOpen(true);
         }
 
         function hideMenu() {
             menu.setAttribute("hidden", "");
             overlay.setAttribute("hidden", "");
             button.removeAttribute("hidden");
-            menu.classList.remove("active"); // Убираем класс "active" для скрытия меню
-            setIsMenuOpen(false); // Устанавливаем состояние "false" при закрытии меню
+            menu.classList.remove("active");
+            setIsMenuOpen(false);
         }
 
         button.addEventListener("click", showMenu);
         close.addEventListener("click", hideMenu);
         overlay.addEventListener("click", hideMenu);
 
-        // Возвращаем функцию очистки для удаления обработчиков событий при размонтировании компонента
         return () => {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
         };
-    }, []); // Пустой массив зависимостей означает, что useEffect будет выполняться только после монтирования и размонтирования компонента
+    }, []);
 
     return (
-        <>
+        <Router>
             <div className="hero__wrapper">
                 <button className="menu__button">
                     <div>
@@ -58,7 +59,7 @@ function BottomNavigation() {
                         </button>
                     </div>
                     <div className="menu__links">
-                        <a href="#0">О нас</a>
+                        <Link to="/about-us">О нас</Link>
                         <a href="#0">Меню</a>
                         <a href="#0">Вакансии</a>
                         <a href="#0">Акции</a>
