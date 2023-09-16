@@ -1,10 +1,4 @@
-body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
+
 
 .main {
     background-color: var(--tg-theme-bg-color);
