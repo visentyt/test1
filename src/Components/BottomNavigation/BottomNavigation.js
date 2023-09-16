@@ -9,13 +9,35 @@ import "./test.css";
 
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const [isAtTop, setIsAtTop] = useState(true);
     useEffect(() => {
         // Используйте useEffect для установки обработчиков событий после монтирования компонента
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
+
+
+        useEffect(() => {
+            function handleScroll() {
+                const scrollTop = window.scrollY;
+                // Вы можете настроить этот порог в соответствии с вашими потребностями
+                const scrollThreshold = 50; // Например, 50px
+
+                if (scrollTop <= scrollThreshold) {
+                    setIsAtTop(true);
+                } else {
+                    setIsAtTop(false);
+                }
+            }
+
+            window.addEventListener("scroll", handleScroll);
+
+            return () => {
+                window.removeEventListener("scroll", handleScroll);
+            };
+        }, []);
+
 
         function showMenu() {
             button.setAttribute("hidden", "");
@@ -52,7 +74,7 @@ function BottomNavigation() {
                     </div>
                     Меню
                 </button>
-                <section className="menu__body" hidden={!isMenuOpen}>
+                <section className={`menu__body ${isAtTop ? 'hidden' : ''}`} hidden={!isMenuOpen}>
                     <div className="menu__header">
                         <label>
                             <div></div>

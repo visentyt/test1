@@ -133,6 +133,10 @@
 .menu__body[hidden] {
     --y: 150%;
 }
+.menu__body.hidden {
+    transform: translate3d(var(--x), 150%, var(--z));
+}
+
 .menu__body > *:not(:last-child) {
     border-bottom: 2px solid var(--neutral);
 }
