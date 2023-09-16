@@ -20,7 +20,7 @@
     content: "";
     width: 150px;
     height: 150px;
-    background: linear-gradient(135deg, var(--color-light), var(--color-dark));
+    background: red;
     border-radius: 50%;
     position: fixed;
     bottom: 50px;
@@ -82,7 +82,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: red;
+    background: linear-gradient(to right, var(--color-light), var(--color-dark));
     padding: 10px 20px;
     border-radius: 28px;
     box-shadow: 0 2px 40px -10px var(--color);
