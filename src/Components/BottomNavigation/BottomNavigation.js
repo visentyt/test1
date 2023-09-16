@@ -111,7 +111,9 @@ function BottomNavigation() {
                 </section>
                 <div className="menu__overlay" hidden={!isMenuOpen}></div>
             </div>
-        </>
+
+            <Route path="/about-us" component={AboutUs} />
+        </Router>
     );
 }
 
