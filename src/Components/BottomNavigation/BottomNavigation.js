@@ -13,30 +13,27 @@ function BottomNavigation() {
     useEffect(() => {
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
-        const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
 
         function showMenu() {
             button.setAttribute("hidden", "");
-            menu.style.transform = "translateY(0%)"; // Показываем меню
+            menu.style.display = "block"; // Показываем меню
             overlay.removeAttribute("hidden");
             setIsMenuOpen(true);
         }
 
         function hideMenu() {
             button.removeAttribute("hidden");
-            menu.style.transform = "translateY(100%)"; // Скрываем меню
+            menu.style.display = "none"; // Скрываем меню
             overlay.setAttribute("hidden", "");
             setIsMenuOpen(false);
         }
 
         button.addEventListener("click", showMenu);
-        close.addEventListener("click", hideMenu);
         overlay.addEventListener("click", hideMenu);
 
         return () => {
             button.removeEventListener("click", showMenu);
-            close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
         };
     }, []);
