@@ -62,7 +62,7 @@ function BottomNavigation() {
     return (
         <Router>
             <div className="hero__wrapper">
-                <button className="menu__button">
+                <button className={`menu__button ${isMenuOpen ? 'hidden' : ''}`}>
                     <div>
                         <div></div>
                     </div>
@@ -144,6 +144,7 @@ function BottomNavigation() {
             <Route path="/complaints" component={Complaints} />
             <Route path="/promotions" component={Promotions} />
             <Route path="/vacancies" component={Vacancies} />
+
             <Redirect from="/" to="/about-us" />
         </Router>
     );
