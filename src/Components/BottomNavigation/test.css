@@ -124,7 +124,7 @@
     border-top-right-radius: 20px;
     box-shadow: 0px -9px 50px -30px black;
     font-family: "Montserrat", sans-serif;
-    bottom: -10px;
+    bottom: -15px;
     position: fixed; /* Изменили значение на fixed */
     z-index: 105;
     transform: translate3d(var(--x), var(--y), var(--z));
