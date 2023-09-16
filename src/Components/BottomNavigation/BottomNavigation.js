@@ -10,12 +10,14 @@ import "./test.css";
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // Объявляем menuRef в верхней части компонента
+    const menuRef = useRef(null);
+
     useEffect(() => {
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
-        const menuRef = useRef(null);
 
         function showMenu() {
             button.setAttribute("hidden", "");
@@ -50,7 +52,6 @@ function BottomNavigation() {
             document.removeEventListener("click", handleDocumentClick);
             document.removeEventListener("keydown", handleEscapeKey);
         }
-
 
         button.addEventListener("click", showMenu);
         close.addEventListener("click", hideMenu);
