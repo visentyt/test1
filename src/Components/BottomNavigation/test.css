@@ -79,8 +79,8 @@
     color: var(--light);
     font-size: 16px;
     white-space: nowrap;
-    position: fixed; /* Изменили значение на fixed */
-    bottom: 15px; /* Установили отступ в 15px от нижнего края */
+    position: fixed;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
@@ -91,6 +91,12 @@
 .menu__button[hidden] {
     display: none;
 }
+
+.menu__button > div {
+    flex-grow: 1;
+    text-align: center; /* Добавляем это свойство для центрирования текста */
+}
+
 .menu__button div {
     display: flex;
     align-items: center;
@@ -98,6 +104,7 @@
     height: 12px;
     margin-right: 20px;
 }
+
 .menu__button div div {
     display: table;
     height: 1px;
@@ -231,3 +238,4 @@
     font-size: 14px;
     font-weight: bold;
 }
+
