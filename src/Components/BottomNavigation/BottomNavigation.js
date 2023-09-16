@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import AboutUs from "./AboutUs";
+import AboutUs from "./AboutUs"; // Импортируйте компонент AboutUs
 import Menu from "./Menu";
 import Complaints from "./Complaints";
 import Promotions from "./Promotions";
@@ -11,6 +11,7 @@ function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
+        // Используйте useEffect для установки обработчиков событий после монтирования компонента
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
         const close = document.querySelector(".menu__header button");
@@ -35,25 +36,12 @@ function BottomNavigation() {
         close.addEventListener("click", hideMenu);
         overlay.addEventListener("click", hideMenu);
 
-        // Добавляем обработчик события прокрутки
-        window.addEventListener("scroll", handleScroll);
-
         return () => {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
-            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-
-    // Функция обработки события прокрутки
-    function handleScroll() {
-        // Проверяем, находится ли страница в верхней части
-        if (window.scrollY > 0) {
-            // Если не в верхней части, скрываем меню
-            setIsMenuOpen(false);
-        }
-    }
 
     return (
         <Router>
