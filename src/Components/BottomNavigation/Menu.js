@@ -1,8 +1,7 @@
 import React from "react";
 import Card from "../Card/Card";
-import BottomNavigation from "./BottomNavigation";
 
-function Menu() {
+function Menu({ showCards, filteredFoods, onAdd, onRemove, cartItems, setCartItems }) {
     return (
         <>
             <div id="menu">
