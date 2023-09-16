@@ -15,13 +15,22 @@ function BottomNavigation() {
 
     useEffect(() => {
         const button = document.querySelector(".menu__button");
-        const menu = menuRef.current;
         const close = document.querySelector(".menu__header button");
-        const overlay = document.querySelector(".menu__overlay");
 
+        function showMenu() {
+            const menu = menuRef.current;
+            const overlay = document.querySelector(".menu__overlay");
 
+            button.setAttribute("hidden", "");
+            menu.classList.add("active");
+            overlay.removeAttribute("hidden");
+            setIsMenuOpen(true);
+        }
 
         function hideMenu() {
+            const menu = menuRef.current;
+            const overlay = document.querySelector(".menu__overlay");
+
             menu.setAttribute("hidden", "");
             overlay.setAttribute("hidden", "");
             button.removeAttribute("hidden");
@@ -30,6 +39,7 @@ function BottomNavigation() {
         }
 
         function handleDocumentClick(event) {
+            const menu = menuRef.current;
             if (isMenuOpen && !menu.contains(event.target) && event.target !== button) {
                 hideMenu();
             }
@@ -53,14 +63,6 @@ function BottomNavigation() {
         const button = document.querySelector(".menu__button");
         button.removeAttribute("hidden");
         tele.MainButton.hide();
-    }
-
-    function showMenu() {
-        const button = document.querySelector(".menu__button");
-        button.setAttribute("hidden", "");
-        menu.classList.add("active");
-        overlay.removeAttribute("hidden");
-        setIsMenuOpen(true);
     }
 
     return (
