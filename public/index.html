@@ -33,8 +33,12 @@
     <script>
       let tg = window.Telegram.WebApp;
       const user = tg.initDataUnsafe.user;
-      setUsername(user.username);
-      tg.expand()
+      const username = user.username;
+
+      // Создаем глобальную переменную username и присваиваем ей значение
+      window.username = username;
+
+      tg.expand();
     </script>
   </head>
   <body>
