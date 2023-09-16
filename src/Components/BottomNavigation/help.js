@@ -6,8 +6,8 @@ function Help() {
 
     const handleSendMessage = async () => {
         try {
-            const botToken = "YOUR_BOT_TOKEN"; // Замените на токен вашего бота
-            const chatId = "YOUR_CHAT_ID"; // Замените на идентификатор вашей беседы
+            const botToken = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на токен вашего бота
+            const chatId = "-1001970812497"; // Замените на идентификатор вашей беседы
 
             const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: "POST",
