@@ -16,17 +16,7 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-.hero__wrapper:before {
-    content: "";
-    width: 150px;
-    height: 150px;
-    background: red;
-    border-radius: 50%;
-    position: fixed;
-    bottom: 50px;
-    left: 10px;
-    z-index: -1;
-}
+
 .hero__wrapper > * {
     margin: 15px;
 }
