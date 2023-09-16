@@ -56,7 +56,6 @@ function BottomNavigation() {
                     <div>
                         <div></div>
                     </div>
-                    Меню
                 </button>
                 <section className="menu__body" hidden={!isMenuOpen}>
                     <div className="menu__header">
