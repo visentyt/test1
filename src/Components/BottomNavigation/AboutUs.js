@@ -35,7 +35,7 @@ function AboutUs() {
 
     return (
         <>
-            {/* Ваш контент JSX без удаленной части */}
+            <div className="hero__wrapper">
             <button className="menu__button">
                 <div>
                     <div></div>
@@ -104,6 +104,7 @@ function AboutUs() {
                 </div>
             </section>
             <div className="menu__overlay" hidden={true}></div>
+            </div>
         </>
     );
 }
