@@ -131,7 +131,7 @@
     transition: 0.2s cubic-bezier(0.33, 1, 0.53, 1);
 }
 .menu__body[hidden] {
-    --y: 100%;
+    display:none;
 }
 .menu__body > *:not(:last-child) {
     border-bottom: 2px solid var(--neutral);

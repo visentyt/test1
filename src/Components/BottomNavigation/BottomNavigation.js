@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import AboutUs from "./AboutUs";
+import AboutUs from "./AboutUs"; // Импортируйте компонент AboutUs
 import Menu from "./Menu";
 import Complaints from "./Complaints";
 import Promotions from "./Promotions";
@@ -11,29 +11,34 @@ function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
+        // Используйте useEffect для установки обработчиков событий после монтирования компонента
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
+        const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
 
         function showMenu() {
             button.setAttribute("hidden", "");
-            menu.style.display = "block"; // Показываем меню
+            menu.classList.add("active");
             overlay.removeAttribute("hidden");
             setIsMenuOpen(true);
         }
 
         function hideMenu() {
-            button.removeAttribute("hidden");
-            menu.style.display = "none"; // Скрываем меню
+            menu.setAttribute("hidden", "");
             overlay.setAttribute("hidden", "");
+            button.removeAttribute("hidden");
+            menu.classList.remove("active");
             setIsMenuOpen(false);
         }
 
         button.addEventListener("click", showMenu);
+        close.addEventListener("click", hideMenu);
         overlay.addEventListener("click", hideMenu);
 
         return () => {
             button.removeEventListener("click", showMenu);
+            close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
         };
     }, []);
