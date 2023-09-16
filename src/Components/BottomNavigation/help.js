@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import "./help.css";
+import "../../../public/index.html"
 
 function Test() {
     useEffect(() => {
