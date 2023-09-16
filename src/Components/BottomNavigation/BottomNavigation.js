@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import AboutUs from "./AboutUs";
 import Menu from "./Menu";
-import Complaints from "./Complaints";
-import Vacancies from "./Vacancies";
-import Promotions from "./Promotiosns";
 
 function BottomNavigation() {
     const [activeTab, setActiveTab] = useState("aboutUs");
