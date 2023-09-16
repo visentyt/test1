@@ -66,7 +66,7 @@
 }
 
 .menu__button {
-    --x: 0;
+    --x: -50%;
     --y: 0;
     --z: 0;
     display: flex;
@@ -81,7 +81,6 @@
     white-space: nowrap;
     position: fixed; /* Изменили значение на fixed */
     bottom: 15px; /* Установили отступ в 15px от нижнего края */
-    left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
     z-index: 105;
