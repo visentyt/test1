@@ -26,7 +26,7 @@ function BottomNavigation() {
         function hideMenu() {
             menu.setAttribute("hidden", "");
             overlay.setAttribute("hidden", "");
-            button.removeAttribute("hidden");
+            button.removeAttribute("hidden"); // Убираем атрибут hidden у кнопки "меню"
             menu.classList.remove("active");
             setIsMenuOpen(false);
         }
@@ -42,9 +42,11 @@ function BottomNavigation() {
         };
     }, []);
 
-    // Функция для скрытия меню при выборе ссылки
+    // Функция для скрытия меню и отображения кнопки "меню" при выборе ссылки
     function handleLinkClick() {
         setIsMenuOpen(false);
+        const button = document.querySelector(".menu__button");
+        button.removeAttribute("hidden"); // Убираем атрибут hidden у кнопки "меню"
     }
 
     return (
