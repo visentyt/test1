@@ -6,9 +6,9 @@ function Help() {
     const [username, setUsername] = useState(""); // Объявляем состояние для имени пользователя
 
     useEffect(() => {
-        let tg = window.Telegram.WebApp;
-        tg.onInit(() => {
-            const user = tg.initDataUnsafe.user;
+        const tele = window.Telegram.WebApp;
+        tele.onInit(() => {
+            const user = tele.initDataUnsafe.user;
             setUsername(user.username);
         });
     }, []);
