@@ -9,28 +9,11 @@ import "./test.css";
 
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    // Объявляем menuRef в верхней части компонента
     const menuRef = useRef(null);
-
-    // Объявляем функцию hideMenu
-    function hideMenu() {
-        const button = document.querySelector(".menu__button");
-        const menu = document.querySelector(".menu__body");
-        const overlay = document.querySelector(".menu__overlay");
-
-        menu.setAttribute("hidden", "");
-        overlay.setAttribute("hidden", "");
-        button.removeAttribute("hidden");
-        menu.classList.remove("active");
-        setIsMenuOpen(false);
-        document.removeEventListener("click", handleDocumentClick);
-        document.removeEventListener("keydown", handleEscapeKey);
-    }
 
     useEffect(() => {
         const button = document.querySelector(".menu__button");
-        const menu = document.querySelector(".menu__body");
+        const menu = menuRef.current;
         const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
 
@@ -39,42 +22,39 @@ function BottomNavigation() {
             menu.classList.add("active");
             overlay.removeAttribute("hidden");
             setIsMenuOpen(true);
-            document.addEventListener("click", handleDocumentClick);
-            document.addEventListener("keydown", handleEscapeKey);
-            menuRef.current.focus(); // Устанавливаем фокус в меню
+        }
+
+        function hideMenu() {
+            menu.setAttribute("hidden", "");
+            overlay.setAttribute("hidden", "");
+            button.removeAttribute("hidden");
+            menu.classList.remove("active");
+            setIsMenuOpen(false);
         }
 
         function handleDocumentClick(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target) && event.target !== button) {
-                // Если клик был вне меню и не на кнопку "menu__button", скрываем его
-                hideMenu();
-            }
-        }
-
-        function handleEscapeKey(event) {
-            if (event.key === "Escape") {
-                // Если нажата клавиша Escape, скрываем меню
+            if (isMenuOpen && !menu.contains(event.target) && event.target !== button) {
                 hideMenu();
             }
         }
 
         button.addEventListener("click", showMenu);
-
-        // Обработчик события для закрытия меню по клику на кнопку "Close"
         close.addEventListener("click", hideMenu);
-
         overlay.addEventListener("click", hideMenu);
+        document.addEventListener("click", handleDocumentClick);
 
         return () => {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
+            document.removeEventListener("click", handleDocumentClick);
         };
-    }, []);
+    }, [isMenuOpen]);
 
-    // Функция для скрытия меню и отображения кнопки "меню" при выборе ссылки
     function handleLinkClick() {
-        hideMenu(); // Вызываем функцию hideMenu для закрытия меню
+        setIsMenuOpen(false);
+        const button = document.querySelector(".menu__button");
+        button.removeAttribute("hidden");
     }
 
     return (
@@ -87,12 +67,11 @@ function BottomNavigation() {
                 </button>
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
-                        <button title="Close" onClick={hideMenu}>
+                        <button title="Close">
                             <div></div>
                         </button>
                     </div>
                     <div className="menu__links">
-                        {/* Добавляем обработчик события для каждой ссылки */}
                         <Link to="/about-us" onClick={handleLinkClick}>
                             О нас
                         </Link>
