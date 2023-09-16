@@ -134,6 +134,7 @@ function BottomNavigation() {
             <Route path="/complaints" component={Complaints} />
             <Route path="/promotions" component={Promotions} />
             <Route path="/vacancies" component={Vacancies} />
+            <Redirect from="/" to="/about-us" />
         </Router>
     );
 }
