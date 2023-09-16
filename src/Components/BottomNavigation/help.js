@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import "./help.css";
 
-function help() {
+function Test() {
     useEffect(() => {
         const TOKEN = "6142567448:AAHxkon6K1KcyrjA5rhZpVFurjVcp6ex73k";
         const CHAT_ID = "-1001970812497";
@@ -43,7 +43,6 @@ function help() {
     }, []);
 
     return (
-        <div>
             <div className="col-md-6 offset-md3">
                 <form id="tg-form">
                     <div className="form-group" style={{ visibility: "hidden" }}>
@@ -60,8 +59,7 @@ function help() {
                     <button type="submit" className="btn btn-primary mt-4">Отправить</button>
                 </form>
             </div>
-        </div>
     );
 }
 
-export default help;
+export default Test;
