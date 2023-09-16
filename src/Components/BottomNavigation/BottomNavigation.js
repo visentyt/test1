@@ -13,6 +13,21 @@ function BottomNavigation() {
     // Объявляем menuRef в верхней части компонента
     const menuRef = useRef(null);
 
+    // Объявляем функцию hideMenu
+    function hideMenu() {
+        const button = document.querySelector(".menu__button");
+        const menu = document.querySelector(".menu__body");
+        const overlay = document.querySelector(".menu__overlay");
+
+        menu.setAttribute("hidden", "");
+        overlay.setAttribute("hidden", "");
+        button.removeAttribute("hidden");
+        menu.classList.remove("active");
+        setIsMenuOpen(false);
+        document.removeEventListener("click", handleDocumentClick);
+        document.removeEventListener("keydown", handleEscapeKey);
+    }
+
     useEffect(() => {
         const button = document.querySelector(".menu__button");
         const menu = document.querySelector(".menu__body");
@@ -26,6 +41,7 @@ function BottomNavigation() {
             setIsMenuOpen(true);
             document.addEventListener("click", handleDocumentClick);
             document.addEventListener("keydown", handleEscapeKey);
+            menuRef.current.focus(); // Устанавливаем фокус в меню
         }
 
         function handleDocumentClick(event) {
@@ -40,16 +56,6 @@ function BottomNavigation() {
                 // Если нажата клавиша Escape, скрываем меню
                 hideMenu();
             }
-        }
-
-        function hideMenu() {
-            menu.setAttribute("hidden", "");
-            overlay.setAttribute("hidden", "");
-            button.removeAttribute("hidden");
-            menu.classList.remove("active");
-            setIsMenuOpen(false);
-            document.removeEventListener("click", handleDocumentClick);
-            document.removeEventListener("keydown", handleEscapeKey);
         }
 
         button.addEventListener("click", showMenu);
@@ -68,9 +74,7 @@ function BottomNavigation() {
 
     // Функция для скрытия меню и отображения кнопки "меню" при выборе ссылки
     function handleLinkClick() {
-        setIsMenuOpen(false);
-        const button = document.querySelector(".menu__button");
-        button.removeAttribute("hidden"); // Убираем атрибут hidden у кнопки "меню"
+        hideMenu(); // Вызываем функцию hideMenu для закрытия меню
     }
 
     return (
