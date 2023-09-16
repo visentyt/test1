@@ -141,7 +141,7 @@
 .menu__header {
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px;
+    padding: 5px 10px;
 }
 .menu__header label div {
     width: 15px;
