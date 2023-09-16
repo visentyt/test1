@@ -79,10 +79,10 @@
     color: var(--light);
     font-size: 16px;
     white-space: nowrap;
-    position: absolute;
-    bottom: 30px;
+    position: fixed; /* Изменили значение на fixed */
+    bottom: 15px; /* Установили отступ в 15px от нижнего края */
     left: 50%;
-    transform: translate3d(var(--x), var(--y), var(--z));
+    transform: translateX(-50%);
     cursor: pointer;
     z-index: 105;
     transition: 0.15s cubic-bezier(0.33, 1, 0.53, 1);
@@ -125,7 +125,6 @@
     box-shadow: 0px -9px 50px -30px black;
     font-family: "Montserrat", sans-serif;
     position: fixed; /* Изменили значение на fixed */
-    bottom: 15px; /* Установили отступ в 15px от нижнего края */
     left: 0; /* Изменили значение на 0 */
     right: 0; /* Добавили значение right для растяжения на всю ширину */
     z-index: 105;
