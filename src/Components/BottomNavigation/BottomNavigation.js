@@ -54,7 +54,10 @@ function BottomNavigation() {
         }
 
         button.addEventListener("click", showMenu);
+
+        // Обработчик события для закрытия меню по клику на кнопку
         close.addEventListener("click", hideMenu);
+
         overlay.addEventListener("click", hideMenu);
 
         return () => {
