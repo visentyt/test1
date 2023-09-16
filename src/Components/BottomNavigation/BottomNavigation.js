@@ -88,7 +88,7 @@ function BottomNavigation() {
                             Вакансии
                         </Link>
                         <Link to="/complaints" onClick={handleLinkClick}>
-                            Контакты
+                            Личный кабинет
                         </Link>
                     </div>
                     <div className="menu__contact">

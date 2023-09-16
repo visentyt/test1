@@ -31,7 +31,7 @@ function Help() {
 
             if (response.ok) {
                 setMessageText("");
-                setMessageAlert("Сообщение отправлено!");
+                setMessageAlert("Ваше сообщение отправленно, ответ вы получите в личные сообщения!");
             } else {
                 console.error("Ошибка при отправке сообщения:", response.status, response.statusText);
             }

@@ -1,7 +1,7 @@
 import React from "react";
 
 function Complaints() {
-    return <div>Complaints</div>;
+    return <div>ЛК</div>;
 }
 
 export default Complaints;
