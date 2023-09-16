@@ -25,7 +25,7 @@ function Help() {
                 },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `Пользователь @${username} написал жалобу: \n Написал жалобу: \n ${messageText}`,
+                    text: `Пользователь @${username} \n Написал жалобу: \n ${messageText}`,
                 }),
             });
 

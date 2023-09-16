@@ -63,11 +63,12 @@ function BottomNavigation() {
     return (
         <Router>
             <div className="hero__wrapper">
-                <button className="menu__button">
-                    <div>
-                        <div></div>
-                    </div>
-                </button>
+                <img
+                    className="menu__button"
+                    src="../../images/MDA.jpg"
+                    alt="Изображение кнопки"
+                    onClick={showMenu}
+                />
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
                         <button title="Close">
