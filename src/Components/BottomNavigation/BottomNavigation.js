@@ -9,7 +9,6 @@ import "./test.css";
 
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isAtTop, setIsAtTop] = useState(true);
 
     useEffect(() => {
         const button = document.querySelector(".menu__button");
@@ -36,31 +35,25 @@ function BottomNavigation() {
         close.addEventListener("click", hideMenu);
         overlay.addEventListener("click", hideMenu);
 
+        // Добавляем обработчик события прокрутки
+        window.addEventListener("scroll", handleScroll);
+
         return () => {
             button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
-        };
-    }, []);
-
-    useEffect(() => {
-        function handleScroll() {
-            const scrollTop = window.scrollY;
-            const scrollThreshold = 50;
-
-            if (scrollTop <= scrollThreshold) {
-                setIsAtTop(true);
-            } else {
-                setIsAtTop(false);
-            }
-        }
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
+    // Функция обработки события прокрутки
+    function handleScroll() {
+        // Проверяем, находится ли страница в верхней части
+        if (window.scrollY > 0) {
+            // Если не в верхней части, скрываем меню
+            setIsMenuOpen(false);
+        }
+    }
 
     return (
         <Router>
@@ -71,7 +64,7 @@ function BottomNavigation() {
                     </div>
                     Меню
                 </button>
-                <section className={`menu__body ${isAtTop ? 'hidden' : ''}`} hidden={!isMenuOpen}>
+                <section className="menu__body" hidden={!isMenuOpen}>
                     <div className="menu__header">
                         <label>
                             <div></div>
