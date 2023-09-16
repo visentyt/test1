@@ -5,6 +5,7 @@ import Menu from "./Menu";
 import Complaints from "./Complaints";
 import Promotions from "./Promotions";
 import Vacancies from "./Vacancies";
+import Help from "./help";
 import "./test.css";
 
 const tele = window.Telegram.WebApp;
@@ -120,7 +121,7 @@ function BottomNavigation() {
                             </svg>
                             <span>Telegram</span>
                         </a>
-                        <a href="#0">
+                        <Link to="/help" onClick={handleLinkClick}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="#000000"
@@ -132,7 +133,7 @@ function BottomNavigation() {
                                 <path d="M0 0h24v24H0z" fill="none"></path>
                             </svg>
                             <span>Жалоба</span>
-                        </a>
+                        </Link>
                     </div>
                 </section>
                 <div className="menu__overlay" hidden={!isMenuOpen}></div>
@@ -143,6 +144,7 @@ function BottomNavigation() {
             <Route path="/complaints" component={Complaints} />
             <Route path="/promotions" component={Promotions} />
             <Route path="/vacancies" component={Vacancies} />
+            <Route path="/help" component={Help} />
             <Redirect from="/" to="/about-us" />
         </Router>
     );

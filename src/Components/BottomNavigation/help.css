@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: var(--tg-theme-bg-color);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: var(--tg-theme-text-color);
+    text-align: center;
+    padding: 5px 6px;
+    text-decoration: none;
+    font-size: 0px;
+}
+
+.navbar a:hover {
+    background: var(--tg-theme-bg-color);
+    color: black;
+}
+
+.main {
+    background-color: var(--tg-theme-bg-color);
+    margin-bottom: -1%;
+}
+
+.my111 {
+    background: white;
+}
+
+.nav {
+    background: white;
+    margin-bottom: -10%;
+
+
+}
+
+.dropdown-menu {
+    font-size: 20px;
+}
+
+.privet {
+    text-align:center;
+    font-size:10px;
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+}
