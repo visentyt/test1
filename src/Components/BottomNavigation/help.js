@@ -6,10 +6,11 @@ function Help() {
     const [messageText, setMessageText] = useState("");
 
     const username = window.username;
+    const [messageAlert, setMessageAlert] = useState(""); // Стейт для текста сообщения
 
     const handleSendMessage = async () => {
         if (!messageText) {
-            alert("Вы ничего не написали.");
+            setMessageAlert("Вы ничего не написали."); // Установка текста сообщения
             return;
         }
 
@@ -31,6 +32,7 @@ function Help() {
             if (response.ok) {
                 setMessageSent(true);
                 setMessageText("");
+                setMessageAlert("Сообщение отправлено!"); // Установка текста сообщения
             } else {
                 console.error("Ошибка при отправке сообщения:", response.status, response.statusText);
             }
@@ -40,7 +42,7 @@ function Help() {
     };
 
     return (
-        <div>
+        <div className="main">
             <div>
                 <label htmlFor="message">Введите текст сообщения:</label>
                 <input
@@ -51,7 +53,7 @@ function Help() {
                 />
             </div>
             <button onClick={handleSendMessage}>Отправить сообщение в Telegram</button>
-            {messageSent && <p>Сообщение отправлено!</p>}
+            {messageAlert && <p>{messageAlert}</p>} {/* Вывод текста сообщения */}
         </div>
     );
 }

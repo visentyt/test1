@@ -5,27 +5,5 @@ body {
 
 .main {
     background-color: var(--tg-theme-bg-color);
-    margin-bottom: -1%;
-}
-
-.my111 {
-    background: white;
-}
-
-.nav {
-    background: white;
-    margin-bottom: -10%;
-
-
-}
-
-.dropdown-menu {
-    font-size: 20px;
-}
-
-.privet {
-    text-align:center;
-    font-size:10px;
-    background-color: var(--tg-theme-bg-color);
     color: var(--tg-theme-text-color);
 }
