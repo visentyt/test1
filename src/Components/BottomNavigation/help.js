@@ -6,13 +6,12 @@ function Help() {
     const [username, setUsername] = useState(""); // Объявляем состояние для имени пользователя
 
     useEffect(() => {
-        // Получаем имя пользователя Telegram при загрузке компонента
         let tg = window.Telegram.WebApp;
         tg.onInit(() => {
             const user = tg.initDataUnsafe.user;
             setUsername(user.username);
         });
-    }, []); // Передаем пустой массив зависимостей, чтобы эффект выполнялся только при монтировании
+    }, []);
 
     const handleSendMessage = async () => {
         try {
