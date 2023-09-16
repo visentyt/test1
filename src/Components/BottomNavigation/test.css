@@ -124,10 +124,8 @@
     border-top-right-radius: 20px;
     box-shadow: 0px -9px 50px -30px black;
     font-family: "Montserrat", sans-serif;
-    bottom: 0px; /* Установили отступ в 15px от нижнего края */
+    bottom: 0px;
     position: fixed; /* Изменили значение на fixed */
-    left: 0; /* Изменили значение на 0 */
-    right: 0; /* Добавили значение right для растяжения на всю ширину */
     z-index: 105;
     transform: translate3d(var(--x), var(--y), var(--z));
     transition: 0.2s cubic-bezier(0.33, 1, 0.53, 1);
