@@ -2,28 +2,6 @@ body {
     margin: 0;
 }
 
-.navbar {
-    overflow: hidden;
-    background-color: var(--tg-theme-bg-color);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-.navbar a {
-    float: left;
-    display: block;
-    color: var(--tg-theme-text-color);
-    text-align: center;
-    padding: 5px 6px;
-    text-decoration: none;
-    font-size: 0px;
-}
-
-.navbar a:hover {
-    background: var(--tg-theme-bg-color);
-    color: black;
-}
 
 .main {
     background-color: var(--tg-theme-bg-color);

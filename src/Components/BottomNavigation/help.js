@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import "./help.css";
 
-function Test() {
+function help() {
     useEffect(() => {
         const TOKEN = "6142567448:AAHxkon6K1KcyrjA5rhZpVFurjVcp6ex73k";
         const CHAT_ID = "-1001970812497";
@@ -64,4 +64,4 @@ function Test() {
     );
 }
 
-export default Test;
+export default help;
