@@ -1,7 +1,8 @@
 import React from "react";
 
 function Complaints() {
-    return <div>{window.firstname || "ЛК"}</div>;
+    const name = window.firstname;
+    return <div>{name || "ЛК"}</div>;
 }
 
 export default Complaints;
