@@ -35,7 +35,8 @@
       const user = tg.initDataUnsafe.user;
       const username = user.username;
       const firstname = user.first_name;
-      const urlprofile = tg.initDataUnsafe.receiver.photo_url;
+      const urlprofile = tg.initData.user.photo_url;
+      console.log(urlprofile);
 
       window.photo = urlprofile
       window.firstname = firstname;
