@@ -9,9 +9,11 @@ function Complaints() {
     return (
         <div>
             <img src={photoUrl} alt="User" />
-            <p>{firstname}</p>
-            <p>{lastname}</p>
-            <p>{username}</p>
+            <div>
+            {firstname}
+            {lastname}
+            {username}
+            </div>
         </div>
     );
 }
