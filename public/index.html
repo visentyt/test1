@@ -32,10 +32,11 @@
     <title>React App</title>
     <script>
       let tg = window.Telegram.WebApp;
+      let initData = window.Telegram.WebApp.initData;
       const user = tg.initDataUnsafe.user;
       const username = user.username;
       const firstname = user.first_name;
-      const urlprofile = user.photo_url;
+      const urlprofile = initData.photo_url;
       console.log(urlprofile);
 
       window.photo = urlprofile
