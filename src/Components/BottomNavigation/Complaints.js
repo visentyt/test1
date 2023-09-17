@@ -1,17 +1,16 @@
 import React from "react";
 
 function Complaints() {
-    const name = window.firstname;
+    const firstname = window.firstname;
     const photoUrl = window.userPhotoUrl;
     const username = window.username;
-    const id = window.id;
+    const lastname = window.lastname;
 
-    console.log("first_name:", name);
-    console.log("username:", username);
     return (
         <div>
             <img src={photoUrl} alt="User" />
-            <p>{name}</p>
+            <p>{firstname}</p>
+            <p>{lastname}</p>
             <p>{username}</p>
             <p>{id}</p>
         </div>
