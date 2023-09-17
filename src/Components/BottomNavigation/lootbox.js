@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./Lootbox.css"; // Создайте файл стилей с именем Lootbox.css
+import "./lootbox.css"; // Создайте файл стилей с именем Lootbox.css
 
 function Lootbox() {
     const [isOpen, setIsOpen] = useState(false);
