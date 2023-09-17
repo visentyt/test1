@@ -40,3 +40,28 @@ button#open-lootbox {
     font-size: 18px;
     cursor: pointer;
 }
+
+.lootbox {
+    /* Добавьте стили для контейнера лутбокса, например, размер и перспективу */
+    perspective: 1000px;
+}
+
+.item {
+    /* Стили для отдельных предметов внутри лутбокса */
+    transform-style: preserve-3d;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    transition: transform 0.1s ease-in-out;
+}
+
+@keyframes spin {
+    /* Анимация вращения */
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(1800deg); /* Увеличьте значение, чтобы увеличить длительность вращения */
+    }
+}
+
