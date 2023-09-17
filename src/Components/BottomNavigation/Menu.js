@@ -5,14 +5,13 @@ import { getData } from "../../db/db";
 import Cart from "../Cart/Cart"; // Импортируйте ваш Cart компонент
 
 const tele = window.Telegram.WebApp;
-const [isCartVisible, setIsCartVisible] = useState(false);
-
 
 function Menu() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
+    const [isCartVisible, setIsCartVisible] = useState(false); // Перемещено сюда
 
     const foods = getData();
 
