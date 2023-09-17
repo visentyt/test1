@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom"; // Уберите 'Redirect' из импорта
 import AboutUs from "./AboutUs";
 import Menu from "./Menu";
 import Complaints from "./Complaints";
