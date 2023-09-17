@@ -1,20 +1,18 @@
+// Cart.js
 import React from "react";
-import "./Cart.css";
-import Button from "../Button/Button";
-function Cart({ cartItems, onCheckout, totalPrice }) {
 
-
-  return (
-    <div className="cart__container">
-      {cartItems.length === 0 ? "Вы ничего не добавили в корзину" : ""}
-      <br /> <span className="">Цена: {totalPrice.toFixed(2)}₽</span>
-      <Button
-        title={`${cartItems.length === 0 ? "Заказать !" : "Оплатить"} `}
-        type={"checkout"}
-        disable={cartItems.length === 0 ? true : false}
-        onClick={onCheckout}
-      />
-    </div>
-  );
+function Cart({ cartItems, onRemove }) {
+    return (
+        <div className="cart">
+            {cartItems.map((item) => (
+                <div key={item.id} className="cart-item">
+                    <span>{item.title} (x{item.quantity})</span>
+                    <button onClick={() => onRemove(item)}>Удалить</button>
+                </div>
+            ))}
+            <button className="checkout-button">Оплатить</button>
+        </div>
+    );
 }
+
 export default Cart;

@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
+import Cart from "../Cart/Cart"; // Импортируйте ваш Cart компонент
 
 const tele = window.Telegram.WebApp;
+const [isCartVisible, setIsCartVisible] = useState(false);
+
 
 function Menu() {
     const [cartItems, setCartItems] = useState([]);
@@ -57,7 +60,9 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
+        tele.MainButton.click = () => setIsCartVisible(true);
     };
+
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -79,6 +84,11 @@ function Menu() {
 
     return (
         <>
+            {isCartVisible ? (
+                <Cart cartItems={cartItems} onRemove={onRemove} />
+            ) : (
+                <>
+
             <div id="menu">
                 <div className="menu-item" onClick={() => showCards(null)}>
                     Все
@@ -102,18 +112,20 @@ function Menu() {
                     Коктейли
                 </div>
             </div>
-            <div className="cards__container">
-                {filteredFoods.map((food) => (
-                    <Card
-                        key={food.id}
-                        food={food}
-                        onAdd={onAdd}
-                        onRemove={onRemove}
-                        cartItems={cartItems}
-                        setCartItems={setCartItems}
-                    />
-                ))}
-            </div>
+                    <div className="cards__container">
+                        {filteredFoods.map((food) => (
+                            <Card
+                                key={food.id}
+                                food={food}
+                                onAdd={onAdd}
+                                onRemove={onRemove}
+                                cartItems={cartItems}
+                                setCartItems={setCartItems}
+                            />
+                        ))}
+                    </div>
+                </>
+            )}
         </>
     );
 }
