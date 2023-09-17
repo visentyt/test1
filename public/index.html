@@ -36,11 +36,6 @@
       const user = tg.initDataUnsafe.user;
       const username = user.username;
       const firstname = user.first_name;
-      if (initData) {
-        const photoUrl = initData.user.photo_url;
-        window.photo = photoUrl; // Используйте переменную photoUrl
-        console.log("photo_url:", photoUrl);
-      }
 
       window.firstname = firstname;
 
