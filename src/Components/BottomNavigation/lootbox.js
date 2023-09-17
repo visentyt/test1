@@ -6,7 +6,8 @@ function Lootbox() {
     const [result, setResult] = useState("");
 
     const items = [
-        { name: "Item 1", image: "item1.png", chance: 0.2 },
+        { name: "Кальян", image: "../../images/hooka1.png", chance: 0.2 },
+        { name: "Кола", image: "../../images/coca.png", chance: 0.2 },
         // Добавьте другие предметы здесь
     ];
 
@@ -31,7 +32,6 @@ function Lootbox() {
 
     return (
         <div>
-            <div>Promotions</div>
             {isOpen ? (
                 <div>
                     <div>Результат: {result}</div>
