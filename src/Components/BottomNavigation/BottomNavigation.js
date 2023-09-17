@@ -5,6 +5,7 @@ import Menu from "./Menu";
 import Complaints from "./Complaints";
 import Promotions from "./Promotions";
 import Vacancies from "./Vacancies";
+import Lootbox from "./lootbox";
 import Help from "./help";
 import "./test.css";
 
@@ -81,6 +82,9 @@ function BottomNavigation() {
                         <Link to="/menu" onClick={handleLinkClick}>
                             Меню
                         </Link>
+                        <Link to="/Lootbox" onClick={handleLinkClick}>
+                            Призы
+                        </Link>
                         <Link to="/promotions" onClick={handleLinkClick}>
                             Акции
                         </Link>
@@ -145,6 +149,7 @@ function BottomNavigation() {
             <Route path="/promotions" component={Promotions} />
             <Route path="/vacancies" component={Vacancies} />
             <Route path="/help" component={Help} />
+            <Route path="/Lootbox" component={Lootbox} />
             <Redirect from="/" to="/about-us" />
         </Router>
     );
