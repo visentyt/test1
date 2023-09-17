@@ -10,7 +10,6 @@ function Menu() {
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isCartOpen, setIsCartOpen] = useState(false); // Состояние корзины
 
     const foods = getData();
 
@@ -58,8 +57,6 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        // Открываем корзину
-        setIsCartOpen(true);
     };
 
     const filterFoodsByCategory = (category) => {
@@ -117,22 +114,9 @@ function Menu() {
                     />
                 ))}
             </div>
-            {/* Отображение корзины */}
-            {isCartOpen && (
-                <div className="cart">
-                    <h2>Корзина</h2>
-                    {cartItems.map((item) => (
-                        <div key={item.id}>
-                            <span>{item.title}</span>
-                            <span>Количество: {item.quantity}</span>
-                        </div>
-                    ))}
-                    <button onClick={() => setIsCartOpen(false)}>Закрыть корзину</button>
-                    <button>Оплатить</button>
-                </div>
-            )}
         </>
     );
 }
+
 
 export default Menu;

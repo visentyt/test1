@@ -150,7 +150,7 @@ function BottomNavigation() {
             <Route path="/vacancies" component={Vacancies} />
             <Route path="/help" component={Help} />
             <Route path="/Lootbox" component={Lootbox} />
-            <Redirect from="/" to="/about-us" />
+            <Route exact path="/" component={AboutUs} />
         </Router>
     );
 }
