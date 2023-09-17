@@ -1,0 +1,42 @@
+.lootbox-container {
+    text-align: center;
+}
+
+.lootbox {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    perspective: 1000px;
+}
+
+.item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 3s ease-in-out;
+}
+
+.item img {
+    width: 100%;
+    height: 100%;
+}
+
+.item-name {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+button#open-lootbox {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
