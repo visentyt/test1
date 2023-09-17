@@ -14,16 +14,19 @@ function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 
+    function showMenu() {
+        const menu = menuRef.current;
+        const overlay = document.querySelector(".menu__overlay");
+
+        menu.classList.add("active");
+        overlay.removeAttribute("hidden");
+        setIsMenuOpen(true);
+    }
+
     useEffect(() => {
         const menu = menuRef.current;
         const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
-
-        function showMenu() {
-            menu.classList.add("active");
-            overlay.removeAttribute("hidden");
-            setIsMenuOpen(true);
-        }
 
         function hideMenu() {
             menu.setAttribute("hidden", "");
