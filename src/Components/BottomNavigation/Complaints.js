@@ -6,6 +6,8 @@ function Complaints() {
     const username = window.username;
     const id = window.id;
 
+    console.log("first_name:", name);
+    console.log("username:", username);
     return (
         <div>
             <img src={photoUrl} alt="User" />

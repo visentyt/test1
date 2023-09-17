@@ -31,15 +31,28 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <title>React App</title>
     <script>
-      let tg = window.Telegram.WebApp;
-      const user = tg.initDataUnsafe.user;
-      const username = user.username;
+      let tg = window.Telegram && window.Telegram.WebApp;
 
-      // Создаем глобальную переменную username и присваиваем ей значение
-      window.username = username;
+      if (tg && tg.initDataUnsafe) {
+        const { first_name, last_name, username } = tg.initDataUnsafe.user;
+        console.log("first_name:", first_name);
+        console.log("last_name:", last_name);
+        console.log("username:", username);
+        const userPhotoUrl = user.photo_url; // используем правильное свойство
 
-      tg.expand();
+        // Создаем глобальные переменные
+        window.username = username;
+        window.firstname = first_name;
+        window.lastname = last_name;
+        window.userPhotoUrl = userPhotoUrl;
+
+        if (typeof tg.expand === "function") {
+          tg.expand();
+        }
+      }
     </script>
+
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
