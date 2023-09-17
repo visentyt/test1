@@ -3,11 +3,13 @@ import React from "react";
 function Complaints() {
     const name = window.firstname;
     const photoUrl = window.userPhotoUrl;
+    const username = window.username;
 
     return (
         <div>
-            <img src={photoUrl || "default_image_url.jpg"} alt="User" />
-            {name || "ЛК"}
+            <img src={photoUrl} alt="User" />
+            ${name}
+            ${username}
         </div>
     );
 }
