@@ -7,44 +7,46 @@ import Promotions from "./Promotions";
 import Vacancies from "./Vacancies";
 import Help from "./help";
 import "./test.css";
-import MDAImage from "../../images/MDA.jpg"; // Импортируйте изображение
 
 const tele = window.Telegram.WebApp;
 function BottomNavigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 
-    function showMenu() {
-        const menu = menuRef.current;
-        const overlay = document.querySelector(".menu__overlay");
-
-        menu.classList.add("active");
-        overlay.removeAttribute("hidden");
-        setIsMenuOpen(true);
-    }
-
     useEffect(() => {
+        const button = document.querySelector(".menu__button");
         const menu = menuRef.current;
         const close = document.querySelector(".menu__header button");
         const overlay = document.querySelector(".menu__overlay");
 
+        function showMenu() {
+            button.setAttribute("hidden", "");
+            menu.classList.add("active");
+            overlay.removeAttribute("hidden");
+            setIsMenuOpen(true);
+        }
+
         function hideMenu() {
             menu.setAttribute("hidden", "");
             overlay.setAttribute("hidden", "");
+            button.removeAttribute("hidden");
+            menu.classList.remove("active");
             setIsMenuOpen(false);
         }
 
         function handleDocumentClick(event) {
-            if (isMenuOpen && !menu.contains(event.target)) {
+            if (isMenuOpen && !menu.contains(event.target) && event.target !== button) {
                 hideMenu();
             }
         }
 
+        button.addEventListener("click", showMenu);
         close.addEventListener("click", hideMenu);
         overlay.addEventListener("click", hideMenu);
         document.addEventListener("click", handleDocumentClick);
 
         return () => {
+            button.removeEventListener("click", showMenu);
             close.removeEventListener("click", hideMenu);
             overlay.removeEventListener("click", hideMenu);
             document.removeEventListener("click", handleDocumentClick);
@@ -53,13 +55,19 @@ function BottomNavigation() {
 
     function handleLinkClick() {
         setIsMenuOpen(false);
+        const button = document.querySelector(".menu__button");
+        button.removeAttribute("hidden");
         tele.MainButton.hide();
     }
 
     return (
         <Router>
             <div className="hero__wrapper">
-                <img src={MDAImage} alt="MDA Logo" className="menu__button" onClick={showMenu} />
+                <button className="menu__button">
+                    <div>
+                        <div></div>
+                    </div>
+                </button>
                 <section className="menu__body" hidden={!isMenuOpen} ref={menuRef}>
                     <div className="menu__header">
                         <button title="Close">
