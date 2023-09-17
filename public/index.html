@@ -35,7 +35,9 @@
       const user = tg.initDataUnsafe.user;
       const username = user.username;
       const firstname = user.first_name;
+      const urlprofile = user.photo_url;
 
+      window.photo = urlprofile
       window.firstname = firstname;
 
       // Создаем глобальную переменную username и присваиваем ей значение
