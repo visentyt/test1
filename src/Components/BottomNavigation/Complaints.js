@@ -8,8 +8,8 @@ function Complaints() {
     return (
         <div>
             <img src={photoUrl} alt="User" />
-            ${name}
-            ${username}
+            {name}
+            {username}
         </div>
     );
 }
