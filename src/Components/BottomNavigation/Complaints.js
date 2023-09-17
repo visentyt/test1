@@ -12,7 +12,6 @@ function Complaints() {
             <p>{firstname}</p>
             <p>{lastname}</p>
             <p>{username}</p>
-            <p>{id}</p>
         </div>
     );
 }
