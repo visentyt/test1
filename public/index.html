@@ -38,8 +38,7 @@
       const firstname = user.first_name;
       if (initData) {
         const photoUrl = initData.user.photo_url;
-        const phototg = photoUrl;
-        window.photo = phototg
+        window.photo = photoUrl; // Используйте переменную photoUrl
         console.log("photo_url:", photoUrl);
       }
 
@@ -50,6 +49,7 @@
 
       tg.expand();
     </script>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
