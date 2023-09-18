@@ -101,8 +101,13 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        tele.MainButton.onClick(handlePayment);
+        if (updatedTotalPrice > 0) {
+            tele.MainButton.onClick(handlePayment);
+        } else {
+            tele.MainButton.onClick(null); // или другое действие, которое вы хотите выполнить, если цена равна нулю
+        }
     };
+
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
