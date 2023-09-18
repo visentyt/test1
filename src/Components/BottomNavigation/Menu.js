@@ -13,6 +13,19 @@ function Menu() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [isCartVisible, setIsCartVisible] = useState(false);
 
+    const foods = getData();
+
+    const updateButtonLabel = useCallback((updatedTotalPrice) => {
+        if (isCartVisible) {
+            tele.MainButton.text = "Оплатить";
+        } else {
+            tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
+            tele.MainButton.show();
+            tele.MainButton.textColor = "#ffffff";
+            tele.MainButton.color = "#A9A9A9";
+        }
+    }, [isCartVisible]);
+
     const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
             setIsCartVisible(false);
@@ -23,7 +36,6 @@ function Menu() {
         }
     }, [isCartVisible, totalPrice, updateButtonLabel]);
 
-    const foods = getData();
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
