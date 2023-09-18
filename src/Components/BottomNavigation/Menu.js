@@ -28,7 +28,7 @@ function Menu() {
 
     const handlePayment = useCallback(() => {
         const provider_token = "381764678:TEST:66150";
-        const chat_id = "6570877120";
+        const chat_id = "-1001970812497";
         const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your actual bot token
         const title = "Medusa";
         const description = "123 Test";
