@@ -36,14 +36,16 @@ function Menu() {
         const chat_id = "6570877120"; // ID чата с клиентом
         const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8";
         const title = "Medusa";
+        const currency = "RUB";
         const description = "123 Test";
         const payload = `order_id_${Date.now()}`;
         const prices = [
-            { label: "Product Price", amount: totalPrice * 100 } // Цена в копейках
+            { label: "Product Price", amount: totalPrice * 100, currency: currency }
         ];
 
         // Формирование URL
         const apiUrl = `https://api.telegram.org/bot${token}/sendInvoice?chat_id=${chat_id}&title=${title}&description=${description}&payload=${payload}&provider_token=${provider_token}&prices=${JSON.stringify(prices)}`;
+
 
         fetch(apiUrl, {
             method: "POST"
