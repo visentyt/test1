@@ -108,9 +108,10 @@ function Menu() {
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
 
-        // Call sendInvoiceToTelegram with the updated total price
-        sendInvoiceToTelegram(true);
+        // Вызываем функцию sendInvoiceToTelegram с передачей ей обновленной цены
+        sendInvoiceToTelegram(updatedTotalPrice);
     };
+
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
