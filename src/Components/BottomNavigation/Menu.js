@@ -68,7 +68,7 @@ function Menu() {
             tele.MainButton.text = "Оплатить";
             handlePayment(); // Добавлен вызов функции оплаты
         }
-    }, [isCartVisible, totalPrice, updateButtonLabel]);
+    }, [isCartVisible, totalPrice, updateButtonLabel, handlePayment]);
 
 
     const onAdd = (food) => {
