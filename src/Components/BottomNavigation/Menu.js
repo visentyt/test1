@@ -30,6 +30,7 @@ function Menu() {
 
     // Функция для создания и отправки счета
     const handlePayment = useCallback(() => {
+        console.log('totalPrice внутри handlePayment:', totalPrice); // Добавлено логирование
         if (totalPrice <= 0) {
             console.error('Общая стоимость должна быть больше нуля.');
             return;
