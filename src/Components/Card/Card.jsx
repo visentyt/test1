@@ -52,3 +52,5 @@ function Card({ food, onAdd, onRemove, cartItems, setCartItems, shouldSendInvoic
 }
 
 export default Card;
+
+
