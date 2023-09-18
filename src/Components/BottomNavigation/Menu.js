@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
@@ -13,17 +13,15 @@ function Menu() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [isCartVisible, setIsCartVisible] = useState(false);
 
-    const handleMainButtonClick = () => {
+    const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
-            // Если корзина уже отображается, возвращаемся в меню
             setIsCartVisible(false);
             updateButtonLabel(totalPrice);
         } else {
-            // Показываем корзину
             setIsCartVisible(true);
             tele.MainButton.text = "Оплатить";
         }
-    };
+    }, [isCartVisible, totalPrice, updateButtonLabel]);
 
     const foods = getData();
 
@@ -57,18 +55,7 @@ function Menu() {
         }
     };
 
-    useEffect(() => {
-        tele.ready();
-        tele.MainButton.onClick(handleMainButtonClick);
-        updateButtonLabel(totalPrice);
-    }, [totalPrice]);
-
-    const updateTotalPrice = (priceDifference) => {
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(totalPrice + priceDifference);
-    };
-
-    const updateButtonLabel = (updatedTotalPrice) => {
+    const updateButtonLabel = useCallback((updatedTotalPrice) => {
         if (isCartVisible) {
             tele.MainButton.text = "Оплатить";
         } else {
@@ -77,6 +64,17 @@ function Menu() {
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         }
+    }, [isCartVisible]);
+
+    useEffect(() => {
+        tele.ready();
+        tele.MainButton.onClick(handleMainButtonClick);
+        updateButtonLabel(totalPrice);
+    }, [totalPrice, handleMainButtonClick, updateButtonLabel]);
+
+    const updateTotalPrice = (priceDifference) => {
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+        updateButtonLabel(totalPrice + priceDifference);
     };
 
     const filterFoodsByCategory = (category) => {
