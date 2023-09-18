@@ -3,7 +3,7 @@ import '../../App.css';
 import Card from '../Card/Card';
 import { getData } from "../../db/db";
 
-const tele = window.Telegram;
+const tele = window.Telegram.WebApp;
 
 function Menu() {
     const [cartItems, setCartItems] = useState([]);
@@ -26,7 +26,7 @@ function Menu() {
             const response = JSON.parse(xhr.response);
 
             // Открываете инвоис-линк в приложении
-            tele.WebApp.openInvoice(response.result);
+            tele.openInvoice(response.result);
         };
     }, [totalPrice]);
 
