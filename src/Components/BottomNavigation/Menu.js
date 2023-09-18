@@ -52,7 +52,7 @@ function Menu() {
             .catch(error => {
                 console.error("Ошибка:", error);
             });
-    };
+    });
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
