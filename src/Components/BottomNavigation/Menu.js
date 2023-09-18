@@ -104,9 +104,9 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        tele.MainButton.onClick(() => {
-            setShouldSendInvoice(true); // Установите shouldSendInvoice в true при нажатии кнопки
+        tele.MainButton.onClick = () => {
             sendInvoiceToTelegram(updatedTotalPrice);
+        };
         });
     };
 
