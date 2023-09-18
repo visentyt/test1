@@ -107,8 +107,8 @@ function Menu() {
         tele.MainButton.onClick = () => {
             sendInvoiceToTelegram(updatedTotalPrice);
         };
-        });
     };
+
 
 
 
