@@ -31,7 +31,7 @@ function Menu() {
         const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на ваш реальный токен бота
         const title = "Medusa";
         const description = "123 Test";
-        const payload = `order_id_${Date.now()}`;
+        const payload = `Заказ_номер_${Date.now()}`;
         const currency = "RUB"; // Код валюты
         const calculatedTotalPrice = totalPrice > 0 ? totalPrice : 0; // Используйте calculatedTotalPrice здесь
 
