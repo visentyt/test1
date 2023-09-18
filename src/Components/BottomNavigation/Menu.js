@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
@@ -13,54 +13,45 @@ function Menu() {
 
     const foods = getData();
 
-    const handlePayment = useCallback(() => {
-        if (totalPrice <= 0) {
-            console.error('Ошибка: Нельзя отправить счет с неположительной ценой.');
-            return;
-        }
+    const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
+    const CHAT_ID = '-1001970812497'; // Замените на ID чата пользователя
 
-        const provider_token = "381764678:TEST:66150";
-        const chat_id = "-1001970812497";
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8";
-        const title = "Medusa";
-        const description = "123 Test";
-        const payload = `order_id_${Date.now()}`;
-        const currency = "RUB";
-        const calculatedTotalPrice = totalPrice > 0 ? totalPrice : 0;
-
-        const prices = [
-            { label: "Цена продукта", amount: calculatedTotalPrice * 100, currency: currency }
-        ];
-
-        const payloadData = {
-            chat_id,
-            title,
-            description,
-            payload,
-            provider_token,
-            prices: JSON.stringify(prices),
-            currency: currency
+    const initiatePayment = () => {
+        const invoiceData = {
+            chat_id: CHAT_ID,
+            title: "Оплата заказа",
+            description: "Описание вашего заказа",
+            payload: "Заказ номер 1",
+            provider_token: "381764678:TEST:66150", // Токен, который выдал @BotFather
+            start_parameter: "payment",
+            currency: "RUB",
+            prices: [{
+                label: "Общая стоимость",
+                amount: totalPrice * 100 // В копейках
+            }]
+            // ... добавьте другие параметры, если это необходимо
         };
 
-        fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
-            method: "POST",
+        fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendInvoice`, {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payloadData),
+            body: JSON.stringify(invoiceData)
         })
             .then(response => response.json())
             .then(data => {
+                // Обработка ответа
                 if (data.ok) {
-                    // Запрос на оплату успешно выполнен
+                    console.log("Счет отправлен!");
                 } else {
-                    console.error('Ошибка отправки счета:', data.description);
+                    console.error("Ошибка при отправке счета:", data.description);
                 }
             })
-            .catch(err => {
-                console.error('Ошибка отправки счета:', err);
+            .catch(error => {
+                console.error("Ошибка:", error);
             });
-    }, [totalPrice]);
+    };
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -106,11 +97,7 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        if (updatedTotalPrice > 0) {
-            tele.MainButton.onClick(handlePayment);
-        } else {
-            tele.MainButton.onClick(null); // или другое действие, которое вы хотите выполнить, если цена равна нулю
-        }
+        tele.MainButton.onClick = initiatePayment; // предположительно так, но API может отличаться
     };
 
 
@@ -135,13 +122,27 @@ function Menu() {
     return (
         <>
             <div id="menu">
-                <div className="menu-item" onClick={() => showCards(null)}>Все</div>
-                <div className="menu-item" onClick={() => showCards("hookah")}>Кальян</div>
-                <div className="menu-item" onClick={() => showCards("beer")}>Пиво</div>
-                <div className="menu-item" onClick={() => showCards("shot")}>Шоты</div>
-                <div className="menu-item" onClick={() => showCards("drink")}>Напитки</div>
-                <div className="menu-item" onClick={() => showCards("eat")}>Закуски</div>
-                <div className="menu-item" onClick={() => showCards("kokteil")}>Коктейли</div>
+                <div className="menu-item" onClick={() => showCards(null)}>
+                    Все
+                </div>
+                <div className="menu-item" onClick={() => showCards("hookah")}>
+                    Кальян
+                </div>
+                <div className="menu-item" onClick={() => showCards("beer")}>
+                    Пиво
+                </div>
+                <div className="menu-item" onClick={() => showCards("shot")}>
+                    Шоты
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("eat")}>
+                    Закуски
+                </div>
+                <div className="menu-item" onClick={() => showCards("kokteil")}>
+                    Коктейли
+                </div>
             </div>
             <div className="cards__container">
                 {filteredFoods.map((food) => (
@@ -158,5 +159,6 @@ function Menu() {
         </>
     );
 }
+
 
 export default Menu;
