@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
-import Cart from "../Cart/Cart";
+
 
 const tele = window.Telegram.WebApp;
 
@@ -15,7 +15,7 @@ function Menu() {
 
     const foods = getData();
 
-    
+
     const updateButtonLabel = useCallback((updatedTotalPrice) => {
         if (isCartVisible) {
             tele.MainButton.text = "Оплатить";
@@ -34,6 +34,7 @@ function Menu() {
 
         const provider_token = "381764678:TEST:66150"; // полученный токен от @BotFather
         const chat_id = "6570877120"; // ID чата с клиентом
+        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8";
         const title = "Medusa";
         const description = "123 Test";
         const payload = `order_id_${Date.now()}`;
@@ -42,7 +43,7 @@ function Menu() {
         ];
 
         // Формирование URL
-        const apiUrl = `https://api.telegram.org/bot6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8/sendInvoice?chat_id=${chat_id}&title=${title}&description=${description}&payload=${payload}&provider_token=${provider_token}&prices=${JSON.stringify(prices)}`;
+        const apiUrl = `https://api.telegram.org/bot${token}/sendInvoice?chat_id=${chat_id}&title=${title}&description=${description}&payload=${payload}&provider_token=${provider_token}&prices=${JSON.stringify(prices)}`;
 
         fetch(apiUrl, {
             method: "POST"
@@ -134,12 +135,6 @@ function Menu() {
 
     return (
         <>
-            {isCartVisible ? (
-                <>
-                    <Cart cartItems={cartItems} onRemove={onRemove} />
-                    <button onClick={() => setIsCartVisible(false)}>Назад в меню</button>
-                </>
-            ) : (
                 <>
                     <div id="menu">
                         <div className="menu-item" onClick={() => showCards(null)}>
@@ -177,7 +172,6 @@ function Menu() {
                         ))}
                     </div>
                 </>
-            )}
         </>
     );
 }
