@@ -11,7 +11,7 @@ function Menu() {
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
     const [orderCount, setOrderCount] = useState(1); // Added orderCount state
-    const [shouldSendInvoice, setShouldSendInvoice] = useState(false); // New state
+    const [shouldSendInvoice] = useState(false); // New state
 
     const foods = getData();
 
