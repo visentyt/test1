@@ -14,6 +14,11 @@ function Menu() {
     const foods = getData();
 
     const handlePayment = useCallback(() => {
+        if (totalPrice <= 0) {
+            console.error('Ошибка: Нельзя отправить счет с неположительной ценой.');
+            return;
+        }
+
         const provider_token = "381764678:TEST:66150";
         const chat_id = "-1001970812497";
         const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8";
@@ -24,7 +29,7 @@ function Menu() {
         const calculatedTotalPrice = totalPrice > 0 ? totalPrice : 0;
 
         const prices = [
-            { label: "Product Price", amount: calculatedTotalPrice * 100, currency: currency }
+            { label: "Цена продукта", amount: calculatedTotalPrice * 100, currency: currency }
         ];
 
         const payloadData = {
