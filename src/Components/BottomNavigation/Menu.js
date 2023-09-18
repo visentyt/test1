@@ -16,55 +16,44 @@ function Menu() {
     const foods = getData();
 
 
-    const updateButtonLabel = useCallback((updatedTotalPrice) => {
-        if (isCartVisible) {
-            tele.MainButton.text = "Оплатить";
-        } else {
-            tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
-            tele.MainButton.show();
-            tele.MainButton.textColor = "#ffffff";
-            tele.MainButton.color = "#A9A9A9";
-        }
-    }, [isCartVisible]);
-
     const handlePayment = useCallback(() => {
-
-        // Здесь вызываем функцию sendInvoice для отправки счета
-        // На основе вашего описания и примеров выше:
-
-        const provider_token = "381764678:TEST:66150"; // полученный токен от @BotFather
-        const chat_id = "6570877120"; // ID чата с клиентом
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8";
+        const provider_token = "381764678:TEST:66150";
+        const chat_id = "6570877120";
+        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your actual bot token
         const title = "Medusa";
         const description = "123 Test";
         const payload = `order_id_${Date.now()}`;
-        const currency = "RUB";
+        const currency = "RUB"; // Currency code
         const prices = [
             { label: "Product Price", amount: totalPrice * 100, currency: currency }
         ];
-console.log(prices);
-        console.log(payload);
-        console.log(currency);
-        console.log(totalPrice);
 
-        // Формирование URL
-        const apiUrl = `https://api.telegram.org/bot${token}/sendInvoice?chat_id=${chat_id}&title=${title}&description=${description}&payload=${payload}&provider_token=${provider_token}&prices=${JSON.stringify(prices)}`;
+        const payloadData = {
+            chat_id,
+            title,
+            description,
+            payload,
+            provider_token,
+            prices: JSON.stringify(prices) // Convert prices array to JSON string
+        };
 
-        console.log(apiUrl);
-        fetch(apiUrl, {
-            method: "POST"
+        fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payloadData),
         })
             .then(response => response.json())
             .then(data => {
-                // Обработка ответа здесь
                 if (data.ok) {
-                    // Запрос успешно выполнен
+                    // Payment request successful
                 } else {
-                    console.error('Ошибка при отправке инвойса:', data.description);
+                    console.error('Error sending invoice:', data.description);
                 }
             })
             .catch(err => {
-                console.error('Ошибка при отправке инвойса:', err);
+                console.error('Error sending invoice:', err);
             });
     }, [totalPrice]);
 
