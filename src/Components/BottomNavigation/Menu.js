@@ -34,7 +34,7 @@ function Menu() {
             }]
             // ... добавьте другие параметры, если это необходимо
         };
-
+        console.log('Sending invoice with total price:', totalPrice);
         fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendInvoice`, {
             method: 'POST',
             headers: {
@@ -91,8 +91,10 @@ function Menu() {
     }, []);
 
     const updateTotalPrice = (priceDifference) => {
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(totalPrice + priceDifference);
+        const newTotalPrice = totalPrice + priceDifference;
+        setTotalPrice(newTotalPrice);
+        updateButtonLabel(newTotalPrice);
+
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
