@@ -15,11 +15,11 @@ function Menu() {
     const foods = getData();
 
     const initiatePayment = useCallback(() => {
-        Axios.post('https://medusakhabarovsk.ru/createInvoiceLink', {
+        const chatId = '-1001970812497'; // Замените на действительный chat_id
+        Axios.post('https://ваш_сервер/createInvoiceLink', {
             title: 'Оплата заказа',
             amount: totalPrice * 100,
-            description: 'Описание вашего заказа здесь',
-            payload: 'Дополнительные данные', // Замените на свои дополнительные данные
+            chat_id: chatId, // Передайте действительный chat_id
         })
             .then((response) => {
                 const invoiceLink = response.data.result;
