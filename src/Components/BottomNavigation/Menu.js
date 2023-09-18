@@ -93,25 +93,18 @@ function Menu() {
     const updateTotalPrice = (priceDifference) => {
         const newTotalPrice = totalPrice + priceDifference;
         setTotalPrice(newTotalPrice);
-        updateButtonLabel(newTotalPrice);
-
     };
 
-    const updateButtonLabel = (updatedTotalPrice) => {
-        tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
+
+    useEffect(() => {
+        tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
 
-        tele.MainButton.onClick(() => {
-            if (paymentInProgress.current) {
-                return;
-            }
-            paymentInProgress.current = true;
-            initiatePayment(updatedTotalPrice);
-            paymentInProgress.current = false;
-        });
-    };
+        tele.MainButton.onClick(() => initiatePayment(totalPrice));
+    }, [totalPrice]);
+
 
 
 
