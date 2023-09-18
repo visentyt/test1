@@ -93,7 +93,6 @@ function Menu() {
 
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(totalPrice + priceDifference);
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
@@ -102,8 +101,10 @@ function Menu() {
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
 
-        // Call sendInvoiceToTelegram with the updated total price
-        sendInvoiceToTelegram(updatedTotalPrice);
+        // Call sendInvoiceToTelegram with the updated total price when the button is clicked
+        tele.MainButton.onClick = () => {
+            sendInvoiceToTelegram(updatedTotalPrice);
+        };
     };
 
     const filterFoodsByCategory = (category) => {
