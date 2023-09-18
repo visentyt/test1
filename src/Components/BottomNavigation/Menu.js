@@ -67,17 +67,6 @@ function Menu() {
         }
     };
 
-    const updateButtonLabel = useCallback((updatedTotalPrice) => {
-        if (isCartVisible) {
-            tele.MainButton.text = "Оплатить";
-        } else {
-            tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
-            tele.MainButton.show();
-            tele.MainButton.textColor = "#ffffff";
-            tele.MainButton.color = "#A9A9A9";
-        }
-    }, [isCartVisible]);
-
     useEffect(() => {
         tele.ready();
         tele.MainButton.onClick(handleMainButtonClick);
