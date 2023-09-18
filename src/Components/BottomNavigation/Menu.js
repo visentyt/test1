@@ -132,12 +132,14 @@ function Menu() {
     // Функция для обновления общей стоимости
     // Функция для обновления общей стоимости
     const updateTotalPrice = (priceDifference) => {
-        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        // Обновляем общую стоимость перед вызовом updateButtonLabel
-        const updatedTotalPrice = totalPrice + priceDifference;
-        updateButtonLabel(updatedTotalPrice);
+        setTotalPrice((prevTotalPrice) => {
+            const updatedTotalPrice = prevTotalPrice + priceDifference;
+            updateButtonLabel(updatedTotalPrice);
+            return updatedTotalPrice;
+        });
         console.log(priceDifference);
     };
+
 
 
     // Функция для фильтрации продуктов по категории
