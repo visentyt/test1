@@ -13,6 +13,8 @@ function Menu() {
 
     const foods = getData();
 
+
+
     const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
     const CHAT_ID = '-1001970812497'; // Замените на ID чата пользователя
 
@@ -97,8 +99,9 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        tele.MainButton.onClick = initiatePayment; // предположительно так, но API может отличаться
+        tele.MainButton.onClick(initiatePayment);
     };
+
 
 
     const filterFoodsByCategory = (category) => {
