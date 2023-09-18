@@ -15,7 +15,7 @@ function Menu() {
     const foods = getData();
 
     const initiatePayment = useCallback(() => {
-        const chatId = '1008837582'; // Замените на действительный chat_id
+        const chatId = '6570877120'; // Замените на действительный chat_id
 
         Axios.post('https://medusakhabarovsk.ru/createInvoiceLink', {
             title: 'Оплата заказа',
