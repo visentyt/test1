@@ -16,6 +16,7 @@ function Menu() {
 
     const initiatePayment = useCallback(() => {
         const chatId = '-1001970812497'; // Замените на действительный chat_id
+
         Axios.post('https://medusakhabarovsk.ru/createInvoiceLink', {
             title: 'Оплата заказа',
             amount: totalPrice * 100,
@@ -23,12 +24,15 @@ function Menu() {
         })
             .then((response) => {
                 const invoiceLink = response.data.result;
+console.log(invoiceLink);
+                // Открываете инвойс-линк в приложении
                 tele.openInvoice(invoiceLink);
             })
             .catch((error) => {
-                console.error('Ошибка при создании инвоиса:', error);
+                console.error('Ошибка при создании инвойса:', error);
             });
     }, [totalPrice]);
+
 
 
     const onAdd = (food) => {
