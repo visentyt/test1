@@ -130,10 +130,14 @@ function Menu() {
     }, [totalPrice, handleMainButtonClick, updateButtonLabel]);
 
     // Функция для обновления общей стоимости
+    // Функция для обновления общей стоимости
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
-        updateButtonLabel(totalPrice + priceDifference);
+        // Обновляем общую стоимость перед вызовом updateButtonLabel
+        const updatedTotalPrice = totalPrice + priceDifference;
+        updateButtonLabel(updatedTotalPrice);
     };
+
 
     // Функция для фильтрации продуктов по категории
     const filterFoodsByCategory = (category) => {
