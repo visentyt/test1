@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
@@ -18,7 +18,7 @@ function Menu() {
     const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
     const CHAT_ID = '-1001970812497'; // Замените на ID чата пользователя
 
-    const initiatePayment = () => {
+    const initiatePayment = useCallback(() => {
         const invoiceData = {
             chat_id: CHAT_ID,
             title: "Оплата заказа",
@@ -104,7 +104,8 @@ function Menu() {
 
     useEffect(() => {
         tele.MainButton.onClick(() => initiatePayment());
-    }, []);
+    }, [initiatePayment]);
+
 
 
 
