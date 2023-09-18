@@ -3,7 +3,6 @@ import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
 
-
 const tele = window.Telegram.WebApp;
 
 function Menu() {
@@ -29,17 +28,16 @@ function Menu() {
     const handlePayment = useCallback(() => {
         const provider_token = "381764678:TEST:66150";
         const chat_id = "-1001970812497";
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your actual bot token
+        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на ваш реальный токен бота
         const title = "Medusa";
         const description = "123 Test";
         const payload = `order_id_${Date.now()}`;
-        const currency = "RUB"; // Currency code
-        const totalPrice = Math.max(0, totalPrice); // Используйте totalPrice здесь
+        const currency = "RUB"; // Код валюты
+        const calculatedTotalPrice = Math.max(0, totalPrice); // Используйте calculatedTotalPrice здесь
 
         const prices = [
-            { label: "Product Price", amount: totalPrice * 100, currency: currency }
+            { label: "Product Price", amount: calculatedTotalPrice * 100, currency: currency }
         ];
-
 
         const payloadData = {
             chat_id,
@@ -47,10 +45,9 @@ function Menu() {
             description,
             payload,
             provider_token,
-            prices: JSON.stringify(prices), // Convert prices array to JSON string
-            currency: currency // Add the currency parameter
+            prices: JSON.stringify(prices), // Преобразуйте массив цен в строку JSON
+            currency: currency // Добавьте параметр валюты
         };
-
 
         fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
             method: "POST",
@@ -62,15 +59,15 @@ function Menu() {
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    // Payment request successful
+                    // Запрос на оплату успешно выполнен
                 } else {
-                    console.error('Error sending invoice:', data.description);
+                    console.error('Ошибка отправки счета:', data.description);
                 }
             })
             .catch(err => {
-                console.error('Error sending invoice:', err);
+                console.error('Ошибка отправки счета:', err);
             });
-    }, [updateButtonLabel, handlePayment]);
+    }, [totalPrice]);
 
     const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
@@ -82,7 +79,6 @@ function Menu() {
             handlePayment();
         }
     }, [isCartVisible, totalPrice, updateButtonLabel, handlePayment]);
-
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
@@ -145,43 +141,41 @@ function Menu() {
 
     return (
         <>
-                <>
-                    <div id="menu">
-                        <div className="menu-item" onClick={() => showCards(null)}>
-                            Все
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("hookah")}>
-                            Кальян
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("beer")}>
-                            Пиво
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("shot")}>
-                            Шоты
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("eat")}>
-                            Закуски
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("kokteil")}>
-                            Коктейли
-                        </div>
-                    </div>
-                    <div className="cards__container">
-                        {filteredFoods.map((food) => (
-                            <Card
-                                key={food.id}
-                                food={food}
-                                onAdd={onAdd}
-                                onRemove={onRemove}
-                                cartItems={cartItems}
-                                setCartItems={setCartItems}
-                            />
-                        ))}
-                    </div>
-                </>
+            <div id="menu">
+                <div className="menu-item" onClick={() => showCards(null)}>
+                    Все
+                </div>
+                <div className="menu-item" onClick={() => showCards("hookah")}>
+                    Кальян
+                </div>
+                <div className="menu-item" onClick={() => showCards("beer")}>
+                    Пиво
+                </div>
+                <div className="menu-item" onClick={() => showCards("shot")}>
+                    Шоты
+                </div>
+                <div className="menu-item" onClick={() => showCards("drink")}>
+                    Напитки
+                </div>
+                <div className="menu-item" onClick={() => showCards("eat")}>
+                    Закуски
+                </div>
+                <div className="menu-item" onClick={() => showCards("kokteil")}>
+                    Коктейли
+                </div>
+            </div>
+            <div className="cards__container">
+                {filteredFoods.map((food) => (
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        cartItems={cartItems}
+                        setCartItems={setCartItems}
+                    />
+                ))}
+            </div>
         </>
     );
 }
