@@ -26,17 +26,21 @@ function Menu() {
     }, [isCartVisible]);
 
     const handlePayment = useCallback(() => {
+        if (totalPrice <= 0) {
+            console.error('Total price must be greater than zero.');
+            return;
+        }
+
         const provider_token = "381764678:TEST:66150";
         const chat_id = "-1001970812497";
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на ваш реальный токен бота
+        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your actual bot token
         const title = "Medusa";
         const description = "123 Test";
         const payload = `Заказ_номер_${Date.now()}`;
-        const currency = "RUB"; // Код валюты
-        const calculatedTotalPrice = totalPrice > 0 ? totalPrice : 0; // Используйте calculatedTotalPrice здесь
+        const currency = "RUB";
 
         const prices = [
-            { label: "Product Price", amount: calculatedTotalPrice * 100, currency: currency }
+            { label: "Product Price", amount: totalPrice * 100, currency: currency }
         ];
 
         const payloadData = {
@@ -45,8 +49,8 @@ function Menu() {
             description,
             payload,
             provider_token,
-            prices: JSON.stringify(prices), // Преобразуйте массив цен в строку JSON
-            currency: currency // Добавьте параметр валюты
+            prices: JSON.stringify(prices),
+            currency: currency
         };
 
         fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
@@ -59,13 +63,13 @@ function Menu() {
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    // Запрос на оплату успешно выполнен
+                    // Invoice request successful
                 } else {
-                    console.error('Ошибка отправки счета:', data.description);
+                    console.error('Invoice sending error:', data.description);
                 }
             })
             .catch(err => {
-                console.error('Ошибка отправки счета:', err);
+                console.error('Invoice sending error:', err);
             });
     }, [totalPrice]);
 
