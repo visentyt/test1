@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
@@ -10,84 +10,9 @@ function Menu() {
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isCartVisible, setIsCartVisible] = useState(false);
 
     const foods = getData();
 
-    // Функция для обновления надписи на кнопке оплаты
-    const updateButtonLabel = useCallback((updatedTotalPrice) => {
-        if (isCartVisible) {
-            tele.MainButton.text = "Оплатить";
-        } else {
-            tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
-            tele.MainButton.show();
-            tele.MainButton.textColor = "#ffffff";
-            tele.MainButton.color = "#A9A9A9";
-        }
-    }, [isCartVisible]);
-
-    // Функция для создания и отправки счета
-    const handlePayment = useCallback(() => {
-        console.log('totalPrice внутри handlePayment:', totalPrice); // Добавлено логирование
-        if (totalPrice <= 0) {
-            console.error('Общая стоимость должна быть больше нуля.');
-            return;
-        }
-
-        const provider_token = "381764678:TEST:66150";
-        const chat_id = "-1001970812497";
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на ваш токен бота
-        const title = "Medusa";
-        const description = "123 Test";
-        const payload = `Заказ_номер_${Date.now()}`;
-        const currency = "RUB";
-
-        const prices = [
-            { label: "Product Price", amount: totalPrice * 100, currency: currency }
-        ];
-
-        const payloadData = {
-            chat_id,
-            title,
-            description,
-            payload,
-            provider_token,
-            prices: JSON.stringify(prices),
-            currency: currency
-        };
-
-        fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payloadData),
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    // Запрос на оплату успешно выполнен
-                } else {
-                    console.error('Ошибка отправки счета:', data.description);
-                }
-            })
-            .catch(err => {
-                console.error('Ошибка отправки счета:', err);
-            });
-    }, [totalPrice]);
-
-    // Обработчик нажатия на кнопку "Оплатить"
-    const handleMainButtonClick = useCallback(() => {
-        if (isCartVisible) {
-            setIsCartVisible(false);
-            updateButtonLabel(totalPrice);
-        } else {
-            setIsCartVisible(true);
-            tele.MainButton.text = "Оплатить";
-        }
-    }, [isCartVisible, totalPrice, updateButtonLabel]);
-
-    // Функция для добавления продукта в корзину
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
         if (exist) {
@@ -102,7 +27,6 @@ function Menu() {
         updateTotalPrice(food.price);
     };
 
-    // Функция для удаления продукта из корзины
     const onRemove = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
         if (exist) {
@@ -119,22 +43,67 @@ function Menu() {
         }
     };
 
-    // Эффект для настройки Telegram кнопки и надписи при изменении общей стоимости
     useEffect(() => {
         tele.ready();
-        tele.MainButton.onClick(handleMainButtonClick);
-        updateButtonLabel(totalPrice);
-    }, [totalPrice, handleMainButtonClick, updateButtonLabel]);
+    }, []);
 
-    // Функция для обновления общей стоимости
-    const updateTotalPrice = (priceDifference) => {
-        setTotalPrice((prevTotalPrice) => {
-            const updatedTotalPrice = prevTotalPrice + priceDifference;
-            return updatedTotalPrice;
-        });
+    const sendInvoiceToTelegram = (totalPrice) => {
+        const chat_id = "<your_chat_id>"; // Replace with your chat ID
+        const title = "Your Invoice Title";
+        const description = "Your Invoice Description";
+        const payload = "Your Invoice Payload";
+        const provider_token = "Your Provider Token";
+        const currency = "RUB"; // Replace with your desired currency
+        const token = "<your_bot_token>"; // Replace with your bot token
+
+        const prices = [{ label: "Total Price", amount: Math.floor(totalPrice * 100) }]; // Convert price to cents
+
+        const payloadData = {
+            chat_id,
+            title,
+            description,
+            payload,
+            provider_token,
+            prices: JSON.stringify(prices),
+            currency,
+        };
+
+        fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payloadData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.ok) {
+                    // Invoice request successful
+                    console.log("Invoice sent successfully!");
+                } else {
+                    console.error("Error sending invoice:", data.description);
+                }
+            })
+            .catch((err) => {
+                console.error("Error sending invoice:", err);
+            });
     };
 
-    // Функция для фильтрации продуктов по категории
+    const updateTotalPrice = (priceDifference) => {
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+        updateButtonLabel(totalPrice + priceDifference);
+    };
+
+    const updateButtonLabel = (updatedTotalPrice) => {
+        tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
+        tele.MainButton.show();
+        tele.MainButton.textColor = "#ffffff";
+        tele.MainButton.color = "#A9A9A9";
+
+        // Call sendInvoiceToTelegram with the updated total price
+        sendInvoiceToTelegram(updatedTotalPrice);
+    };
+
     const filterFoodsByCategory = (category) => {
         if (category === null) {
             return foods;
@@ -143,14 +112,12 @@ function Menu() {
         }
     };
 
-    // Фильтрация продуктов в зависимости от активной категории или ключевого слова поиска
     const filteredFoods = searchKeyword
         ? foods.filter((food) =>
             food.title.toLowerCase().includes(searchKeyword.toLowerCase())
         )
         : filterFoodsByCategory(activeCategory);
 
-    // Функция для отображения карточек продуктов
     const showCards = (category) => {
         setActiveCategory(category);
     };
