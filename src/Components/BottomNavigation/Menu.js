@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../../App.css';
 import Card from '../Card/Card';
+import { getData } from "../../db/db";
+
 
 const tele = window.Telegram.WebApp;
 
