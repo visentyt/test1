@@ -50,6 +50,7 @@ function Menu() {
     }, []);
 
     const sendInvoiceToTelegram = (totalPrice) => {
+        // Move the content of the original sendInvoiceToTelegram function here
         const chat_id = "-1001970812497"; // Replace with your chat ID
         const title = "Medusa";
         const description = "123 test";
@@ -93,6 +94,7 @@ function Menu() {
 
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
+        updateButtonLabel(totalPrice + priceDifference);
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
@@ -101,10 +103,8 @@ function Menu() {
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
 
-        // Call sendInvoiceToTelegram with the updated total price when the button is clicked
-        tele.MainButton.onClick = () => {
-            sendInvoiceToTelegram(updatedTotalPrice);
-        };
+        // Call sendInvoiceToTelegram with the updated total price
+        sendInvoiceToTelegram(updatedTotalPrice);
     };
 
     const filterFoodsByCategory = (category) => {
