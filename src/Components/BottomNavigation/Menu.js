@@ -14,7 +14,15 @@ function Menu() {
     const [isCartVisible, setIsCartVisible] = useState(false);
 
     const handleMainButtonClick = () => {
-        setIsCartVisible(true);
+        if (isCartVisible) {
+            // Если корзина уже отображается, возвращаемся в меню
+            setIsCartVisible(false);
+            updateButtonLabel(totalPrice);
+        } else {
+            // Показываем корзину
+            setIsCartVisible(true);
+            tele.MainButton.text = "Оплатить";
+        }
     };
 
     const foods = getData();
@@ -52,7 +60,8 @@ function Menu() {
     useEffect(() => {
         tele.ready();
         tele.MainButton.onClick(handleMainButtonClick);
-    }, []);
+        updateButtonLabel(totalPrice);
+    }, [totalPrice]);
 
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
@@ -60,10 +69,14 @@ function Menu() {
     };
 
     const updateButtonLabel = (updatedTotalPrice) => {
-        tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
-        tele.MainButton.show();
-        tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
+        if (isCartVisible) {
+            tele.MainButton.text = "Оплатить";
+        } else {
+            tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
+            tele.MainButton.show();
+            tele.MainButton.textColor = "#ffffff";
+            tele.MainButton.color = "#A9A9A9";
+        }
     };
 
     const filterFoodsByCategory = (category) => {
@@ -87,7 +100,10 @@ function Menu() {
     return (
         <>
             {isCartVisible ? (
-                <Cart cartItems={cartItems} onRemove={onRemove} />
+                <>
+                    <Cart cartItems={cartItems} onRemove={onRemove} />
+                    <button onClick={() => setIsCartVisible(false)}>Назад в меню</button>
+                </>
             ) : (
                 <>
                     <div id="menu">
