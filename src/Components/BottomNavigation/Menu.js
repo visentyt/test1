@@ -15,6 +15,16 @@ function Menu() {
 
     const foods = getData();
 
+    const updateButtonLabel = useCallback((updatedTotalPrice) => {
+        if (isCartVisible) {
+            tele.MainButton.text = "Оплатить";
+        } else {
+            tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
+            tele.MainButton.show();
+            tele.MainButton.textColor = "#ffffff";
+            tele.MainButton.color = "#A9A9A9";
+        }
+    }, [isCartVisible]);
 
     const handlePayment = useCallback(() => {
         const provider_token = "381764678:TEST:66150";
