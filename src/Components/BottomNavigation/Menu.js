@@ -103,8 +103,16 @@ function Menu() {
 
 
     useEffect(() => {
-        tele.MainButton.onClick(() => initiatePayment());
+        const handleClick = () => {
+            initiatePayment();
+        };
+        tele.MainButton.onClick(handleClick);
+
+        return () => {
+            tele.MainButton.offClick(handleClick);  // Предположим, что у вас есть такой метод для удаления обработчика. Если нет, вам придется реализовать его.
+        };
     }, [initiatePayment]);
+
 
 
 
