@@ -18,15 +18,13 @@ function Menu() {
     const updateButtonLabel = useCallback((updatedTotalPrice) => {
         if (isCartVisible) {
             tele.MainButton.text = "Оплатить";
-            console.log(updatedTotalPrice);
-            console.log(totalPrice);
         } else {
             tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
             tele.MainButton.show();
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         }
-    }, [isCartVisible, totalPrice]);
+    }, [isCartVisible]);
 
     // Функция для создания и отправки счета
     const handlePayment = useCallback(() => {
@@ -86,9 +84,8 @@ function Menu() {
         } else {
             setIsCartVisible(true);
             tele.MainButton.text = "Оплатить";
-            handlePayment();
         }
-    }, [isCartVisible, totalPrice, updateButtonLabel, handlePayment]);
+    }, [isCartVisible, totalPrice, updateButtonLabel]);
 
     // Функция для добавления продукта в корзину
     const onAdd = (food) => {
@@ -130,17 +127,12 @@ function Menu() {
     }, [totalPrice, handleMainButtonClick, updateButtonLabel]);
 
     // Функция для обновления общей стоимости
-    // Функция для обновления общей стоимости
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => {
             const updatedTotalPrice = prevTotalPrice + priceDifference;
-            updateButtonLabel(updatedTotalPrice);
             return updatedTotalPrice;
         });
-        console.log(priceDifference);
     };
-
-
 
     // Функция для фильтрации продуктов по категории
     const filterFoodsByCategory = (category) => {
