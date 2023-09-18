@@ -1,57 +1,32 @@
-import React, { useState, useEffect, useCallback } from "react";
-import "../../App.css";
-import Card from "../Card/Card";
-import { getData } from "../../db/db";
+import React, { useState, useEffect, useCallback } from 'react';
+import '../../App.css';
+import Card from '../Card/Card';
 
 const tele = window.Telegram.WebApp;
 
 function Menu() {
     const [cartItems, setCartItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
-    const [searchKeyword] = useState("");
+    const [searchKeyword] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
 
     const foods = getData();
 
-
-
-    const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
-    const CHAT_ID = '-1001970812497'; // Замените на ID чата пользователя
-
     const initiatePayment = useCallback(() => {
-        const invoiceData = {
-            chat_id: CHAT_ID,
-            title: "Оплата заказа",
-            description: "Описание вашего заказа",
-            payload: "Заказ номер 1",
-            provider_token: "381764678:TEST:66150", // Токен, который выдал @BotFather
-            start_parameter: "payment",
-            currency: "RUB",
-            prices: [{
-                label: "Общая стоимость",
-                amount: totalPrice * 100 // В копейках
-            }]
+        // Запрос к серверу для получения ссылки на оплату
+        let xhrURL = new URL('https://medusakhabarovsk.ru/createInvoiceLink');
+        xhrURL.searchParams.set('title', 'Оплата заказа');
+        xhrURL.searchParams.set('amount', totalPrice * 100); // В копейках
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', xhrURL);
+        xhr.send();
+        xhr.onload = function () {
+            const response = JSON.parse(xhr.response);
+
+            // Открываете инвоис-линк в приложении
+            WebApp.openInvoice(response.result);
         };
-        console.log('Sending invoice with total price:', totalPrice);
-        fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendInvoice`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(invoiceData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Обработка ответа
-                if (data.ok) {
-                    console.log("Счет отправлен!");
-                } else {
-                    console.error("Ошибка при отправке счета:", data.description);
-                }
-            })
-            .catch(error => {
-                console.error("Ошибка:", error);
-            });
     }, [totalPrice]);
 
     const onAdd = (food) => {
@@ -100,6 +75,7 @@ function Menu() {
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
     }, [totalPrice]);
+
 
 
     useEffect(() => {
