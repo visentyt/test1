@@ -15,6 +15,7 @@ function Menu() {
 
     const foods = getData();
 
+    
     const updateButtonLabel = useCallback((updatedTotalPrice) => {
         if (isCartVisible) {
             tele.MainButton.text = "Оплатить";
@@ -26,7 +27,8 @@ function Menu() {
         }
     }, [isCartVisible]);
 
-    const handlePayment = () => {
+    const handlePayment = useCallback(() => {
+
         // Здесь вызываем функцию sendInvoice для отправки счета
         // На основе вашего описания и примеров выше:
 
@@ -57,7 +59,7 @@ function Menu() {
             .catch(err => {
                 console.error('Ошибка при отправке инвойса:', err);
             });
-    };
+    }, [totalPrice]);
 
     const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
@@ -66,7 +68,7 @@ function Menu() {
         } else {
             setIsCartVisible(true);
             tele.MainButton.text = "Оплатить";
-            handlePayment(); // Добавлен вызов функции оплаты
+            handlePayment();
         }
     }, [isCartVisible, totalPrice, updateButtonLabel, handlePayment]);
 
