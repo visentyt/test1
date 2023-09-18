@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
-import Cart from "../Cart/Cart"; // Импортируйте ваш Cart компонент
+import Cart from "../Cart/Cart";
 
 const tele = window.Telegram.WebApp;
 
@@ -11,7 +11,7 @@ function Menu() {
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isCartVisible, setIsCartVisible] = useState(false); // Перемещено сюда
+    const [isCartVisible, setIsCartVisible] = useState(false);
 
     const foods = getData();
 
@@ -47,6 +47,16 @@ function Menu() {
 
     useEffect(() => {
         tele.ready();
+
+        function handleMainButtonClick() {
+            setIsCartVisible(true);
+        }
+
+        tele.addEventListener("main_button_pressed", handleMainButtonClick);
+
+        return () => {
+            tele.removeEventListener("main_button_pressed", handleMainButtonClick);
+        };
     }, []);
 
     const updateTotalPrice = (priceDifference) => {
@@ -59,9 +69,7 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        tele.MainButton.click = () => setIsCartVisible(true);
     };
-
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -81,52 +89,35 @@ function Menu() {
         setActiveCategory(category);
     };
 
+    if (isCartVisible) {
+        return <Cart cartItems={cartItems} onRemove={onRemove} />;
+    }
+
     return (
         <>
-            {isCartVisible ? (
-                <Cart cartItems={cartItems} onRemove={onRemove} />
-            ) : (
-                <>
-                    <div id="menu">
-                        <div className="menu-item" onClick={() => showCards(null)}>
-                            Все
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("hookah")}>
-                            Кальян
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("beer")}>
-                            Пиво
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("shot")}>
-                            Шоты
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("drink")}>
-                            Напитки
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("eat")}>
-                            Закуски
-                        </div>
-                        <div className="menu-item" onClick={() => showCards("kokteil")}>
-                            Коктейли
-                        </div>
-                    </div>
-                    <div className="cards__container">
-                        {filteredFoods.map((food) => (
-                            <Card
-                                key={food.id}
-                                food={food}
-                                onAdd={onAdd}
-                                onRemove={onRemove}
-                                cartItems={cartItems}
-                                setCartItems={setCartItems}
-                            />
-                        ))}
-                    </div>
-                </>
-            )}
+            <div id="menu">
+                <div className="menu-item" onClick={() => showCards(null)}>Все</div>
+                <div className="menu-item" onClick={() => showCards("hookah")}>Кальян</div>
+                <div className="menu-item" onClick={() => showCards("beer")}>Пиво</div>
+                <div className="menu-item" onClick={() => showCards("shot")}>Шоты</div>
+                <div className="menu-item" onClick={() => showCards("drink")}>Напитки</div>
+                <div className="menu-item" onClick={() => showCards("eat")}>Закуски</div>
+                <div className="menu-item" onClick={() => showCards("kokteil")}>Коктейли</div>
+            </div>
+            <div className="cards__container">
+                {filteredFoods.map((food) => (
+                    <Card
+                        key={food.id}
+                        food={food}
+                        onAdd={onAdd}
+                        onRemove={onRemove}
+                        cartItems={cartItems}
+                        setCartItems={setCartItems}
+                    />
+                ))}
+            </div>
         </>
     );
 }
-
 
 export default Menu;
