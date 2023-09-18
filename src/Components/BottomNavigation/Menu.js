@@ -19,7 +19,7 @@ function Menu() {
     const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
     const CHAT_ID = '-1001970812497'; // Замените на ID чата пользователя
 
-    const initiatePayment = (updatedTotalPrice) => {
+    const initiatePayment = (fullprice) => {
         const invoiceData = {
             chat_id: CHAT_ID,
             title: "Оплата заказа",
@@ -30,11 +30,11 @@ function Menu() {
             currency: "RUB",
             prices: [{
                 label: "Общая стоимость",
-                amount: updatedTotalPrice * 100 // В копейках
+                amount: fullprice * 100 // В копейках
             }]
             // ... добавьте другие параметры, если это необходимо
         };
-        console.log('Sending invoice with total price:', updatedTotalPrice);
+        console.log('Sending invoice with total price:', fullprice);
         fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendInvoice`, {
             method: 'POST',
             headers: {
@@ -102,9 +102,10 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-
         if (!paymentHandlerAdded) {
-            tele.MainButton.onClick(() => initiatePayment(updatedTotalPrice));
+            const fullprice = updatedTotalPrice;
+            setTotalPrice(fullprice);
+            tele.MainButton.onClick(() => initiatePayment(fullprice));
             setPaymentHandlerAdded(true);
         }
     };
