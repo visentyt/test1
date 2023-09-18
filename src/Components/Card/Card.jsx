@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Card.css";
 import Button from "../Button/Button";
 
-function Card({ food, onAdd, onRemove, cartItems, setCartItems, handleSendInvoice }) {
+function Card({ food, onAdd, onRemove, cartItems, setCartItems, shouldSendInvoice }) {
     const [count, setCount] = useState(0);
     const { title, Image, price } = food;
 

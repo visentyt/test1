@@ -11,6 +11,7 @@ function Menu() {
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
     const [orderCount, setOrderCount] = useState(1); // Added orderCount state
+    const [shouldSendInvoice, setShouldSendInvoice] = useState(false); // New state
 
     const foods = getData();
 
@@ -50,46 +51,50 @@ function Menu() {
     }, []);
 
     const sendInvoiceToTelegram = (totalPrice) => {
-        // Move the content of the original sendInvoiceToTelegram function here
-        const chat_id = "-1001970812497"; // Replace with your chat ID
-        const title = "Medusa";
-        const description = "123 test";
-        const payload = `Заказ номер ${orderCount} по счету`; // Include order number
-        const provider_token = "381764678:TEST:66150";
-        const currency = "RUB"; // Replace with your desired currency
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your bot token
+        if (shouldSendInvoice) { // Check shouldSendInvoice before sending
+            const chat_id = "-1001970812497"; // Replace with your chat ID
+            const title = "Medusa";
+            const description = "123 test";
+            const payload = `Заказ номер ${orderCount} по счету`; // Include order number
+            const provider_token = "381764678:TEST:66150";
+            const currency = "RUB"; // Replace with your desired currency
+            const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your bot token
 
-        const prices = [{ label: "Total Price", amount: Math.floor(totalPrice * 100) }]; // Convert price to cents
+            const prices = [{ label: "Total Price", amount: Math.floor(totalPrice * 100) }]; // Convert price to cents
 
-        const payloadData = {
-            chat_id,
-            title,
-            description,
-            payload,
-            provider_token,
-            prices: JSON.stringify(prices),
-            currency,
-        };
+            const payloadData = {
+                chat_id,
+                title,
+                description,
+                payload,
+                provider_token,
+                prices: JSON.stringify(prices),
+                currency,
+            };
 
-        fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payloadData),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.ok) {
-                    // Invoice request successful
-                    console.log("Invoice sent successfully!");
-                } else {
-                    console.error("Error sending invoice:", data.description);
-                }
+            fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payloadData),
             })
-            .catch((err) => {
-                console.error("Error sending invoice:", err);
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.ok) {
+                        // Invoice request successful
+                        console.log("Invoice sent successfully!");
+                    } else {
+                        console.error("Error sending invoice:", data.description);
+                    }
+                })
+                .catch((err) => {
+                    console.error("Error sending invoice:", err);
+                });
+
+            // Reset shouldSendInvoice back to false after sending
+            setShouldSendInvoice(false);
+        }
     };
 
     const updateTotalPrice = (priceDifference) => {
@@ -104,7 +109,7 @@ function Menu() {
         tele.MainButton.color = "#A9A9A9";
 
         // Call sendInvoiceToTelegram with the updated total price
-        sendInvoiceToTelegram(updatedTotalPrice);
+        setShouldSendInvoice(true); // Set shouldSendInvoice to true
     };
 
     const filterFoodsByCategory = (category) => {
