@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../../App.css';
 import Card from '../Card/Card';
-import { getData } from "../../db/db";
+import { getData } from '../../db/db';
+import Axios from 'axios'; // Импортируем Axios
 
 const tele = window.Telegram.WebApp;
 
@@ -14,20 +15,17 @@ function Menu() {
     const foods = getData();
 
     const initiatePayment = useCallback(() => {
-        // Запрос к серверу для получения ссылки на оплату
-        let xhrURL = new URL('https://medusakhabarovsk.ru/createInvoiceLink');
-        xhrURL.searchParams.set('title', 'Оплата заказа');
-        xhrURL.searchParams.set('amount', totalPrice * 100); // В копейках
-
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', xhrURL);
-        xhr.send();
-        xhr.onload = function () {
-            const response = JSON.parse(xhr.response);
-
-            // Открываете инвоис-линк в приложении
-            tele.openInvoice(response.result);
-        };
+        Axios.post('https://medusakhabarovsk.ru/createInvoiceLink', {
+            title: 'Оплата заказа',
+            amount: totalPrice * 100,
+        })
+            .then((response) => {
+                const invoiceLink = response.data.result;
+                tele.openInvoice(invoiceLink);
+            })
+            .catch((error) => {
+                console.error('Ошибка при создании инвоиса:', error);
+            });
     }, [totalPrice]);
 
     const onAdd = (food) => {
@@ -69,15 +67,12 @@ function Menu() {
         setTotalPrice(newTotalPrice);
     };
 
-
     useEffect(() => {
         tele.MainButton.text = `Цена: ${totalPrice.toFixed(2)}₽`;
         tele.MainButton.show();
-        tele.MainButton.textColor = "#ffffff";
-        tele.MainButton.color = "#A9A9A9";
+        tele.MainButton.textColor = '#ffffff';
+        tele.MainButton.color = '#A9A9A9';
     }, [totalPrice]);
-
-
 
     useEffect(() => {
         const handleClick = () => {
@@ -86,19 +81,9 @@ function Menu() {
         tele.MainButton.onClick(handleClick);
 
         return () => {
-            tele.MainButton.offClick(handleClick);  // Предположим, что у вас есть такой метод для удаления обработчика. Если нет, вам придется реализовать его.
+            tele.MainButton.offClick(handleClick);
         };
     }, [initiatePayment]);
-
-
-
-
-
-
-
-
-
-
 
     const filterFoodsByCategory = (category) => {
         if (category === null) {
@@ -121,7 +106,7 @@ function Menu() {
     return (
         <>
             <div id="menu">
-                <div className="menu-item" onClick={() => showCards(null)}>
+            <div className="menu-item" onClick={() => showCards(null)}>
                     Все
                 </div>
                 <div className="menu-item" onClick={() => showCards("hookah")}>
