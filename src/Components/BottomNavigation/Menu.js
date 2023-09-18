@@ -34,7 +34,7 @@ function Menu() {
         const description = "123 Test";
         const payload = `order_id_${Date.now()}`;
         const currency = "RUB"; // Currency code
-        const totalPrice = Math.max(0, yourCalculatedTotalPrice);
+        const totalPrice = Math.max(0, totalPrice); // Используйте totalPrice здесь
 
         const prices = [
             { label: "Product Price", amount: totalPrice * 100, currency: currency }
