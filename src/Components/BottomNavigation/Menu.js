@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import Card from "../Card/Card";
 import { getData } from "../../db/db";
@@ -14,7 +14,6 @@ function Menu() {
     const foods = getData();
 
 
-    const paymentInProgress = useRef(false);
 
     const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
     const CHAT_ID = '-1001970812497'; // Замените на ID чата пользователя
