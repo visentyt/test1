@@ -44,8 +44,10 @@ function Menu() {
             description,
             payload,
             provider_token,
-            prices: JSON.stringify(prices) // Convert prices array to JSON string
+            prices: JSON.stringify(prices), // Convert prices array to JSON string
+            currency: currency // Add the currency parameter
         };
+
 
         fetch(`https://api.telegram.org/bot${token}/sendInvoice`, {
             method: "POST",
