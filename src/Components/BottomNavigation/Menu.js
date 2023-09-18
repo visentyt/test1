@@ -26,6 +26,39 @@ function Menu() {
         }
     }, [isCartVisible]);
 
+    const handlePayment = () => {
+        // Здесь вызываем функцию sendInvoice для отправки счета
+        // На основе вашего описания и примеров выше:
+
+        const provider_token = "381764678:TEST:66150"; // полученный токен от @BotFather
+        const chat_id = "6570877120"; // ID чата с клиентом
+        const title = "Medusa";
+        const description = "123 Test";
+        const payload = `order_id_${Date.now()}`;
+        const prices = [
+            { label: "Product Price", amount: totalPrice * 100 } // Цена в копейках
+        ];
+
+        // Формирование URL
+        const apiUrl = `https://api.telegram.org/bot6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8/sendInvoice?chat_id=${chat_id}&title=${title}&description=${description}&payload=${payload}&provider_token=${provider_token}&prices=${JSON.stringify(prices)}`;
+
+        fetch(apiUrl, {
+            method: "POST"
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Обработка ответа здесь
+                if (data.ok) {
+                    // Запрос успешно выполнен
+                } else {
+                    console.error('Ошибка при отправке инвойса:', data.description);
+                }
+            })
+            .catch(err => {
+                console.error('Ошибка при отправке инвойса:', err);
+            });
+    };
+
     const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
             setIsCartVisible(false);
@@ -33,6 +66,7 @@ function Menu() {
         } else {
             setIsCartVisible(true);
             tele.MainButton.text = "Оплатить";
+            handlePayment(); // Добавлен вызов функции оплаты
         }
     }, [isCartVisible, totalPrice, updateButtonLabel]);
 
