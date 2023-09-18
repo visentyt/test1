@@ -91,9 +91,6 @@ function Menu() {
                 .catch((err) => {
                     console.error("Error sending invoice:", err);
                 });
-
-            // Reset shouldSendInvoice back to false after sending
-            setShouldSendInvoice(false);
         }
     };
 
@@ -107,9 +104,8 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-
-        // Вызываем функцию sendInvoiceToTelegram с передачей ей обновленной цены
-        sendInvoiceToTelegram(updatedTotalPrice);
+        tele.MainButton.onClick(sendInvoiceToTelegram);
+        
     };
 
 
