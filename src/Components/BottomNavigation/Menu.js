@@ -70,7 +70,7 @@ function Menu() {
             .catch(err => {
                 console.error('Error sending invoice:', err);
             });
-    }, [totalPrice]);
+    }, [updateButtonLabel, handlePayment]);
 
     const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
