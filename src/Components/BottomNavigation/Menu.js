@@ -13,6 +13,7 @@ function Menu() {
 
     const foods = getData();
 
+    const [paymentHandlerAdded, setPaymentHandlerAdded] = useState(false);
 
 
     const TELEGRAM_BOT_TOKEN = '6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8'; // Замените на ваш токен
@@ -99,8 +100,13 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        tele.MainButton.onClick(initiatePayment);
+
+        if (!paymentHandlerAdded) {
+            tele.MainButton.onClick(initiatePayment);
+            setPaymentHandlerAdded(true);
+        }
     };
+
 
 
 
