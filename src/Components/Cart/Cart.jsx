@@ -29,3 +29,4 @@ const currency = "RUB";
 const prices = [
     { label: "Product Price", amount: totalPrice * 100, currency: currency }
 ];
+

@@ -10,6 +10,7 @@ function Menu() {
     const [activeCategory, setActiveCategory] = useState(null);
     const [searchKeyword] = useState("");
     const [totalPrice, setTotalPrice] = useState(0);
+    const [orderCount, setOrderCount] = useState(1); // Added orderCount state
 
     const foods = getData();
 
@@ -25,6 +26,7 @@ function Menu() {
             setCartItems([...cartItems, { ...food, quantity: 1 }]);
         }
         updateTotalPrice(food.price);
+        setOrderCount(orderCount + 1); // Increment order count
     };
 
     const onRemove = (food) => {
@@ -48,13 +50,13 @@ function Menu() {
     }, []);
 
     const sendInvoiceToTelegram = (totalPrice) => {
-        const chat_id = "<your_chat_id>"; // Replace with your chat ID
-        const title = "Your Invoice Title";
-        const description = "Your Invoice Description";
-        const payload = "Your Invoice Payload";
-        const provider_token = "Your Provider Token";
+        const chat_id = "-1001970812497"; // Replace with your chat ID
+        const title = "Medusa";
+        const description = "123 test";
+        const payload = `Заказ номер ${orderCount} по счету`; // Include order number
+        const provider_token = "381764678:TEST:66150";
         const currency = "RUB"; // Replace with your desired currency
-        const token = "<your_bot_token>"; // Replace with your bot token
+        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your bot token
 
         const prices = [{ label: "Total Price", amount: Math.floor(totalPrice * 100) }]; // Convert price to cents
 
