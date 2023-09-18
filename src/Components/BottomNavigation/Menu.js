@@ -14,9 +14,12 @@ function Menu() {
 
     const foods = getData();
 
+    // Функция для обновления надписи на кнопке оплаты
     const updateButtonLabel = useCallback((updatedTotalPrice) => {
         if (isCartVisible) {
             tele.MainButton.text = "Оплатить";
+            console.log(updatedTotalPrice);
+            console.log(totalPrice);
         } else {
             tele.MainButton.text = `Цена: ${updatedTotalPrice.toFixed(2)}₽`;
             tele.MainButton.show();
@@ -25,16 +28,17 @@ function Menu() {
         }
     }, [isCartVisible]);
 
+    // Функция для создания и отправки счета
     const handlePayment = useCallback(() => {
         if (totalPrice <= 0) {
+            console.error('Общая стоимость должна быть больше нуля.');
             console.log(totalPrice);
-            console.error('Total price must be greater than zero.');
             return;
         }
 
         const provider_token = "381764678:TEST:66150";
         const chat_id = "-1001970812497";
-        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Replace with your actual bot token
+        const token = "6570877120:AAEPBTRjmI3I5qVvNnk6jGNl7A0InoQI4g8"; // Замените на ваш токен бота
         const title = "Medusa";
         const description = "123 Test";
         const payload = `Заказ_номер_${Date.now()}`;
@@ -64,16 +68,17 @@ function Menu() {
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    // Invoice request successful
+                    // Запрос на оплату успешно выполнен
                 } else {
-                    console.error('Invoice sending error:', data.description);
+                    console.error('Ошибка отправки счета:', data.description);
                 }
             })
             .catch(err => {
-                console.error('Invoice sending error:', err);
+                console.error('Ошибка отправки счета:', err);
             });
     }, [totalPrice]);
 
+    // Обработчик нажатия на кнопку "Оплатить"
     const handleMainButtonClick = useCallback(() => {
         if (isCartVisible) {
             setIsCartVisible(false);
@@ -85,6 +90,7 @@ function Menu() {
         }
     }, [isCartVisible, totalPrice, updateButtonLabel, handlePayment]);
 
+    // Функция для добавления продукта в корзину
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
         if (exist) {
@@ -99,6 +105,7 @@ function Menu() {
         updateTotalPrice(food.price);
     };
 
+    // Функция для удаления продукта из корзины
     const onRemove = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
         if (exist) {
@@ -115,17 +122,20 @@ function Menu() {
         }
     };
 
+    // Эффект для настройки Telegram кнопки и надписи при изменении общей стоимости
     useEffect(() => {
         tele.ready();
         tele.MainButton.onClick(handleMainButtonClick);
         updateButtonLabel(totalPrice);
     }, [totalPrice, handleMainButtonClick, updateButtonLabel]);
 
+    // Функция для обновления общей стоимости
     const updateTotalPrice = (priceDifference) => {
         setTotalPrice((prevTotalPrice) => prevTotalPrice + priceDifference);
         updateButtonLabel(totalPrice + priceDifference);
     };
 
+    // Функция для фильтрации продуктов по категории
     const filterFoodsByCategory = (category) => {
         if (category === null) {
             return foods;
@@ -134,12 +144,14 @@ function Menu() {
         }
     };
 
+    // Фильтрация продуктов в зависимости от активной категории или ключевого слова поиска
     const filteredFoods = searchKeyword
         ? foods.filter((food) =>
             food.title.toLowerCase().includes(searchKeyword.toLowerCase())
         )
         : filterFoodsByCategory(activeCategory);
 
+    // Функция для отображения карточек продуктов
     const showCards = (category) => {
         setActiveCategory(category);
     };
