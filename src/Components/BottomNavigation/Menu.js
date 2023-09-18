@@ -29,9 +29,10 @@ function Menu() {
     }, [isCartVisible, totalPrice]);
 
     // Функция для создания и отправки счета
+    // Заменяем totalPrice на updatedTotalPrice внутри handlePayment
     const handlePayment = useCallback(() => {
-        console.log('totalPrice внутри handlePayment:', totalPrice); // Добавлено логирование
-        if (totalPrice <= 0) {
+        console.log('updatedTotalPrice внутри handlePayment:', updatedTotalPrice); // Заменяем totalPrice на updatedTotalPrice
+        if (updatedTotalPrice <= 0) { // Заменяем totalPrice на updatedTotalPrice
             console.error('Общая стоимость должна быть больше нуля.');
             return;
         }
@@ -45,7 +46,7 @@ function Menu() {
         const currency = "RUB";
 
         const prices = [
-            { label: "Product Price", amount: totalPrice * 100, currency: currency }
+            { label: "Product Price", amount: updatedTotalPrice * 100, currency: currency } // Заменяем totalPrice на updatedTotalPrice
         ];
 
         const payloadData = {
@@ -76,7 +77,9 @@ function Menu() {
             .catch(err => {
                 console.error('Ошибка отправки счета:', err);
             });
-    }, [totalPrice]);
+    }, [updatedTotalPrice]); // Заменяем totalPrice на updatedTotalPrice
+
+
 
     // Обработчик нажатия на кнопку "Оплатить"
     const handleMainButtonClick = useCallback(() => {
@@ -136,6 +139,7 @@ function Menu() {
         // Обновляем общую стоимость перед вызовом updateButtonLabel
         const updatedTotalPrice = totalPrice + priceDifference;
         updateButtonLabel(updatedTotalPrice);
+        console.log(priceDifference);
     };
 
 
