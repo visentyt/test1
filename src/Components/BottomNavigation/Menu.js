@@ -18,6 +18,7 @@ function Menu() {
         Axios.post('https://medusakhabarovsk.ru/createInvoiceLink', {
             title: 'Оплата заказа',
             amount: totalPrice * 100,
+            description: 'Описание вашего заказа здесь', // Замените на ваше описание
         })
             .then((response) => {
                 const invoiceLink = response.data.result;
@@ -27,6 +28,7 @@ function Menu() {
                 console.error('Ошибка при создании инвоиса:', error);
             });
     }, [totalPrice]);
+
 
     const onAdd = (food) => {
         const exist = cartItems.find((x) => x.id === food.id);
