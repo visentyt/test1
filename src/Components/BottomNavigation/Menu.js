@@ -26,7 +26,7 @@ function Menu() {
             tele.MainButton.textColor = "#ffffff";
             tele.MainButton.color = "#A9A9A9";
         }
-    }, [isCartVisible]);
+    }, [isCartVisible, totalPrice]);
 
     // Функция для создания и отправки счета
     const handlePayment = useCallback(() => {
