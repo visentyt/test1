@@ -27,6 +27,7 @@ function Menu() {
 
     const handlePayment = useCallback(() => {
         if (totalPrice <= 0) {
+            console.log(totalPrice);
             console.error('Total price must be greater than zero.');
             return;
         }
