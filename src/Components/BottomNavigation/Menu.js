@@ -29,7 +29,7 @@ function Menu() {
     }, [isCartVisible, totalPrice]);
 
     // Функция для создания и отправки счета
-    useEffect(() => {
+    const handlePayment = useCallback(() => {
         if (totalPrice <= 0) {
             console.error('Общая стоимость должна быть больше нуля.');
             return;
