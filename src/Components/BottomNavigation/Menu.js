@@ -104,9 +104,12 @@ function Menu() {
         tele.MainButton.show();
         tele.MainButton.textColor = "#ffffff";
         tele.MainButton.color = "#A9A9A9";
-        tele.MainButton.onClick(sendInvoiceToTelegram);
-        
+        tele.MainButton.onClick(() => {
+            setShouldSendInvoice(true); // Установите shouldSendInvoice в true при нажатии кнопки
+            sendInvoiceToTelegram(updatedTotalPrice);
+        });
     };
+
 
 
     const filterFoodsByCategory = (category) => {
